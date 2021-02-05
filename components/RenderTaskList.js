@@ -1,11 +1,34 @@
 import React from 'react';
 import { View } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { toggleCompleted } from '../redux/tasksSlice';
+
+
+const mapDispatch = { 
+    toggleCompleted: (id) => (toggleCompleted(id))
+ }; 
 
 
 const RenderTaskList = (props) => {
-    const taskList = props.tasks.map(task => {
-
+    const {tasks, toggleCompleted, forPage, navigation } = props;
+    const removeTask = () => {
+        console.log("remove task");
+     }
+     const rescheduleTask = () => {
+        console.log("reschedule task");
+     }
+     // passed as props to TaskList
+     const editDetails = (id) => {
+         // dispatch storeTask with selected task
+     //   props.storeTask(task);
+         // redirect to edit task page
+        console.log("edit details")
+        navigation.navigate('Edit');
+     };
+    
+    const taskList = tasks.map(task => {
+       
         return (
             <ListItem key={task.id}>
                 <ListItem.Content style={{flex: 1}}>
@@ -14,22 +37,39 @@ const RenderTaskList = (props) => {
                         checked={task.completed}
                         checkedIcon="check-square-o"
                         uncheckedIcon="square-o"
-                        onLongPress={props.editDetails}
-                        onPress={props.toggleCompleted}
+                        onPress={() => toggleCompleted(task.id)}
                         style={{flex: 2}}
                     />
                    
                 </ListItem.Content>
                 <ListItem.Chevron 
-                        type='font-awesome'
-                        name="times"
-                        style={{flex: 1}}
-                        onPress={props.removeTask}
-                        />
+                    type='font-awesome'
+                    name="pencil"
+                    style={{flex: 1}}
+                    onPress={() => editDetails(task.id)}
+                    />
+        {(forPage === "list") &&
+            <ListItem.Chevron 
+                    type='font-awesome'
+                    name="times"
+                    style={{flex: 1}}
+                    onPress={removeTask}
+                    />
+                
+        }
+        {(forPage === "schedule") &&
+        <ListItem.Chevron 
+                    type='font-awesome'
+                    name="calendar-times-o"
+                    style={{flex: 1}}
+                    onPress={rescheduleTask}
+                    />
+        }
             </ListItem>     
         );
     });
-    if (!props.tasks || props.tasks.length === 0) return <View />;
+
+    if (!tasks || tasks.length === 0) return <View />;
     return (
 
         <View>   
@@ -39,4 +79,4 @@ const RenderTaskList = (props) => {
 }
 
 
-export default RenderTaskList;
+export default connect(null, mapDispatch)(RenderTaskList);

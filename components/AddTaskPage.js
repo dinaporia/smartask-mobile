@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 import { TaskCategoryInput, TaskNameInput, TaskDateInput } from './TaskBasics';
+import { connect } from 'react-redux';
+import { addTask } from '../redux/tasksSlice';
+
+
+const mapDispatch = { addTask };
 
 // component holds state for new task object to pass on to store after all fields have been completed
 
@@ -54,11 +59,16 @@ class AddTaskPage extends Component {
       this.props.addTask(newTask);
       // reset state
       this.setState({id: '', task:'', due:'', category: 'Work'});
+      
+      console.log("new task: " + JSON.stringify(this.state));
       // navigate to task list
       this.props.navigation.navigate('List');
       
    }
   
+   passToDetails = () => {
+      this.props.navigation.navigate('Details');
+   }
 
    render() {
       return (
@@ -96,4 +106,4 @@ const styles = StyleSheet.create({
  });
 
 
-export default AddTaskPage;
+export default connect(null, mapDispatch)(AddTaskPage);
