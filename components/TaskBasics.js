@@ -49,7 +49,8 @@ class TaskDateInput extends Component {
     handleDateInput = (date) => {
         if (date) { 
         this.setState({show: false});
-        this.props.onDateChange(date);
+        const stringDate = date.toString().substring(0, 10);
+        this.props.onDateChange(stringDate);
         }}
     
 
@@ -62,7 +63,7 @@ class TaskDateInput extends Component {
                     <Button 
                         // on press, set show to true
                         onPress={() => this.setState({show: !this.state.show})}
-                        title={(this.props.date) ? this.props.date.toLocaleDateString('en-US') : today.toLocaleDateString('en-US')}
+                        title={(this.props.date) ? this.props.date : today.toLocaleDateString('en-US')}
                         accessibilityLabel='Tap to select due date'
                     />
                 </View>

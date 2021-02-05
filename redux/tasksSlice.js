@@ -1,5 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+   // method generates new id before passing state to store
+ const  generateId = (tasks) => {
+    // store today's date as a 10 digit string
+    const today = (new Date()).toISOString().substring(0, 10);
+    // initialize idTag for while loop
+    let idTag = 1;
+    // if other tasks exist with this creation date
+    const todaysTasks = tasks.filter(task => task.id.includes(today));
+    if (todaysTasks.length > 0) {
+       // check that the idTag hasn't already been used
+       let existingTags = todaysTasks.filter(task => +task.id.substring(11) === idTag);
+       // increment idTag until it is unique
+       for (let i = 1; existingTags.length > 0; i++) {
+             idTag = i;
+             existingTags = todaysTasks.filter(task => +task.id.substring(11) === i);    
+       }
+    }
+    // append idTag to date to create unique id
+    return today + '-' + idTag;
+ }
+
 const myTasks = [
     {
         id: '2021-01-12-1',
@@ -102,20 +123,22 @@ const tasksSlice = createSlice({
         completed: true
     }],
     reducers: {
+       
     // gets task properties from input through local state
     // adds task to state, overriding default values
-        // addTask(state, action) {
-        //     const defaultTask = {
-        //         duration: null, 
-        //         category: "Work", 
-        //         priority: 0, 
-        //         difficulty: 0, 
-        //         interest: 0, 
-        //         completed: false 
-        //     };
-        //     const task = action.payload;
-        //     state.push({...defaultTask, ...task});
-        // },
+        addTask(state, action) {
+            const defaultTask = {
+                id: generateId(state),
+                duration: 30, 
+                category: "Work", 
+                priority: 2, 
+                difficulty: 2, 
+                interest: 2, 
+                completed: false 
+            };
+            const task = action.payload;
+            state.push({...defaultTask, ...task});
+        },
     // gets task id, toggles completed
         toggleCompleted(state, action) {
             const task = state.find(task => task.id === action.payload);

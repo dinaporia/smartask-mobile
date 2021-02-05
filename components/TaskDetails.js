@@ -1,6 +1,6 @@
-import React, { Component, useState } from 'react';
-import { Text, View } from 'react-native';
-import { Rating, AirbnbRating, Card, Slider } from 'react-native-elements';
+import React from 'react';
+import { Text } from 'react-native';
+import { AirbnbRating, Card, Slider } from 'react-native-elements';
 
 
 const PriorityInput = ({priority, setPriority}) => {
@@ -8,19 +8,7 @@ const PriorityInput = ({priority, setPriority}) => {
         <Card>
             <Card.Title>Priority</Card.Title>
             <Card.Divider />
- {/*            {(priority) && 
-            <Text style={{textAlign: 'center'}}>
-               {priorityText}
-            </Text>
-            }
-            <Rating 
-               type='star'
-               fractions={0}
-               minValue={1}
-               ratingCount={3}
-               imageSize={30}
-               onFinishRating={(rating) => setPriority(rating)}
-            /> */}
+ 
             <AirbnbRating 
                 count={3}
                 reviews={["WANT", "SHOULD", "MUST"]}
@@ -38,11 +26,7 @@ const DifficultyInput = ({difficulty, setDifficulty}) => {
         <Card>
             <Card.Title>Difficulty</Card.Title>
             <Card.Divider />
-         {/*   {(difficulty) && 
-             <Text style={{textAlign: 'center'}}>
-               {difficultyText}
-            </Text> 
-            }*/}
+        
             <AirbnbRating 
                 count={4}
                 reviews={["EASY", "DOABLE", "CHALLENGING", "HARD"]}
@@ -51,14 +35,7 @@ const DifficultyInput = ({difficulty, setDifficulty}) => {
                 onFinishRating={(rating) => setDifficulty(rating)}
 
             />
-            {/* <Rating 
-               type='star'
-               fractions={0}
-               minValue={1}
-               ratingCount={4}
-               imageSize={30}
-               onFinishRating={(rating) => setDifficulty(rating)}
-            /> */}
+           
          </Card>
     )
 }
@@ -76,19 +53,7 @@ const InterestInput = ({interest, setInterest}) => {
                 onFinishRating={(rating) => setInterest(rating)}
 
             />
-            {/* {(interest) && 
-            <Text style={{textAlign: 'center'}}>
-               {interestText}
-            </Text>
-            }
-            <Rating 
-               type='star'
-               fractions={0}
-               minValue={1}
-               ratingCount={3}
-               imageSize={30}
-               onFinishRating={(rating) => setInterest(rating)}
-            /> */}
+          
          </Card>
     )
 }

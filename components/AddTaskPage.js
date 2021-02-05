@@ -1,109 +1,84 @@
-import React, { Component } from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, ScrollView, StyleSheet, Modal } from 'react-native';
 import { Button } from 'react-native-elements';
 import { TaskCategoryInput, TaskNameInput, TaskDateInput } from './TaskBasics';
+import AddDetails from './AddDetails';
 import { connect } from 'react-redux';
 import { addTask } from '../redux/tasksSlice';
 
 
 const mapDispatch = { addTask };
 
-// component holds state for new task object to pass on to store after all fields have been completed
 
-class AddTaskPage extends Component {
-   constructor(props) {
-      super(props);
-      
-      this.state = {
-         id: '',
-         task: '',
-         due: '',
-         category: 'Work',
-         recurring: false,
-         completed: false,
-      }
-   }
-   
-   // methods handle input from child components
-   onTextChange = (text) => this.setState({task: text});
-   onDateChange = (date) => this.setState({due: date});
-   setProperty = (property, value) => {
-      this.setState({[property]: value});
-   }
+const AddTaskPage = (props) => {
+   // hooks for new task object
+   const [taskText, setTaskText] = useState('');
+   const [taskDate, setTaskDate] = useState('');
+   const [taskCategory, setTaskCategory] = useState('');
+ 
+   // hook for modal
+   const [showModal, setShowModal] = useState(false);
 
-   // method generates new id before passing state to store
-   generateId = () => {
-      // store today's date as a 10 digit string
-      const today = (new Date()).toISOString().substring(0, 10);
-      // initialize idTag for while loop
-      let idTag = 1;
-      // if other tasks exist with this creation date
-      const todaysTasks = this.props.tasks.filter(task => task.id.includes(today));
-      if (todaysTasks.length > 0) {
-         // check that the idTag hasn't already been used
-         let existingTags = todaysTasks.filter(task => +task.id.substring(11) === idTag);
-         // increment idTag until it is unique
-         for (let i = 1; existingTags.length > 0; i++) {
-               idTag = i;
-               existingTags = todaysTasks.filter(task => +task.id.substring(11) === i);    
-         }
-      }
-      // append idTag to date to create unique id
-      return today + '-' + idTag;
-      }
-   
-   quickAdd = () => {
-      // assign new id and add to state
-      const newTask = {...this.state, id: this.generateId()};
-      // dispatch addTask
-      this.props.addTask(newTask);
-      // reset state
-      this.setState({id: '', task:'', due:'', category: 'Work'});
-      
-      console.log("new task: " + JSON.stringify(this.state));
-      // navigate to task list
-      this.props.navigation.navigate('List');
-      
-   }
-  
-   passToDetails = () => {
-      this.props.navigation.navigate('Details');
-   }
+   const resetBasics = () => {
+      setTaskText('');
+      setTaskDate('');
+      setTaskCategory('');
+   };
+   // adds complete task object to store, navigates to list page
+   const addDetailed = (task) => {
+      props.addTask(task);
+      props.navigation.navigate('List');
+      resetBasics();
+      setShowModal(false);
+   };
 
-   render() {
-      return (
-         <ScrollView >
-            <TaskNameInput onTextChange={this.onTextChange} task={this.state.task}
+   // stores basic task object to pass either to store or details page
+   const newTask = {task: taskText, due: taskDate, category: taskCategory};
+
+   return (
+      <ScrollView>
+         <View >
+            <TaskNameInput onTextChange={setTaskText} task={taskText}
             />
-            <TaskDateInput onDateChange={this.onDateChange} date={this.state.due}
+            <TaskDateInput onDateChange={setTaskDate} date={taskDate}
             />
-            <TaskCategoryInput onSelect={this.setProperty} category={this.state.category}
+            <TaskCategoryInput onSelect={setTaskCategory} category={taskCategory}
             />
             <View style={styles.container}>
                <Button
                title='QUICK ADD'
-               onPress={this.quickAdd}
+               onPress={() => addDetailed(newTask)}
                accessibilityLabel='Tap to quickly add task basics'
                />
                <Button
                title='ADD DETAILS'
-               onPress={this.passToDetails}
+               onPress={() => setShowModal(true)}
                accessibilityLabel='Tap to add more details to task'
                />
             </View>
-       </ScrollView>
-      
+         </View>
+         {/* modal displays details input */}
+         <Modal 
+            animationType={'slide'}
+            transparent={false}
+            visible={showModal}
+            onRequestClose={() => setShowModal(false)}
+            >
+            <AddDetails taskBasics={(newTask)} navigation={props.navigation} addDetailed={addDetailed}/>
+         </Modal>
+   
+      </ScrollView>
 
-    ) 
-   }
+   ); 
 }
+
 const styles = StyleSheet.create({
    container: {
      flex: 1,
      alignItems: 'center',
      justifyContent: 'center',
    },
- });
+});
 
 
 export default connect(null, mapDispatch)(AddTaskPage);
