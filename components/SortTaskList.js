@@ -25,7 +25,7 @@ const SortTaskList = (props) => {
     
     // pass sorted tasklist and reducers to RenderTaskList
     return (
-        <RenderTaskList tasks={sortedTasks} navigation={props.navigation} forPage="list"/>
+        <RenderTaskList tasks={sortedTasks} navigation={props.navigation} forPage="list" selectTask={props.selectTask}/>
     );
 
 }

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView, Modal } from 'react-native';
 import { connect } from 'react-redux';
 import { toggleCompleted } from '../redux/tasksSlice';
 import Filter from './Filter';
 import SortTaskList from './SortTaskList';
 import Footer from './Footer';
 import SortMenu from './SortMenu';
+import EditDetails from './EditDetails';
 
 const mapState = state => {
    return {
@@ -16,6 +17,9 @@ const mapState = state => {
 
 
 const ListPage = ({tasks, toggleCompleted, navigation}) => {
+
+   // hook for modal
+   const [showModal, setShowModal] = useState(false);
    
    const [priorityFilter, setPriorityFilter] = useState(0);
    const [interestFilter, setInterestFilter] = useState(0);
@@ -75,6 +79,13 @@ const ListPage = ({tasks, toggleCompleted, navigation}) => {
       setSortBy(null);
       }
    }
+   const [taskId, setTaskId] = useState(null)
+
+   const selectTask = (id) => {
+      setTaskId(id);
+      console.log("taskId " + taskId);
+      setShowModal(true);
+   }
 
    return (
        <ScrollView>
@@ -83,9 +94,17 @@ const ListPage = ({tasks, toggleCompleted, navigation}) => {
          {/* filter toolbar, receives access to filters and their methods */}
          {/* <Filter priorityFilter={priorityFilter} interestFilter={interestFilter} difficultyFilter={difficultyFilter} completedFilter={completedFilter} setDifficultyFilter={setDifficultyFilter} setInterestFilter={setInterestFilter} setPriorityFilter={setPriorityFilter} setCompletedFilter={setCompletedFilter} clearFilters={clearFilters}/> */}
          {/* sorting Component receives filtered tasks and task methods, sorts, then passes all to RenderTaskList */}
-         <SortTaskList tasks={tasks} sortBy={sortBy} navigation={navigation}/>
+         <SortTaskList tasks={tasks} sortBy={sortBy} navigation={navigation} selectTask={selectTask}/>
          {/* footer maintains counter of completed and remaining tasks, gets access to removeCompleted method */}
          {/* <Footer removeCompleted={removeTask} tasks={filteredTasks}/> */}
+         <Modal 
+            animationType={'slide'}
+            transparent={false}
+            visible={showModal}
+            onRequestClose={() => setShowModal(false)}
+            >
+            <EditDetails setShowModal={setShowModal} taskId={taskId}/>
+         </Modal>
        </ScrollView>
    );
 }

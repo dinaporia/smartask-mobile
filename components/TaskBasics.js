@@ -7,28 +7,28 @@ import {Picker} from '@react-native-community/picker';
 // components render input fields and pass input back to parent
 // rendered by AddTaskPage and EditDetails
 
-const TaskNameInput = props => {
+const TaskNameInput = ({task, onTextChange}) => {
     return (
         <View>
             <TextInput  
             style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
             // disable autofill
             textContentType='none'
-            placeholder='Enter new task here'
-            onChangeText={text => props.onTextChange(text)}
-            value={props.task}
+            placeholder={(task) ? task : 'Enter new task here'}
+            onChangeText={text => onTextChange(text)}
+            value={task}
             />
         </View>
     );
 }
 
-const TaskCategoryInput = props => {
+const TaskCategoryInput = ({category, onSelect}) => {
     return (
         <View>
             <Text>Category:</Text>
             <Picker
-                selectedValue={props.category}
-                onValueChange={itemValue => props.onSelect('category', itemValue)} 
+                selectedValue={category}
+                onValueChange={itemValue => onSelect(itemValue)} 
             >
                 <Picker.Item label='Work' value='Work' />
                 <Picker.Item label='Home' value='Home' />
@@ -70,7 +70,7 @@ class TaskDateInput extends Component {
                 {/* if show is set to true, show calendar */}
                 {this.state.show && (
                     <DateTimePicker
-                        value={(this.props.date) || today}
+                        value={new Date(this.props.date) || today}
                         mode={'date'}
                         display='default'
                         onChange={(event, selectedDate) => this.handleDateInput(selectedDate)}                      

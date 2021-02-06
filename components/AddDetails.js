@@ -6,9 +6,10 @@ import {DurationInput, DifficultyInput, InterestInput, PriorityInput} from './Ta
 
 // called inside modal in AddTaskPage
 // gets task basics
+// returns details to reducer passed as prop
    const AddDetails = (props) => {
 
-      const {taskBasics} = props;
+      const {taskBasics, addDetailed} = props;
 
       const [priority, setPriority] = useState(2);
       const [difficulty, setDifficulty] = useState(2);
@@ -26,7 +27,7 @@ import {DurationInput, DifficultyInput, InterestInput, PriorityInput} from './Ta
       // generate new task object from details, pass back to parent through addDetailed
       const saveDetails = () => {
          const newTask = {...taskBasics, priority: priority, difficulty: difficulty, interest: interest, duration: duration};
-         props.addDetailed(newTask);
+         addDetailed(newTask);
          resetDetails();
       };
 

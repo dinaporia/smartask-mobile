@@ -152,7 +152,7 @@ const Filter = (props) => {
                 onPress={() => props.setDifficultyFilter(1)}
             />
             <Button 
-                title="MEDIUM"
+                title="DOABLE"
                 titleStyle={styles.filterText}
                 type="outline" 
                 raised={(props.difficultyFilter === 2) ? true : false}

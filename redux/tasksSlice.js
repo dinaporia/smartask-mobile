@@ -139,6 +139,15 @@ const tasksSlice = createSlice({
             const task = action.payload;
             state.push({...defaultTask, ...task});
         },
+
+        editTask(state, action) {
+            const {taskId, updatedTask} = action.payload
+            const task = state.find(task => task.id === taskId);
+            const taskIndex = state.findIndex(task => task.id === taskId);
+            state[taskIndex] = {...task, ...updatedTask};
+            
+            //console.log("task: " + JSON.stringify(task));
+        },
     // gets task id, toggles completed
         toggleCompleted(state, action) {
             const task = state.find(task => task.id === action.payload);
@@ -150,5 +159,5 @@ const tasksSlice = createSlice({
     }
 });
 
-export const { addTask, toggleCompleted } = tasksSlice.actions;
+export const { addTask, toggleCompleted, editTask } = tasksSlice.actions;
 export default tasksSlice.reducer;

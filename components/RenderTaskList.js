@@ -20,11 +20,9 @@ const RenderTaskList = (props) => {
      }
      // passed as props to TaskList
      const editDetails = (id) => {
-         // dispatch storeTask with selected task
-     //   props.storeTask(task);
-         // redirect to edit task page
-        console.log("edit details")
-        navigation.navigate('Edit');
+        props.selectTask(id);
+ 
+
      };
     
     const taskList = tasks.map(task => {
@@ -48,23 +46,23 @@ const RenderTaskList = (props) => {
                     style={{flex: 1}}
                     onPress={() => editDetails(task.id)}
                     />
-        {(forPage === "list") &&
-            <ListItem.Chevron 
+                {(forPage === "list") &&
+                <ListItem.Chevron 
                     type='font-awesome'
                     name="times"
                     style={{flex: 1}}
                     onPress={removeTask}
                     />
-                
-        }
-        {(forPage === "schedule") &&
-        <ListItem.Chevron 
+                        
+                }
+                {(forPage === "schedule") &&
+                <ListItem.Chevron 
                     type='font-awesome'
                     name="calendar-times-o"
                     style={{flex: 1}}
                     onPress={rescheduleTask}
                     />
-        }
+                }
             </ListItem>     
         );
     });
