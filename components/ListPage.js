@@ -16,7 +16,7 @@ const mapState = state => {
 
 
 
-const ListPage = ({tasks, toggleCompleted, navigation}) => {
+const ListPage = ({ tasks, toggleCompleted }) => {
 
    // hook for modal
    const [showModal, setShowModal] = useState(false);
@@ -94,7 +94,7 @@ const ListPage = ({tasks, toggleCompleted, navigation}) => {
          {/* filter toolbar, receives access to filters and their methods */}
          {/* <Filter priorityFilter={priorityFilter} interestFilter={interestFilter} difficultyFilter={difficultyFilter} completedFilter={completedFilter} setDifficultyFilter={setDifficultyFilter} setInterestFilter={setInterestFilter} setPriorityFilter={setPriorityFilter} setCompletedFilter={setCompletedFilter} clearFilters={clearFilters}/> */}
          {/* sorting Component receives filtered tasks and task methods, sorts, then passes all to RenderTaskList */}
-         <SortTaskList tasks={tasks} sortBy={sortBy} navigation={navigation} selectTask={selectTask}/>
+         <SortTaskList tasks={tasks} sortBy={sortBy} selectTask={selectTask}/>
          {/* footer maintains counter of completed and remaining tasks, gets access to removeCompleted method */}
          {/* <Footer removeCompleted={removeTask} tasks={filteredTasks}/> */}
          <Modal 

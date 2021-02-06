@@ -70,7 +70,7 @@ class TaskDateInput extends Component {
                 {/* if show is set to true, show calendar */}
                 {this.state.show && (
                     <DateTimePicker
-                        value={new Date(this.props.date) || today}
+                        value={today}
                         mode={'date'}
                         display='default'
                         onChange={(event, selectedDate) => this.handleDateInput(selectedDate)}                      

@@ -11,7 +11,7 @@ const mapDispatch = {
 
 
 const RenderTaskList = (props) => {
-    const {tasks, toggleCompleted, forPage, navigation } = props;
+    const {tasks, toggleCompleted, forPage } = props;
     const removeTask = () => {
         console.log("remove task");
      }

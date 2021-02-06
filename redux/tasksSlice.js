@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-   // method generates new id before passing state to store
+   // helper function generates new id before passing state to store
  const  generateId = (tasks) => {
     // store today's date as a 10 digit string
     const today = (new Date()).toISOString().substring(0, 10);
@@ -113,8 +113,8 @@ const tasksSlice = createSlice({
     initialState: myTasks,
     reducers: {
        
-    // gets task properties from input through local state
-    // adds task to state, overriding default values
+        // gets task properties from input through local state
+        // adds task to state, overriding default values if given
         addTask(state, action) {
             const defaultTask = {
                 id: generateId(state),
@@ -129,15 +129,15 @@ const tasksSlice = createSlice({
             state.push({...defaultTask, ...task});
         },
 
+        // gets task id and new details, updates task in store
         editTask(state, action) {
             const {taskId, updatedTask} = action.payload
             const task = state.find(task => task.id === taskId);
             const taskIndex = state.findIndex(task => task.id === taskId);
             state[taskIndex] = {...task, ...updatedTask};
-            
-            //console.log("task: " + JSON.stringify(task));
         },
-    // gets task id, toggles completed
+
+        // gets task id, toggles completed
         toggleCompleted(state, action) {
             const task = state.find(task => task.id === action.payload);
             if (task) {

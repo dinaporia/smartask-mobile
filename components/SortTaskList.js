@@ -3,20 +3,25 @@ import React from 'react';
 import RenderTaskList from './RenderTaskList';
 
 const SortTaskList = (props) => {
-    let sortedTasks = props.tasks;
+    let sortedTasks = props.tasks.slice();
     
     switch (props.sortBy) {
         case "alphabet":
-            // sort tasks alphabetically by task property
+            // sort tasks alphabetically by name
            sortedTasks.sort((a, b) => a.task.localeCompare(b.task));
             break;
         case "due":
             // sort tasks by earliest due date
-           sortedTasks.sort((a, b) => b.due - a.due);
+            console.log("due sort");
+           sortedTasks.sort((a, b) => {
+                let aDate = new Date(a.due);
+                let bDate = new Date(b.due);
+                return bDate - aDate;   
+            });
             break;
         case "priority":
             // sort tasks by highest priority
-            sortedTasks.sort((a, b) => a.priority - b.priority);
+            sortedTasks.sort((a, b) => b.priority - a.priority);
             break;
         default:
             // if sortBy isn't set, pass filtered tasks on to RenderTaskList
@@ -25,7 +30,7 @@ const SortTaskList = (props) => {
     
     // pass sorted tasklist and reducers to RenderTaskList
     return (
-        <RenderTaskList tasks={sortedTasks} navigation={props.navigation} forPage="list" selectTask={props.selectTask}/>
+        <RenderTaskList tasks={sortedTasks} forPage="list" selectTask={props.selectTask}/>
     );
 
 }
