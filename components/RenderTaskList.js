@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { toggleCompleted } from '../redux/tasksSlice';
@@ -35,6 +35,14 @@ const RenderTaskList = (props) => {
                         checked={task.completed}
                         checkedIcon="check-square-o"
                         uncheckedIcon="square-o"
+                        containerStyle={styles.container}
+                        titleProps={{style:
+                            [styles.titleText,
+                            (task.completed) ? styles.completed 
+                            : (task.priority === 1) ? styles.want
+                            : (task.priority === 3 ) ? styles.must
+                            : styles.should]
+                            }}
                         onPress={() => toggleCompleted(task.id)}
                         style={{flex: 2}}
                     />
@@ -76,5 +84,36 @@ const RenderTaskList = (props) => {
     );
 }
 
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: 'white',
+        borderWidth: 0,
+ 
+    },
+    titleText: {
+        marginLeft: 5,
+
+        
+    },
+    completed: {
+        textDecorationLine: 'line-through',
+        color: 'gray'
+        
+    },
+    want: {
+        textDecorationLine: 'none',
+        color: 'green'
+    },
+    should: {
+        textDecorationLine: 'none',
+        color: 'teal'
+    },
+    must: {
+        textDecorationLine: 'none',
+        color: 'red'
+    }
+    
+  });
 
 export default connect(null, mapDispatch)(RenderTaskList);

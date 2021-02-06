@@ -45,8 +45,8 @@ import {DurationInput, DifficultyInput, InterestInput, PriorityInput} from './Ta
          accessibilityLabel='Tap to save task details'
          />
       </ScrollView> 
-    )
-    
-   
+    );
 }
+
+
 export default AddDetails;

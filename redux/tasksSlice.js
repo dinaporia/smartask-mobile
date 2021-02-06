@@ -25,7 +25,7 @@ const myTasks = [
     {
         id: '2021-01-12-1',
         task: "Create a to-do list",
-        due: new Date("2021-07-25"),
+        due: "2021-07-25",
         duration: 30,
         category: "Home",
         priority: 1,
@@ -37,7 +37,7 @@ const myTasks = [
     {
             id: '2021-01-14-2',
             task: "Test my to-do list",
-            due: new Date("2021-06-26"),
+            due: "2021-06-26",
             duration: 30,
             category: "Work",
             priority: 1,
@@ -49,7 +49,7 @@ const myTasks = [
     {
             id: '2021-01-14-3',
             task: "Implement error checking",
-            due: new Date("2022-10-25"),
+            due: "2022-10-25",
             duration: 120,
             category: "Other",
             priority: 2,
@@ -61,7 +61,7 @@ const myTasks = [
     {
             id: '2021-01-14-4',
             task: "Fetch tasks from server",
-            due: new Date("2021-03-25"),
+            due: "2021-03-25",
             duration: 120,
             category: "Work",
             priority: 2,
@@ -73,7 +73,7 @@ const myTasks = [
     {
             id: '2021-01-14-5',
             task: "Scheduling algorithm",
-            due: new Date("2021-06-25"),
+            due: "2021-06-25",
             duration: 180,
             category: "Work",
             priority: 3,
@@ -85,7 +85,7 @@ const myTasks = [
     {
             id: '2021-01-14-6',
             task: "Preferences input page",
-            due: new Date("2021-09-05"),
+            due: "2021-09-05",
             duration: 30,
             category: "Work",
             priority: 3,
@@ -97,7 +97,7 @@ const myTasks = [
     {
             id: '2021-01-14-7',
             task: "Split tasks into subtasks",
-            due: new Date("2021-07-05"),
+            due: "2021-07-05",
             duration: 60,
             category: "Work",
             priority: 2,
@@ -110,18 +110,7 @@ const myTasks = [
 
 const tasksSlice = createSlice({
     name: 'tasks',
-    initialState: [{
-        id: '2021-01-12-1',
-        task: "Create a to-do list",
-        due: "2021-07-25",
-        duration: 30,
-        category: "Home",
-        priority: 1,
-        difficulty: 1,
-        interest: 1,
-        recurring: false,
-        completed: true
-    }],
+    initialState: myTasks,
     reducers: {
        
     // gets task properties from input through local state
