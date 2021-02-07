@@ -3,7 +3,6 @@ import { Text, View, ScrollView, Modal } from 'react-native';
 import { connect } from 'react-redux';
 import { toggleCompleted } from '../redux/tasksSlice';
 import Filter from './Filter';
-import SortTaskList from './SortTaskList';
 import RenderTaskList from './RenderTaskList';
 import Footer from './Footer';
 import SortMenu from './SortMenu';
@@ -41,7 +40,6 @@ const ListPage = ({ tasks, toggleCompleted }) => {
    const toggle = (id) => {
       console.log("toggle completed");
       console.log("props are " + JSON.stringify(props.tasks));
-      toggleCompleted(id);
    }
 
    // let filteredTasks = props.tasks;
@@ -76,12 +74,12 @@ const ListPage = ({ tasks, toggleCompleted }) => {
 
    return (
        <ScrollView>
-         {/* sorting toolbar, receives access to setSortBy method */}
+         {/* sorting toolbar, receives access to setSortBy hook */}
          <SortMenu sortTasks={sortTasks}/>
          {/* filter toolbar, receives access to filters and their methods */}
          {/* <Filter priorityFilter={priorityFilter} interestFilter={interestFilter} difficultyFilter={difficultyFilter} completedFilter={completedFilter} setDifficultyFilter={setDifficultyFilter} setInterestFilter={setInterestFilter} setPriorityFilter={setPriorityFilter} setCompletedFilter={setCompletedFilter} clearFilters={clearFilters}/> */}
-         {/* sorting Component receives filtered tasks and task methods, sorts, then passes all to RenderTaskList */}
-         {/* <SortTaskList tasks={tasks} sortBy={sortBy} selectTask={selectTask}/> */}
+
+        
          <RenderTaskList tasks={tasks} sortBy={sortBy} selectTask={selectTask} forPage="list" />
          {/* footer maintains counter of completed and remaining tasks, gets access to removeCompleted method */}
          {/* <Footer removeCompleted={removeTask} tasks={filteredTasks}/> */}

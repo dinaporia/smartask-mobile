@@ -4,26 +4,40 @@ import { ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { toggleCompleted, removeTask } from '../redux/tasksSlice';
 
-
 const mapDispatch = { 
     toggleCompleted: (id) => (toggleCompleted(id)),
     removeTask: (id) => (removeTask(id))
  }; 
 
-
 const RenderTaskList = (props) => {
-    const {tasks, toggleCompleted, removeTask, selectTask, forPage } = props;
+    const {tasks, toggleCompleted, removeTask, selectTask, sortBy, forPage } = props;
+    if (!tasks || tasks.length === 0) return <View />;
 
-     const rescheduleTask = () => {
+    const rescheduleTask = () => {
         console.log("reschedule task");
-     }
-     // passed as props to TaskList
-     const editDetails = (id) => {
-        selectTask(id);
-     };
-    
-    const taskList = tasks.map(task => {
-       
+    }
+
+    // sort tasks before passing to ListItems
+    let sortedTasks = tasks.slice();
+    // sortBy is set by SortMenu and passed as props
+    switch (sortBy) {
+        case "alphabet":
+            sortedTasks.sort((a,b) => a.task.localeCompare(b.task));
+            break;
+        case "due":
+            sortedTasks.sort((a, b) => a.due.localeCompare(b.due));
+            break;
+        case "priority":
+            sortedTasks.sort((a, b) => b.priority - a.priority);
+            break;
+        default:
+            // no argument passed resets task order
+            sortedTasks = props.tasks.slice();
+    }
+
+    return (
+        <View>   
+            {sortedTasks.map(task => { 
         return (
             <ListItem key={task.id}>
                 <ListItem.Content style={{flex: 1}}>
@@ -49,7 +63,7 @@ const RenderTaskList = (props) => {
                     type='font-awesome'
                     name="pencil"
                     style={{flex: 1}}
-                    onPress={() => editDetails(task.id)}
+                    onPress={() => selectTask(task.id)}
                     />
                 {(forPage === "list") &&
                 <ListItem.Chevron 
@@ -73,13 +87,7 @@ const RenderTaskList = (props) => {
                 }
             </ListItem>     
         );
-    });
-
-    if (!tasks || tasks.length === 0) return <View />;
-    return (
-
-        <View>   
-            {taskList}
+    })}
         </View>
     );
 }
@@ -89,18 +97,15 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
         borderWidth: 0,
- 
     },
     titleText: {
-        marginLeft: 5,
-
-        
+        marginLeft: 5,  
     },
     completed: {
         textDecorationLine: 'line-through',
-        color: 'gray'
-        
+        color: 'gray'  
     },
+    // conditional formating for task items
     want: {
         textDecorationLine: 'none',
         color: 'green'
