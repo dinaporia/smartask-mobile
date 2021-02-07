@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { toggleCompleted } from '../redux/tasksSlice';
 import Filter from './Filter';
 import SortTaskList from './SortTaskList';
+import RenderTaskList from './RenderTaskList';
 import Footer from './Footer';
 import SortMenu from './SortMenu';
 import EditDetails from './EditDetails';
@@ -43,19 +44,6 @@ const ListPage = ({ tasks, toggleCompleted }) => {
       toggleCompleted(id);
    }
 
-
-   const task = [{
-      id: '2021-01-12-1',
-      task: "Create a to-do list",
-      due: "2021-07-25",
-      duration: 30,
-      category: "Home",
-      priority: 1,
-      difficulty: 1,
-      interest: 1,
-      recurring: false,
-      completed: true
-  }];
    // let filteredTasks = props.tasks;
    // // if filter value is truthy, update filteredTasks based on filter type
    // if (completedFilter) {
@@ -93,7 +81,8 @@ const ListPage = ({ tasks, toggleCompleted }) => {
          {/* filter toolbar, receives access to filters and their methods */}
          {/* <Filter priorityFilter={priorityFilter} interestFilter={interestFilter} difficultyFilter={difficultyFilter} completedFilter={completedFilter} setDifficultyFilter={setDifficultyFilter} setInterestFilter={setInterestFilter} setPriorityFilter={setPriorityFilter} setCompletedFilter={setCompletedFilter} clearFilters={clearFilters}/> */}
          {/* sorting Component receives filtered tasks and task methods, sorts, then passes all to RenderTaskList */}
-         <SortTaskList tasks={tasks} sortBy={sortBy} selectTask={selectTask}/>
+         {/* <SortTaskList tasks={tasks} sortBy={sortBy} selectTask={selectTask}/> */}
+         <RenderTaskList tasks={tasks} sortBy={sortBy} selectTask={selectTask} forPage="list" />
          {/* footer maintains counter of completed and remaining tasks, gets access to removeCompleted method */}
          {/* <Footer removeCompleted={removeTask} tasks={filteredTasks}/> */}
          <Modal 

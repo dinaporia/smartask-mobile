@@ -3,6 +3,7 @@ import { Text, View, TextInput, ScrollView } from 'react-native';
 import { Button } from 'react-native-elements';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Picker} from '@react-native-community/picker';
+import { parseISO } from 'date-fns'
 
 // components render input fields and pass input back to parent
 // rendered by AddTaskPage and EditDetails
@@ -49,8 +50,9 @@ class TaskDateInput extends Component {
     handleDateInput = (date) => {
         if (date) { 
         this.setState({show: false});
-        const stringDate = date.toString().substring(0, 10);
+        const stringDate = date.toISOString();
         this.props.onDateChange(stringDate);
+
         }}
     
 
@@ -63,14 +65,14 @@ class TaskDateInput extends Component {
                     <Button 
                         // on press, set show to true
                         onPress={() => this.setState({show: !this.state.show})}
-                        title={(this.props.date) ? this.props.date : today.toLocaleDateString('en-US')}
+                        title={(this.props.date) ? parseISO(this.props.date).toLocaleDateString('en-US') : today.toLocaleDateString('en-US')}
                         accessibilityLabel='Tap to select due date'
                     />
                 </View>
                 {/* if show is set to true, show calendar */}
                 {this.state.show && (
                     <DateTimePicker
-                        value={today}
+                        value={(this.props.date) ? parseISO(this.props.date) : today}
                         mode={'date'}
                         display='default'
                         onChange={(event, selectedDate) => this.handleDateInput(selectedDate)}                      

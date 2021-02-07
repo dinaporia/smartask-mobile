@@ -2,27 +2,24 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { toggleCompleted } from '../redux/tasksSlice';
+import { toggleCompleted, removeTask } from '../redux/tasksSlice';
 
 
 const mapDispatch = { 
-    toggleCompleted: (id) => (toggleCompleted(id))
+    toggleCompleted: (id) => (toggleCompleted(id)),
+    removeTask: (id) => (removeTask(id))
  }; 
 
 
 const RenderTaskList = (props) => {
-    const {tasks, toggleCompleted, forPage } = props;
-    const removeTask = () => {
-        console.log("remove task");
-     }
+    const {tasks, toggleCompleted, removeTask, selectTask, forPage } = props;
+
      const rescheduleTask = () => {
         console.log("reschedule task");
      }
      // passed as props to TaskList
      const editDetails = (id) => {
-        props.selectTask(id);
- 
-
+        selectTask(id);
      };
     
     const taskList = tasks.map(task => {
@@ -59,7 +56,10 @@ const RenderTaskList = (props) => {
                     type='font-awesome'
                     name="times"
                     style={{flex: 1}}
-                    onPress={removeTask}
+                    onPress={() => {
+                        removeTask(task.id);
+                        console.log("remove task " + task.id);                    }
+                    }
                     />
                         
                 }

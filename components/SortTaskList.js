@@ -3,7 +3,7 @@ import React from 'react';
 import RenderTaskList from './RenderTaskList';
 
 const SortTaskList = (props) => {
-    let sortedTasks = props.tasks.slice();
+    let sortedTasks = props.tasks;
     
     switch (props.sortBy) {
         case "alphabet":
@@ -25,7 +25,7 @@ const SortTaskList = (props) => {
             break;
         default:
             // if sortBy isn't set, pass filtered tasks on to RenderTaskList
-            sortedTasks = props.tasks.slice();
+            sortedTasks = props.tasks;
     }
     
     // pass sorted tasklist and reducers to RenderTaskList

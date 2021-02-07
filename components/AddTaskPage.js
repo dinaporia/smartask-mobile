@@ -6,40 +6,7 @@ import AddDetails from './AddDetails';
 import { connect, useSelector } from 'react-redux';
 import { addTask } from '../redux/tasksSlice';
 
-
-
 const mapDispatch = { addTask };
-
-
-// const  generateId = (tasks) => {
-//    // store today's date as a 10 digit string
-//    const today = (new Date()).toISOString().substring(0, 10);
-//    // check for other tasks created today
-//    const todaysTasks = tasks.map(task => task.id).filter(id => id.includes(today));
- 
-//    // initialize idTag for while loop
-//    let idTag = 1;
-//    if (todaysTasks.length > 0) {
-//       for (todaysTasks.includes(today + '-' + idTag)) {
-//          idTag++
-//       }
-//    }
- 
-   
- 
-//    if (todaysTasks.length > 0) {
-//       // check that the idTag hasn't already been used
-//       let existingTags = todaysTasks.filter(id => +id.substring(11) === idTag);
-//       // increment idTag until it is unique
-//       for (; existingTags.length > 0; idTag++) {
-           
-//             existingTags = todaysTasks.filter(id => +id.substring(11) === idTag);    
-//       }
-//    }
-//    // append idTag to date to create unique id
-//    return today + '-' + idTag;
-// }
-
 
 const AddTaskPage = (props) => {
 const tasks = useSelector(state => state.tasks);
@@ -60,12 +27,10 @@ const tasks = useSelector(state => state.tasks);
    };
 
    
-
    // add complete task object to store, navigate to list page
    const createTask = (task) => {
       // generate id, set default values
       const defaultTask = {
-
          duration: 30, 
          category: "Other", 
          priority: 2, 
@@ -75,7 +40,6 @@ const tasks = useSelector(state => state.tasks);
       };
       // add new input values, override defaults
       const newTask = {...defaultTask, ...task};
-      console.log("create task: " + JSON.stringify(newTask));
       // dispatch addTask
       props.addTask(newTask);
       // go to list page
