@@ -3,13 +3,12 @@ import { StyleSheet, View, TouchableHighlight, Text } from 'react-native';
 import { Rating, Button, Icon } from 'react-native-elements';
 
 
-const Filter = (props) => {
+const Filter = ({priorityFilter, interestFilter, difficultyFilter, completedFilter, setDifficultyFilter, setInterestFilter, setPriorityFilter, setCompletedFilter, clearFilters}) => {
     // hooks allow toggling filter menu
     const [priorityOpen, setPriorityOpen] =  useState(false);
     const [difficultyOpen, setDifficultyOpen] = useState(false);
     const [interestOpen, setInterestOpen] =  useState(false);
    
-
     // toggle filter collapse menu
     const toggle = (filter) => {
         switch (filter) {
@@ -41,17 +40,15 @@ const Filter = (props) => {
                 setPriorityOpen(false);
                 setDifficultyOpen(false);
                 setInterestOpen(false);
-                setPriorityOpen(false);
-                
         }
     }
+
     // call clearFilter and close filter menus
     const clearAll = () => {
-        props.clearFilters();
+        clearFilters();
         setPriorityOpen(false);
         setDifficultyOpen(false);
-        setInterestOpen(false);
-        
+        setInterestOpen(false);  
     }
 
     return (
@@ -89,11 +86,8 @@ const Filter = (props) => {
                 />
                 <Button
                 containerStyle={styles.filterItem}
-                raised={(props.completedFilter) ? true : false}
-                onPress={() => { 
-                        props.setCompletedFilter(!props.completedFilter);
-                        toggle();
-                        }}
+                raised={(completedFilter) ? true : false}
+                onPress={() => setCompletedFilter(!completedFilter)}
                 titleStyle={styles.filterText}
                 title="Completed"
                 type="outline"    
@@ -115,29 +109,29 @@ const Filter = (props) => {
                 title="MUST"
                 titleStyle={styles.filterText}
                 type="outline" 
-                raised={(props.priorityFilter === 1) ? true : false}
-                onPress={() => props.setPriorityFilter(1)}
+                raised={(priorityFilter === 3) ? true : false}
+                onPress={() => setPriorityFilter(3)}
             />
             <Button 
                 title="SHOULD"
                 titleStyle={styles.filterText}
                 type="outline" 
-                raised={(props.priorityFilter === 2) ? true : false}
-                onPress={() => props.setPriorityFilter(2)}
+                raised={(priorityFilter === 2) ? true : false}
+                onPress={() => setPriorityFilter(2)}
             />
             <Button 
                 title="WANT"
                 titleStyle={styles.filterText}
                 type="outline" 
-                raised={(props.priorityFilter === 3) ? true : false}
-                onPress={() => props.setPriorityFilter(3)}
+                raised={(priorityFilter === 1) ? true : false}
+                onPress={() => setPriorityFilter(1)}
             />
             <Button 
                 title="ALL"
                 titleStyle={styles.filterText}
                 type="outline" 
-                raised={(props.priorityFilter === 0) ? true : false}
-                onPress={() => props.setPriorityFilter(0)}
+                raised={(priorityFilter === 0) ? true : false}
+                onPress={() => setPriorityFilter(0)}
             />
         </View>
     }           
@@ -148,36 +142,36 @@ const Filter = (props) => {
                 title="EASY"
                 titleStyle={styles.filterText}
                 type="outline" 
-                raised={(props.difficultyFilter === 1) ? true : false}
-                onPress={() => props.setDifficultyFilter(1)}
+                raised={(difficultyFilter === 1) ? true : false}
+                onPress={() => setDifficultyFilter(1)}
             />
             <Button 
                 title="DOABLE"
                 titleStyle={styles.filterText}
                 type="outline" 
-                raised={(props.difficultyFilter === 2) ? true : false}
-                onPress={() => props.setDifficultyFilter(2)}
+                raised={(difficultyFilter === 2) ? true : false}
+                onPress={() => setDifficultyFilter(2)}
             />
             <Button 
                 title="CHALLENGING"
                 titleStyle={styles.filterText}
                 type="outline" 
-                raised={(props.difficultyFilter === 3) ? true : false}
-                onPress={() => props.setDifficultyFilter(3)}
+                raised={(difficultyFilter === 3) ? true : false}
+                onPress={() => setDifficultyFilter(3)}
             />
             <Button 
                 title="HARD"
                 titleStyle={styles.filterText}
                 type="outline" 
-                raised={(props.difficultyFilter === 4) ? true : false}
-                onPress={() => props.setDifficultyFilter(4)}
+                raised={(difficultyFilter === 4) ? true : false}
+                onPress={() => setDifficultyFilter(4)}
             />
             <Button 
                 title="ALL"
                 titleStyle={styles.filterText}
                 type="outline" 
-                raised={(props.difficultyFilter === 0) ? true : false}
-                onPress={() => props.setDifficultyFilter(0)}
+                raised={(difficultyFilter === 0) ? true : false}
+                onPress={() => setDifficultyFilter(0)}
             />
         </View>
         }             
@@ -188,29 +182,29 @@ const Filter = (props) => {
                 title="FUN"
                 titleStyle={styles.filterText}
                 type="outline" 
-                raised={(props.interestFilter === 1) ? true : false}
-                onPress={() => props.setInterestFilter(1)}
+                raised={(interestFilter === 1) ? true : false}
+                onPress={() => setInterestFilter(1)}
             />
             <Button 
                 title="MEH"
                 titleStyle={styles.filterText}
                 type="outline" 
-                raised={(props.interestFilter === 2) ? true : false}
-                onPress={() => props.setInterestFilter(2)}
+                raised={(interestFilter === 2) ? true : false}
+                onPress={() => setInterestFilter(2)}
             />
             <Button 
                 title="TEDIOUS"
                 titleStyle={styles.filterText}
                 type="outline" 
-                raised={(props.interestFilter === 3) ? true : false}
-                onPress={() => props.setInterestFilter(3)}
+                raised={(interestFilter === 3) ? true : false}
+                onPress={() => setInterestFilter(3)}
             />
             <Button 
                 title="ALL"
                 titleStyle={styles.filterText}
                 type="outline" 
-                raised={(props.interestFilter === 0) ? true : false}
-                onPress={() => props.setInterestFilter(0)}
+                raised={(interestFilter === 0) ? true : false}
+                onPress={() => setInterestFilter(0)}
             />
         </View>
         }                         

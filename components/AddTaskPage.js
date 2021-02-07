@@ -3,33 +3,32 @@ import { View, ScrollView, StyleSheet, Modal } from 'react-native';
 import { Button } from 'react-native-elements';
 import { TaskCategoryInput, TaskNameInput, TaskDateInput } from './TaskBasics';
 import AddDetails from './AddDetails';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { addTask } from '../redux/tasksSlice';
 
 const mapDispatch = { addTask };
 
 const AddTaskPage = (props) => {
-const tasks = useSelector(state => state.tasks);
-
    // hooks for new task object
    const [taskText, setTaskText] = useState('');
    const [taskDate, setTaskDate] = useState('');
    const [taskCategory, setTaskCategory] = useState('');
- 
    // hook for modal
    const [showModal, setShowModal] = useState(false);
+   // store basic task object to pass either to store or details page
+   const newTask = {task: taskText, due: taskDate, category: taskCategory};
 
+   // reset local state
    const resetBasics = () => {
       setTaskText('');
       setTaskDate('');
       setTaskCategory('');
       setShowModal(false);
    };
-
    
    // add complete task object to store, navigate to list page
    const createTask = (task) => {
-      // generate id, set default values
+      // set default values
       const defaultTask = {
          duration: 30, 
          category: "Other", 
@@ -38,34 +37,29 @@ const tasks = useSelector(state => state.tasks);
          interest: 2, 
          completed: false 
       };
-      // add new input values, override defaults
+      // override defaults with new input
       const newTask = {...defaultTask, ...task};
       // dispatch addTask
       props.addTask(newTask);
-      // go to list page
       props.navigation.navigate('List');
-      // reset state
       resetBasics();
    };
-
-   // stores basic task object to pass either to store or details page
-   const newTask = {task: taskText, due: taskDate, category: taskCategory};
 
    return (
       <ScrollView>
          <View >
-            <TaskNameInput onTextChange={setTaskText} task={taskText}
-            />
-            <TaskDateInput onDateChange={setTaskDate} date={taskDate}
-            />
-            <TaskCategoryInput onSelect={setTaskCategory} category={taskCategory}
-            />
+            <TaskNameInput onTextChange={setTaskText} task={taskText} />
+            <TaskDateInput onDateChange={setTaskDate} date={taskDate} />
+            <TaskCategoryInput onSelect={setTaskCategory} category={taskCategory} />
+            
             <View style={styles.container}>
+            {/* add basic task to store, leaving default details */}
                <Button
                title='QUICK ADD'
                onPress={() => createTask(newTask)}
                accessibilityLabel='Tap to quickly add task basics'
                />
+            {/* open modal for details without adding task to store */}
                <Button
                title='ADD DETAILS'
                onPress={() => setShowModal(true)}
@@ -73,6 +67,7 @@ const tasks = useSelector(state => state.tasks);
                />
             </View>
          </View>
+
          {/* modal displays details input */}
          <Modal 
             animationType={'slide'}
@@ -80,11 +75,11 @@ const tasks = useSelector(state => state.tasks);
             visible={showModal}
             onRequestClose={() => setShowModal(false)}
             >
-            <AddDetails taskBasics={(newTask)} navigation={props.navigation} addDetailed={createTask}/>
+            {/* receives new task object, passes details input back to createTask */}
+            <AddDetails taskBasics={newTask} createTask={createTask}/>
          </Modal>
    
       </ScrollView>
-
    ); 
 }
 

@@ -70,10 +70,7 @@ const RenderTaskList = (props) => {
                     type='font-awesome'
                     name="times"
                     style={{flex: 1}}
-                    onPress={() => {
-                        removeTask(task.id);
-                        console.log("remove task " + task.id);                    }
-                    }
+                    onPress={() => removeTask(task.id)}
                     />
                         
                 }

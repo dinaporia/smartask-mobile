@@ -47,7 +47,7 @@ const InterestInput = ({interest, setInterest}) => {
             <Card.Divider />
             <AirbnbRating 
                 count={3}
-                reviews={["FUN", "MEH", "TEDIOUS"]}
+                reviews={["TEDIOUS", "MEH", "FUN"]}
                 defaultRating={interest}
                 size={30}
                 onFinishRating={(rating) => setInterest(rating)}
