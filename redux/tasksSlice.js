@@ -1,25 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
-
-   // helper function generates new id before passing state to store
- const  generateId = (tasks) => {
-    // store today's date as a 10 digit string
-    const today = (new Date()).toISOString().substring(0, 10);
-    // initialize idTag for while loop
-    let idTag = 1;
-    // if other tasks exist with this creation date
-    const todaysTasks = tasks.filter(task => task.id.includes(today));
-    if (todaysTasks.length > 0) {
-       // check that the idTag hasn't already been used
-       let existingTags = todaysTasks.filter(task => +task.id.substring(11) === idTag);
-       // increment idTag until it is unique
-       for (let i = 1; existingTags.length > 0; i++) {
-             idTag = i;
-             existingTags = todaysTasks.filter(task => +task.id.substring(11) === i);    
-       }
-    }
-    // append idTag to date to create unique id
-    return today + '-' + idTag;
- }
+import { createSlice, nanoid } from '@reduxjs/toolkit';
 
 const myTasks = [
     {
@@ -112,29 +91,26 @@ const tasksSlice = createSlice({
     name: 'tasks',
     initialState: myTasks,
     reducers: {
-       
         // gets task properties from input through local state
-        // adds task to state, overriding default values if given
-        addTask(state, action) {
-            const defaultTask = {
-                id: generateId(state),
-                duration: 30, 
-                category: "Work", 
-                priority: 2, 
-                difficulty: 2, 
-                interest: 2, 
-                completed: false 
-            };
-            const task = action.payload;
-            state.push({...defaultTask, ...task});
+        // generates id and adds task to state
+        addTask: {
+            reducer(state, action) {
+                state.push(action.payload);
+            },
+            prepare(task) {
+                return {
+                    payload: { ...task, id: nanoid() }
+                }
+            }
         },
-
         // gets task id and new details, updates task in store
         editTask(state, action) {
             const {taskId, updatedTask} = action.payload
             const task = state.find(task => task.id === taskId);
-            const taskIndex = state.findIndex(task => task.id === taskId);
-            state[taskIndex] = {...task, ...updatedTask};
+            if (task) {
+                const taskIndex = state.findIndex(task => task.id === taskId);
+                state[taskIndex] = {...task, ...updatedTask};
+            }
         },
 
         // gets task id, toggles completed

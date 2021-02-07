@@ -19,7 +19,7 @@ const mapDispatch = { editTask };
 const EditDetails = ({taskId, setShowModal, tasks, editTask}) => {
    // retrieve task from store by id
    const {task, due, category, priority, duration, difficulty, interest } = tasks.filter(task => task.id === taskId)[0];
-
+   
    // hooks for task object
    const [taskText, setTaskText] = useState(task);
    const [taskDate, setTaskDate] = useState(due);
@@ -45,6 +45,7 @@ const EditDetails = ({taskId, setShowModal, tasks, editTask}) => {
 
    // dispatch updated task to store
    const updateTask = () => {
+
       const updatedTask = {
          task: taskText, 
          due: taskDate, 

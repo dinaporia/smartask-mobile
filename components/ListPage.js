@@ -83,7 +83,6 @@ const ListPage = ({ tasks, toggleCompleted }) => {
 
    const selectTask = (id) => {
       setTaskId(id);
-      console.log("taskId " + taskId);
       setShowModal(true);
    }
 
