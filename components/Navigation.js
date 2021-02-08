@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, HeaderBackButton } from '@react-navigation/stack';
 import Home from './Home';
 import AddDetails from './AddDetails';
 import EditDetails from './EditDetails';
@@ -7,6 +7,7 @@ import ListPage from './ListPage';
 import ScheduleView from './ScheduleView';
 import AddTaskPage from './AddTaskPage';
 import Preferences from './Preferences';
+
 
 
 // function returns an object with Screen and Navigator properties
@@ -18,16 +19,23 @@ function Navigation() {
     // Navigator contains Screen elements as its children
         <Stack.Navigator
             initialRouteName="Home"
-            screenOptions={{ gestureEnabled: false }}
+            screenOptions={{ 
+                gestureEnabled: false,
+                headerStyle: {
+                    backgroundColor: 'pink',
+                },
+                headerTintColor: 'indigo',
+                headerTitleStyle: {
+                    fontWeight: 'bold', 
+                    textShadowColor: 'white',
+                    textShadowRadius: 5
+                },
+                }}
         >
             <Stack.Screen name="Home"
             component={Home}
             options={{ 
                 title: "Home", 
-                headerStyle: {
-                    backgroundColor: 'pink'
-                },
-                headerTintColor: 'indigo'
             }}
             />
             <Stack.Screen name="Add"
@@ -42,9 +50,10 @@ function Navigation() {
             component={EditDetails}
             options={{ title: "Edit task" }}
             />
-            <Stack.Screen name="List"
-            component={ListPage}
-            options={{ title: "Task list" }}
+            <Stack.Screen 
+                name="List"
+                component={ListPage}
+                options={{ title: "Task list" }}
             />
             <Stack.Screen name="Schedule"
             component={ScheduleView}

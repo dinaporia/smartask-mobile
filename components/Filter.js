@@ -54,83 +54,96 @@ const Filter = ({priorityFilter, interestFilter, difficultyFilter, completedFilt
     return (
         <View>
             <View style={styles.container}>
-                <Icon style={{marginHorizontal: 3}}    
+                <Icon   
+                    containerStyle={{flex: 1}}
                     size={12}
                     name='filter'
                     type='font-awesome'
                 />
                 <Button
-                containerStyle={styles.filterItem}
+                containerStyle={[styles.filterItem,
+                    (priorityOpen) ? styles.selectedItem : '']
+                    }
+                
                 onPress={() => toggle('priority')}
                 titleStyle={styles.filterText}
                 title="Priority"
-                type="outline"
-                raised={(priorityOpen) ? true : false}
+                type="clear"
+                
                 />
                 <Button
-                raised={(difficultyOpen) ? true : false}
-                containerStyle={styles.filterItem}
+                containerStyle={[styles.filterItem,
+                    (difficultyOpen) ? styles.selectedItem : '']
+                    }
                 onPress={() => toggle('difficulty')}
                 titleStyle={styles.filterText}
                 title="Difficulty"
-                type="outline"   
+                type="clear"   
                     
                 />
                 <Button
-                raised={(interestOpen) ? true : false}
-                containerStyle={styles.filterItem}
+                containerStyle={[styles.filterItem,
+                    (interestOpen) ? styles.selectedItem : '']
+                    }
                 onPress={() => toggle('interest')}
                 titleStyle={styles.filterText}
                 title="Interest"
-                type="outline" 
+                type="clear" 
                 />
                 <Button
-                containerStyle={styles.filterItem}
-                raised={(completedFilter) ? true : false}
-                onPress={() => setCompletedFilter(!completedFilter)}
+                containerStyle={[styles.filterItem,
+                    (completedFilter) ? styles.selectedItem : '']
+                    }
+                onPress={() => {
+                    setCompletedFilter(!completedFilter);
+                    toggle();
+                    }}
                 titleStyle={styles.filterText}
                 title="Completed"
-                type="outline"    
+                type="clear"    
                 />
                 <Icon 
-                    style={{marginHorizontal: 5}}    
                     size={10}
                     name='remove'
                     color='gray'
                     type='font-awesome'
                     onPress={()=> clearAll()}
-                    containerStyle={{alignContent: 'flex-end', marginRight: 5}}
+                    containerStyle={{alignContent: 'flex-end', flex: 1.5}}
                 />
             </View>
     {/* priority toggle menu */}
         {priorityOpen && 
-        <View style={styles.container}>
+        <View style={styles.subContainer}>
             <Button 
                 title="MUST"
-                titleStyle={styles.filterText}
-                type="outline" 
-                raised={(priorityFilter === 3) ? true : false}
+                titleStyle={[styles.filterText,
+                    (priorityFilter === 3) ? styles.selectedText : styles.subFilterText]}
+                containerStyle={styles.filterSubItem}
+                type="clear" 
                 onPress={() => setPriorityFilter(3)}
             />
             <Button 
                 title="SHOULD"
-                titleStyle={styles.filterText}
-                type="outline" 
-                raised={(priorityFilter === 2) ? true : false}
+                titleStyle={[styles.filterText,
+                    (priorityFilter === 2) ? styles.selectedText : styles.subFilterText]}
+                containerStyle={styles.filterSubItem}
+                type="clear" 
                 onPress={() => setPriorityFilter(2)}
             />
             <Button 
                 title="WANT"
-                titleStyle={styles.filterText}
-                type="outline" 
-                raised={(priorityFilter === 1) ? true : false}
+                titleStyle={[styles.filterText,
+                    (priorityFilter === 1) ? styles.selectedText : styles.subFilterText]}
+                containerStyle={styles.filterSubItem}
+                type="clear" 
                 onPress={() => setPriorityFilter(1)}
             />
             <Button 
                 title="ALL"
-                titleStyle={styles.filterText}
-                type="outline" 
-                raised={(priorityFilter === 0) ? true : false}
+                titleStyle={[styles.filterText,
+                    (priorityFilter === 0) ? styles.selectedText : styles.subFilterText]}
+                containerStyle={styles.filterSubItem}
+                type="clear" 
                 onPress={() => setPriorityFilter(0)}
             />
         </View>
@@ -140,37 +153,37 @@ const Filter = ({priorityFilter, interestFilter, difficultyFilter, completedFilt
         <View style={styles.container}>
             <Button 
                 title="EASY"
-                titleStyle={styles.filterText}
-                type="outline" 
-                raised={(difficultyFilter === 1) ? true : false}
+                titleStyle={[styles.filterText,
+                    (difficultyFilter === 1) ? styles.selectedText : styles.subFilterText]}
+                type="clear" 
                 onPress={() => setDifficultyFilter(1)}
             />
             <Button 
                 title="DOABLE"
-                titleStyle={styles.filterText}
-                type="outline" 
-                raised={(difficultyFilter === 2) ? true : false}
+                titleStyle={[styles.filterText,
+                    (difficultyFilter === 2) ? styles.selectedText : styles.subFilterText]}
+                type="clear" 
                 onPress={() => setDifficultyFilter(2)}
             />
             <Button 
                 title="CHALLENGING"
-                titleStyle={styles.filterText}
-                type="outline" 
-                raised={(difficultyFilter === 3) ? true : false}
+                titleStyle={[styles.filterText,
+                    (difficultyFilter === 3) ? styles.selectedText : styles.subFilterText]}
+                type="clear" 
                 onPress={() => setDifficultyFilter(3)}
             />
             <Button 
                 title="HARD"
-                titleStyle={styles.filterText}
-                type="outline" 
-                raised={(difficultyFilter === 4) ? true : false}
+                titleStyle={[styles.filterText,
+                    (difficultyFilter === 4) ? styles.selectedText : styles.subFilterText]}
+                type="clear" 
                 onPress={() => setDifficultyFilter(4)}
             />
             <Button 
                 title="ALL"
-                titleStyle={styles.filterText}
-                type="outline" 
-                raised={(difficultyFilter === 0) ? true : false}
+                titleStyle={[styles.filterText,
+                    (difficultyFilter === 0) ? styles.selectedText : styles.subFilterText]}
+                type="clear" 
                 onPress={() => setDifficultyFilter(0)}
             />
         </View>
@@ -180,29 +193,30 @@ const Filter = ({priorityFilter, interestFilter, difficultyFilter, completedFilt
         <View style={styles.container}>
             <Button 
                 title="FUN"
-                titleStyle={styles.filterText}
-                type="outline" 
-                raised={(interestFilter === 1) ? true : false}
+                titleStyle={[styles.filterText,
+                    (interestFilter === 1) ? styles.selectedText : styles.subFilterText]}
+                type="clear" 
                 onPress={() => setInterestFilter(1)}
             />
             <Button 
                 title="MEH"
-                titleStyle={styles.filterText}
-                type="outline" 
-                raised={(interestFilter === 2) ? true : false}
+                titleStyle={[styles.filterText,
+                    (interestFilter === 2) ? styles.selectedText : styles.subFilterText]}
+                type="clear" 
                 onPress={() => setInterestFilter(2)}
             />
             <Button 
                 title="TEDIOUS"
-                titleStyle={styles.filterText}
-                type="outline" 
-                raised={(interestFilter === 3) ? true : false}
+                titleStyle={[styles.filterText,
+                    (interestFilter === 3) ? styles.selectedText : styles.subFilterText]}
+                type="clear" 
                 onPress={() => setInterestFilter(3)}
             />
             <Button 
                 title="ALL"
-                titleStyle={styles.filterText}
-                type="outline" 
+                titleStyle={[styles.filterText,
+                    (interestFilter === 0) ? styles.selectedText : styles.subFilterText]}
+                type="clear" 
                 raised={(interestFilter === 0) ? true : false}
                 onPress={() => setInterestFilter(0)}
             />
@@ -215,21 +229,42 @@ const Filter = ({priorityFilter, interestFilter, difficultyFilter, completedFilt
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 3,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row'
-        
+    },
+    subContainer: {
+        marginBottom: 3,
+        marginHorizontal: 15,
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row'
     },
     filterItem: {
+        flex: 3,
+    },
+    selectedItem: {
+        backgroundColor: 'white'
+    },
+    notSelected: {
+        backgroundColor: 'rgba(255,255,255,0)'
+    },
+    filterSubItem: {
         flex: 1,
-        borderStyle: 'dotted',
-        
     },
     filterText: {
         fontSize: 10,
+        color: 'indigo',
+        paddingVertical: 0
+    },
+    subFilterText: {
         color: 'gray',
+    },
+    selectedText: {
+        color: 'indigo',
+
     }
     
   });

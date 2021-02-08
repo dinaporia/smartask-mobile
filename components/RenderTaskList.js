@@ -47,6 +47,7 @@ const RenderTaskList = (props) => {
                         checkedIcon="check-square-o"
                         uncheckedIcon="square-o"
                         containerStyle={styles.container}
+                        // task name is styled according to completion status and priority
                         titleProps={{style:
                             [styles.titleText,
                             (task.completed) ? styles.completed 
@@ -59,20 +60,21 @@ const RenderTaskList = (props) => {
                     />
                    
                 </ListItem.Content>
+                {/* pencil icon allows editing task */}
                 <ListItem.Chevron 
                     type='font-awesome'
                     name="pencil"
                     style={{flex: 1}}
                     onPress={() => selectTask(task.id)}
                     />
+                {/* depending on forPage props, task receives remove or reschedule options*/}
                 {(forPage === "list") &&
                 <ListItem.Chevron 
                     type='font-awesome'
                     name="times"
                     style={{flex: 1}}
                     onPress={() => removeTask(task.id)}
-                    />
-                        
+                    />        
                 }
                 {(forPage === "schedule") &&
                 <ListItem.Chevron 

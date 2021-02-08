@@ -6,37 +6,34 @@ import RenderTaskList from './RenderTaskList';
 import Footer from './Footer';
 import SortMenu from './SortMenu';
 import EditDetails from './EditDetails';
+import HeaderBackButton from '@react-navigation/stack';
 
 
 const ListPage = (props) => {
    // retrieve tasks from store
    const tasks = useSelector(state => state.tasks);
 
-   // hooks for filter settings
+   // filter settings
    const [priorityFilter, setPriorityFilter] = useState(0);
    const [interestFilter, setInterestFilter] = useState(0);
    const [difficultyFilter, setDifficultyFilter] = useState(0);
    const [completedFilter, setCompletedFilter] = useState(false);
-   // set by SortMenu via sortTasks, passed to RenderTaskList
+   // set via sortTasks functions, passed to RenderTaskList
    const [sortBy, setSortBy] = useState(null);
    // toggle modal containing EditDetails
    const [showModal, setShowModal] = useState(false);
-   // set by RenderTaskList, passed to EditDetails
+   // set by selectTask, passed to EditDetails
    const [taskId, setTaskId] = useState(null)
 
+   // called by RenderTaskList
    const selectTask = (id) => {
       setTaskId(id);
       setShowModal(true);
    }
 
-   // update sortBy state, called via SortMenu button click
-   const sortTasks = (sorting) => {
-      if (sorting) {
-         setSortBy(sorting);
-      } else {
-      setSortBy(null);
-      }
-   }
+   // called via SortMenu
+   const sortTasks = (sorting) => (sorting) ? setSortBy(sorting) : setSortBy(null);
+   
    // reset all filters
    const clearFilters = () => {
       setPriorityFilter(0);
@@ -80,6 +77,11 @@ const ListPage = (props) => {
          </Modal>
        </ScrollView>
    );
+}
+
+// override back button to return to home
+ListPage.navigationOptions = ({navigation}) => {
+  return { headerLeft: <HeaderBackButton onPress={() => navigation.navigate('Home')} /> }
 }
 
 export default connect()(ListPage);
