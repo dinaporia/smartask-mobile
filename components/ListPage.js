@@ -81,7 +81,9 @@ const ListPage = (props) => {
 
 // override back button to return to home
 ListPage.navigationOptions = ({navigation}) => {
-  return { headerLeft: <HeaderBackButton onPress={() => navigation.navigate('Home')} /> }
+   return { 
+      headerLeft: <HeaderBackButton onPress={() => navigation.navigate('Home')} /> 
+   }
 }
 
 export default connect()(ListPage);

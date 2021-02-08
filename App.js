@@ -1,7 +1,8 @@
 
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import Navigation from './components/Navigation';
+import DrawerNavigator from './components/Navigation';
+
 import { ThemeProvider } from 'react-native-elements';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
@@ -24,7 +25,7 @@ export default function App() {
   <Provider store={store}>
       <NavigationContainer>
         <ThemeProvider theme={theme}>
-          <Navigation />
+          <DrawerNavigator />
         </ThemeProvider>
       </NavigationContainer>
   </Provider>

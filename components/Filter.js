@@ -53,6 +53,7 @@ const Filter = ({priorityFilter, interestFilter, difficultyFilter, completedFilt
 
     return (
         <View>
+        {/* main filter menu */}
             <View style={styles.container}>
                 <Icon   
                     containerStyle={{flex: 1}}
@@ -264,7 +265,6 @@ const styles = StyleSheet.create({
     },
     selectedText: {
         color: 'indigo',
-
     }
     
   });
