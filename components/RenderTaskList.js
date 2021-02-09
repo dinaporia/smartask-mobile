@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert, Text } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { SwipeRow } from 'react-native-swipe-list-view';
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import { toggleCompleted, removeTask } from '../redux/tasksSlice';
 
@@ -35,58 +37,99 @@ const RenderTaskList = (props) => {
             sortedTasks = props.tasks.slice();
     }
 
+    const renderTask = ({item}) => {
+        return (
+            <SwipeRow rightOpenValue={-100} >
+                {(forPage === "list") ?
+                <View style={styles.deleteView} >
+                    <TouchableOpacity 
+                        style={styles.deleteTouchable}
+                        onPress={() => Alert.alert(
+                            'Remove Task?',
+                            'This will permanently remove the selected task from your list.',
+                            [
+                                {
+                                    text: 'Cancel',
+                                    style: 'cancel'
+                                },
+                                {
+                                    text: 'OK',
+                                    onPress: () => removeTask(item.id)
+                                }
+                            ],
+                            { cancelable: false }
+                        )}
+                    >
+                        <Text style={styles.deleteText} >Delete</Text>
+                    </TouchableOpacity>
+                </View>
+                :
+                <View style={styles.deleteView} >
+                    <TouchableOpacity 
+                        style={styles.deleteTouchable}
+                        onPress={() => Alert.alert(
+                            'Reschedule Task?',
+                            'This will remove the task from today\'s schedule, but the task will remain on your list.',
+                            [
+                                {
+                                    text: 'Cancel',
+                                    style: 'cancel'
+                                },
+                                {
+                                    text: 'OK',
+                                    onPress: () => rescheduleTask(item.id)
+                                }
+                            ],
+                            { cancelable: false }
+                        )}
+                    >
+                        <Text style={styles.deleteText} >Delete</Text>
+                    </TouchableOpacity>
+                </View>
+                }
+                <View>
+                    <ListItem >
+                        <ListItem.Content style={{flex: 1}}>
+                            <ListItem.CheckBox
+                                title={item.task}
+                                checked={item.completed}
+                                checkedIcon="check-square-o"
+                                uncheckedIcon="square-o"
+                                containerStyle={styles.container}
+                                // task name is styled according to completion status and priority
+                                titleProps={{style:
+                                    [styles.titleText,
+                                    (item.completed) ? styles.completed 
+                                    : (item.priority === 1) ? styles.want
+                                    : (item.priority === 3 ) ? styles.must
+                                    : styles.should]
+                                    }}
+                                onPress={() => toggleCompleted(item.id)}
+                                style={{flex: 2}}
+                            />
+                        
+                        </ListItem.Content>
+                        {/* pencil icon allows editing task */}
+                        <ListItem.Chevron 
+                            type='font-awesome'
+                            name="pencil"
+                            style={{flex: 1}}
+                            onPress={() => selectTask(item.id)}
+                            />
+                </ListItem>  
+                </View>
+            </SwipeRow>   
+        );
+    };
+        
+        
     return (
         <View>   
-            {sortedTasks.map(task => { 
-        return (
-            <ListItem key={task.id}>
-                <ListItem.Content style={{flex: 1}}>
-                    <ListItem.CheckBox
-                        title={task.task}
-                        checked={task.completed}
-                        checkedIcon="check-square-o"
-                        uncheckedIcon="square-o"
-                        containerStyle={styles.container}
-                        // task name is styled according to completion status and priority
-                        titleProps={{style:
-                            [styles.titleText,
-                            (task.completed) ? styles.completed 
-                            : (task.priority === 1) ? styles.want
-                            : (task.priority === 3 ) ? styles.must
-                            : styles.should]
-                            }}
-                        onPress={() => toggleCompleted(task.id)}
-                        style={{flex: 2}}
-                    />
-                   
-                </ListItem.Content>
-                {/* pencil icon allows editing task */}
-                <ListItem.Chevron 
-                    type='font-awesome'
-                    name="pencil"
-                    style={{flex: 1}}
-                    onPress={() => selectTask(task.id)}
-                    />
-                {/* depending on forPage props, task receives remove or reschedule options*/}
-                {(forPage === "list") &&
-                <ListItem.Chevron 
-                    type='font-awesome'
-                    name="times"
-                    style={{flex: 1}}
-                    onPress={() => removeTask(task.id)}
-                    />        
-                }
-                {(forPage === "schedule") &&
-                <ListItem.Chevron 
-                    type='font-awesome'
-                    name="calendar-times-o"
-                    style={{flex: 1}}
-                    onPress={rescheduleTask}
-                    />
-                }
-            </ListItem>     
-        );
-    })}
+            <FlatList 
+                data={sortedTasks}
+                renderItem={renderTask}
+                keyExtractor={item => item.id}
+            />
         </View>
     );
 }
@@ -116,8 +159,26 @@ const styles = StyleSheet.create({
     must: {
         textDecorationLine: 'none',
         color: 'red'
+    },
+    // formatting for swiperow and delete options
+    deleteView: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        flex: 1
+    },
+    deleteTouchable: {
+        backgroundColor: 'red',
+        height: '100%',
+        justifyContent: 'center'
+    },
+    deleteText: {
+        color: 'white',
+        fontWeight: '700',
+        textAlign: 'center',
+        fontSize: 16,
+        width: 100
     }
-    
   });
 
 export default connect(null, mapDispatch)(RenderTaskList);

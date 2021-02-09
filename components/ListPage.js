@@ -58,13 +58,17 @@ const ListPage = (props) => {
       }
  
    return (
-       <ScrollView>
-         {/* sorting toolbar, receives access to setSortBy hook */}
-         <SortMenu sortTasks={sortTasks}/>
-         {/* filter toolbar, receives access to filters and their methods */}
-         <Filter priorityFilter={priorityFilter} interestFilter={interestFilter} difficultyFilter={difficultyFilter} completedFilter={completedFilter} setDifficultyFilter={setDifficultyFilter} setInterestFilter={setInterestFilter} setPriorityFilter={setPriorityFilter} setCompletedFilter={setCompletedFilter} clearFilters={clearFilters}/>
-
-         <RenderTaskList tasks={filteredTasks} sortBy={sortBy} selectTask={selectTask} forPage="list" />
+      <View>
+         <ScrollView>
+            {/* sorting toolbar, receives access to setSortBy hook */}
+            <SortMenu sortTasks={sortTasks}/>
+            {/* filter toolbar, receives access to filters and their methods */}
+            <Filter priorityFilter={priorityFilter} interestFilter={interestFilter} difficultyFilter={difficultyFilter} completedFilter={completedFilter} setDifficultyFilter={setDifficultyFilter} setInterestFilter={setInterestFilter} setPriorityFilter={setPriorityFilter} setCompletedFilter={setCompletedFilter} clearFilters={clearFilters}/>
+         </ScrollView>
+         <ScrollView>
+            <RenderTaskList tasks={filteredTasks} sortBy={sortBy} selectTask={selectTask} forPage="list" />
+         </ScrollView>
+        
          {/* footer maintains counter of completed and remaining tasks, gets access to removeCompleted method */}
          {/* <Footer removeCompleted={removeTask} tasks={filteredTasks}/> */}
          <Modal 
@@ -75,7 +79,7 @@ const ListPage = (props) => {
             >
             <EditDetails setShowModal={setShowModal} taskId={taskId}/>
          </Modal>
-       </ScrollView>
+       </View>
    );
 }
 
