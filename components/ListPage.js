@@ -8,7 +8,6 @@ import SortMenu from './SortMenu';
 import EditDetails from './EditDetails';
 import HeaderBackButton from '@react-navigation/stack';
 
-
 const ListPage = (props) => {
    // retrieve tasks from store
    const tasks = useSelector(state => state.tasks);
@@ -58,27 +57,26 @@ const ListPage = (props) => {
       }
  
    return (
-      <View>
-         <ScrollView>
+      <View style={{flex: 1}}>
+         <View style={{height: 80}}>
             {/* sorting toolbar, receives access to setSortBy hook */}
             <SortMenu sortTasks={sortTasks}/>
-            {/* filter toolbar, receives access to filters and their methods */}
+               {/* filter toolbar, receives access to filters and their methods */}
             <Filter priorityFilter={priorityFilter} interestFilter={interestFilter} difficultyFilter={difficultyFilter} completedFilter={completedFilter} setDifficultyFilter={setDifficultyFilter} setInterestFilter={setInterestFilter} setPriorityFilter={setPriorityFilter} setCompletedFilter={setCompletedFilter} clearFilters={clearFilters}/>
-         </ScrollView>
-         <ScrollView>
-            <RenderTaskList tasks={filteredTasks} sortBy={sortBy} selectTask={selectTask} forPage="list" />
-         </ScrollView>
-        
-         {/* footer maintains counter of completed and remaining tasks, gets access to removeCompleted method */}
-         {/* <Footer removeCompleted={removeTask} tasks={filteredTasks}/> */}
-         <Modal 
-            animationType={'slide'}
-            transparent={false}
-            visible={showModal}
-            onRequestClose={() => setShowModal(false)}
-            >
-            <EditDetails setShowModal={setShowModal} taskId={taskId}/>
-         </Modal>
+         </View>
+      <RenderTaskList tasks={filteredTasks} sortBy={sortBy} selectTask={selectTask} forPage="list" />
+      <ScrollView >
+         <Footer tasks={filteredTasks}/>
+      </ScrollView>
+      
+      <Modal 
+         animationType={'slide'}
+         transparent={false}
+         visible={showModal}
+         onRequestClose={() => setShowModal(false)}
+         >
+         <EditDetails setShowModal={setShowModal} taskId={taskId}/>
+      </Modal>
        </View>
    );
 }

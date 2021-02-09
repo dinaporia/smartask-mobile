@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Icon, Button } from 'react-native-elements';
+import { ScrollView } from 'react-native-gesture-handler';
 
 // sort order toolbar, gets access to local sortBy state in ListPage
 const SortMenu = ({sortTasks}) => {
@@ -45,7 +46,6 @@ const SortMenu = ({sortTasks}) => {
     );
 }
 
-
 const styles = StyleSheet.create({
     container: {
         marginTop: 3,
@@ -53,8 +53,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-between',
-        flexDirection: 'row'
-        
+        flexDirection: 'row',
     },
     sortItem: {
         flex: 1,
@@ -63,7 +62,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 12
     }
-    
-  });
+});
 
 export default SortMenu;

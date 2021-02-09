@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Alert, Text } from 'react-native';
+import { View, ScrollView, StyleSheet, Alert, Text } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { SwipeRow } from 'react-native-swipe-list-view';
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
@@ -46,7 +46,7 @@ const RenderTaskList = (props) => {
                         style={styles.deleteTouchable}
                         onPress={() => Alert.alert(
                             'Remove Task?',
-                            'This will permanently remove the selected task from your list.',
+                            'This will permanently remove the selected task.',
                             [
                                 {
                                     text: 'Cancel',
@@ -124,13 +124,14 @@ const RenderTaskList = (props) => {
         
         
     return (
-        <View>   
-            <FlatList 
-                data={sortedTasks}
-                renderItem={renderTask}
-                keyExtractor={item => item.id}
-            />
-        </View>
+       
+ <FlatList 
+            data={sortedTasks}
+            renderItem={renderTask}
+            keyExtractor={item => item.id}
+        />
+       
+       
     );
 }
 

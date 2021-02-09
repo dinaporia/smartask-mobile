@@ -52,7 +52,7 @@ const Filter = ({priorityFilter, interestFilter, difficultyFilter, completedFilt
     }
 
     return (
-        <View>
+        <View style={{flex: 2}}>
         {/* main filter menu */}
             <View style={styles.container}>
                 <Icon   
@@ -112,128 +112,127 @@ const Filter = ({priorityFilter, interestFilter, difficultyFilter, completedFilt
                     containerStyle={{alignContent: 'flex-end', flex: 1.5}}
                 />
             </View>
-    {/* priority toggle menu */}
-        {priorityOpen && 
-        <View style={styles.subContainer}>
-            <Button 
-                title="MUST"
-                titleStyle={[styles.filterText,
-                    (priorityFilter === 3) ? styles.selectedText : styles.subFilterText]}
-                containerStyle={styles.filterSubItem}
-                type="clear" 
-                onPress={() => setPriorityFilter(3)}
-            />
-            <Button 
-                title="SHOULD"
-                titleStyle={[styles.filterText,
-                    (priorityFilter === 2) ? styles.selectedText : styles.subFilterText]}
-                containerStyle={styles.filterSubItem}
-                type="clear" 
-                onPress={() => setPriorityFilter(2)}
-            />
-            <Button 
-                title="WANT"
-                titleStyle={[styles.filterText,
-                    (priorityFilter === 1) ? styles.selectedText : styles.subFilterText]}
-                containerStyle={styles.filterSubItem}
-                type="clear" 
-                onPress={() => setPriorityFilter(1)}
-            />
-            <Button 
-                title="ALL"
-                titleStyle={[styles.filterText,
-                    (priorityFilter === 0) ? styles.selectedText : styles.subFilterText]}
-                containerStyle={styles.filterSubItem}
-                type="clear" 
-                onPress={() => setPriorityFilter(0)}
-            />
+        {/* priority toggle menu */}
+            {priorityOpen && 
+            <View style={styles.subContainer}>
+                <Button 
+                    title="MUST"
+                    titleStyle={[styles.filterText,
+                        (priorityFilter === 3) ? styles.selectedText : styles.subFilterText]}
+                    containerStyle={styles.filterSubItem}
+                    type="clear" 
+                    onPress={() => setPriorityFilter(3)}
+                />
+                <Button 
+                    title="SHOULD"
+                    titleStyle={[styles.filterText,
+                        (priorityFilter === 2) ? styles.selectedText : styles.subFilterText]}
+                    containerStyle={styles.filterSubItem}
+                    type="clear" 
+                    onPress={() => setPriorityFilter(2)}
+                />
+                <Button 
+                    title="WANT"
+                    titleStyle={[styles.filterText,
+                        (priorityFilter === 1) ? styles.selectedText : styles.subFilterText]}
+                    containerStyle={styles.filterSubItem}
+                    type="clear" 
+                    onPress={() => setPriorityFilter(1)}
+                />
+                <Button 
+                    title="ALL"
+                    titleStyle={[styles.filterText,
+                        (priorityFilter === 0) ? styles.selectedText : styles.subFilterText]}
+                    containerStyle={styles.filterSubItem}
+                    type="clear" 
+                    onPress={() => setPriorityFilter(0)}
+                />
+            </View>
+        }           
+        {/* difficulty toggle menu */}
+            {difficultyOpen && 
+            <View style={styles.container}>
+                <Button 
+                    title="EASY"
+                    titleStyle={[styles.filterText,
+                        (difficultyFilter === 1) ? styles.selectedText : styles.subFilterText]}
+                    type="clear" 
+                    onPress={() => setDifficultyFilter(1)}
+                />
+                <Button 
+                    title="DOABLE"
+                    titleStyle={[styles.filterText,
+                        (difficultyFilter === 2) ? styles.selectedText : styles.subFilterText]}
+                    type="clear" 
+                    onPress={() => setDifficultyFilter(2)}
+                />
+                <Button 
+                    title="CHALLENGING"
+                    titleStyle={[styles.filterText,
+                        (difficultyFilter === 3) ? styles.selectedText : styles.subFilterText]}
+                    type="clear" 
+                    onPress={() => setDifficultyFilter(3)}
+                />
+                <Button 
+                    title="HARD"
+                    titleStyle={[styles.filterText,
+                        (difficultyFilter === 4) ? styles.selectedText : styles.subFilterText]}
+                    type="clear" 
+                    onPress={() => setDifficultyFilter(4)}
+                />
+                <Button 
+                    title="ALL"
+                    titleStyle={[styles.filterText,
+                        (difficultyFilter === 0) ? styles.selectedText : styles.subFilterText]}
+                    type="clear" 
+                    onPress={() => setDifficultyFilter(0)}
+                />
+            </View>
+            }             
+        {/* interest toggle menu */}
+            {interestOpen && 
+            <View style={styles.container}>
+                <Button 
+                    title="FUN"
+                    titleStyle={[styles.filterText,
+                        (interestFilter === 1) ? styles.selectedText : styles.subFilterText]}
+                    type="clear" 
+                    onPress={() => setInterestFilter(1)}
+                />
+                <Button 
+                    title="MEH"
+                    titleStyle={[styles.filterText,
+                        (interestFilter === 2) ? styles.selectedText : styles.subFilterText]}
+                    type="clear" 
+                    onPress={() => setInterestFilter(2)}
+                />
+                <Button 
+                    title="TEDIOUS"
+                    titleStyle={[styles.filterText,
+                        (interestFilter === 3) ? styles.selectedText : styles.subFilterText]}
+                    type="clear" 
+                    onPress={() => setInterestFilter(3)}
+                />
+                <Button 
+                    title="ALL"
+                    titleStyle={[styles.filterText,
+                        (interestFilter === 0) ? styles.selectedText : styles.subFilterText]}
+                    type="clear" 
+                    raised={(interestFilter === 0) ? true : false}
+                    onPress={() => setInterestFilter(0)}
+                />
+            </View>
+            }                         
         </View>
-    }           
-    {/* difficulty toggle menu */}
-        {difficultyOpen && 
-        <View style={styles.container}>
-            <Button 
-                title="EASY"
-                titleStyle={[styles.filterText,
-                    (difficultyFilter === 1) ? styles.selectedText : styles.subFilterText]}
-                type="clear" 
-                onPress={() => setDifficultyFilter(1)}
-            />
-            <Button 
-                title="DOABLE"
-                titleStyle={[styles.filterText,
-                    (difficultyFilter === 2) ? styles.selectedText : styles.subFilterText]}
-                type="clear" 
-                onPress={() => setDifficultyFilter(2)}
-            />
-            <Button 
-                title="CHALLENGING"
-                titleStyle={[styles.filterText,
-                    (difficultyFilter === 3) ? styles.selectedText : styles.subFilterText]}
-                type="clear" 
-                onPress={() => setDifficultyFilter(3)}
-            />
-            <Button 
-                title="HARD"
-                titleStyle={[styles.filterText,
-                    (difficultyFilter === 4) ? styles.selectedText : styles.subFilterText]}
-                type="clear" 
-                onPress={() => setDifficultyFilter(4)}
-            />
-            <Button 
-                title="ALL"
-                titleStyle={[styles.filterText,
-                    (difficultyFilter === 0) ? styles.selectedText : styles.subFilterText]}
-                type="clear" 
-                onPress={() => setDifficultyFilter(0)}
-            />
-        </View>
-        }             
-    {/* interest toggle menu */}
-        {interestOpen && 
-        <View style={styles.container}>
-            <Button 
-                title="FUN"
-                titleStyle={[styles.filterText,
-                    (interestFilter === 1) ? styles.selectedText : styles.subFilterText]}
-                type="clear" 
-                onPress={() => setInterestFilter(1)}
-            />
-            <Button 
-                title="MEH"
-                titleStyle={[styles.filterText,
-                    (interestFilter === 2) ? styles.selectedText : styles.subFilterText]}
-                type="clear" 
-                onPress={() => setInterestFilter(2)}
-            />
-            <Button 
-                title="TEDIOUS"
-                titleStyle={[styles.filterText,
-                    (interestFilter === 3) ? styles.selectedText : styles.subFilterText]}
-                type="clear" 
-                onPress={() => setInterestFilter(3)}
-            />
-            <Button 
-                title="ALL"
-                titleStyle={[styles.filterText,
-                    (interestFilter === 0) ? styles.selectedText : styles.subFilterText]}
-                type="clear" 
-                raised={(interestFilter === 0) ? true : false}
-                onPress={() => setInterestFilter(0)}
-            />
-        </View>
-        }                         
-    </View>
     );
 }
-
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     subContainer: {
         marginBottom: 3,
