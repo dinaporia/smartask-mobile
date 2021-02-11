@@ -64,19 +64,21 @@ const ListPage = (props) => {
                {/* filter toolbar, receives access to filters and their methods */}
             <Filter priorityFilter={priorityFilter} interestFilter={interestFilter} difficultyFilter={difficultyFilter} completedFilter={completedFilter} setDifficultyFilter={setDifficultyFilter} setInterestFilter={setInterestFilter} setPriorityFilter={setPriorityFilter} setCompletedFilter={setCompletedFilter} clearFilters={clearFilters}/>
          </View>
-      <RenderTaskList tasks={filteredTasks} sortBy={sortBy} selectTask={selectTask} forPage="list" />
-      <ScrollView >
-         <Footer tasks={filteredTasks}/>
-      </ScrollView>
+
+         <RenderTaskList tasks={filteredTasks} sortBy={sortBy} selectTask={selectTask} forPage="list" />
+         
+         <ScrollView contentContainerStyle={{justifyContent: 'flex-end', flexShrink: 1, paddingTop: 15, paddingBottom: 5 }} >
+            <Footer tasks={filteredTasks}/>
+         </ScrollView>
       
-      <Modal 
-         animationType={'slide'}
-         transparent={false}
-         visible={showModal}
-         onRequestClose={() => setShowModal(false)}
-         >
-         <EditDetails setShowModal={setShowModal} taskId={taskId}/>
-      </Modal>
+         <Modal 
+            animationType={'slide'}
+            transparent={false}
+            visible={showModal}
+            onRequestClose={() => setShowModal(false)}
+            >
+            <EditDetails setShowModal={setShowModal} taskId={taskId}/>
+         </Modal>
        </View>
    );
 }

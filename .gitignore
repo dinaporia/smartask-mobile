@@ -9,6 +9,7 @@ npm-debug.*
 *.orig.*
 web-build/
 old_files/
+yarn-error.log
 
 # macOS
 .DS_Store

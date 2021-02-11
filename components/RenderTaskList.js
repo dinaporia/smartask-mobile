@@ -24,7 +24,7 @@ const RenderTaskList = (props) => {
     // sortBy is set by SortMenu and passed as props
     switch (sortBy) {
         case "alphabet":
-            sortedTasks.sort((a,b) => a.task.localeCompare(b.task));
+            sortedTasks.sort((a,b) => a.task.toLowerCase().localeCompare(b.task.toLowerCase()));
             break;
         case "due":
             sortedTasks.sort((a, b) => a.due.localeCompare(b.due));
@@ -107,7 +107,6 @@ const RenderTaskList = (props) => {
                                 onPress={() => toggleCompleted(item.id)}
                                 style={{flex: 2}}
                             />
-                        
                         </ListItem.Content>
                         {/* pencil icon allows editing task */}
                         <ListItem.Chevron 
@@ -115,26 +114,21 @@ const RenderTaskList = (props) => {
                             name="pencil"
                             style={{flex: 1}}
                             onPress={() => selectTask(item.id)}
-                            />
-                </ListItem>  
+                        />
+                    </ListItem>  
                 </View>
             </SwipeRow>   
         );
     };
-        
-        
+            
     return (
-       
- <FlatList 
+        <FlatList 
             data={sortedTasks}
             renderItem={renderTask}
             keyExtractor={item => item.id}
-        />
-       
-       
+        />   
     );
 }
-
 
 const styles = StyleSheet.create({
     container: {

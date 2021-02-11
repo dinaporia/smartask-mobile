@@ -34,7 +34,7 @@ const Footer = ({tasks, removeTask}) => {
     const removeCompleted = () => completedTasks.forEach(task => removeTask(task.id));
 
     return (
-        <View style={{ marginBottom: 20}}>
+        <View style={{ alignSelf: 'stretch' }}>
             <View>
                 {/* button to remove filtered tasks that are completed */}
                 <Button 

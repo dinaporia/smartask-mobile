@@ -10,12 +10,12 @@ import { parseISO } from 'date-fns'
 
 const TaskNameInput = ({task, onTextChange}) => {
     return (
-        <View>
+        <View style={{flex: 1, marginTop: 10}}>
             <TextInput  
-            style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+            style={{ height: 40, borderColor: 'gray', borderWidth: 0, borderBottomWidth: 1, paddingLeft: 5, textAlign: 'center', backgroundColor: 'pink' }}
             // disable autofill
             textContentType='none'
-            placeholder={(task) ? task : 'Enter new task here'}
+            placeholder={(task) ? task : 'Enter task here'}
             onChangeText={text => onTextChange(text)}
             value={task}
             />
@@ -25,8 +25,8 @@ const TaskNameInput = ({task, onTextChange}) => {
 
 const TaskCategoryInput = ({category, onSelect}) => {
     return (
-        <View>
-            <Text>Category:</Text>
+        <View style={{flex: 1}}>
+            <Text style={{textAlign: 'center'}}>Category</Text>
             <Picker
                 selectedValue={category}
                 onValueChange={itemValue => onSelect(itemValue)} 
@@ -34,8 +34,7 @@ const TaskCategoryInput = ({category, onSelect}) => {
                 <Picker.Item label='Work' value='Work' />
                 <Picker.Item label='Home' value='Home' />
                 <Picker.Item label='Other' value='Other' />
-
-            </Picker>
+            </Picker> 
         </View>
     );
 }
@@ -46,28 +45,29 @@ class TaskDateInput extends Component {
         super(props);
         this.state = {show: false};
     }
-
     handleDateInput = (date) => {
         if (date) { 
         this.setState({show: false});
         const stringDate = date.toISOString();
         this.props.onDateChange(stringDate);
-
         }}
     
-
     render() {
         const today = new Date();
         return (
-            <ScrollView>
-                <View >
-                    <Text>Due date</Text>
-                    <Button 
-                        // on press, set show to true
-                        onPress={() => this.setState({show: !this.state.show})}
-                        title={(this.props.date) ? parseISO(this.props.date).toLocaleDateString('en-US') : today.toLocaleDateString('en-US')}
-                        accessibilityLabel='Tap to select due date'
-                    />
+            <ScrollView style={{flex: 1}}>
+                <View style={{flexDirection: 'row', flex: 1}}>
+                    <View style={{flex: 1, justifyContent: 'center'}}>
+                        <Text style={{textAlignVertical: 'center' }}>Due date:</Text>
+                    </View>
+                    <View style={{flex: 2}}>
+                        <Button 
+                            // on press, set show to true
+                            onPress={() => this.setState({show: !this.state.show})}
+                            title={(this.props.date) ? parseISO(this.props.date).toLocaleDateString('en-US') : today.toLocaleDateString('en-US')}
+                            accessibilityLabel='Tap to select due date'
+                        />
+                    </View>
                 </View>
                 {/* if show is set to true, show calendar */}
                 {this.state.show && (

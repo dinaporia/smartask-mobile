@@ -60,8 +60,7 @@ const HomeNavigator = () => {
 
 const TaskNavigator = () => {
     return (
-        <Stack.Navigator screenOptions={screenOptionStyle}
-        >
+        <Stack.Navigator screenOptions={screenOptionStyle} >
             <Stack.Screen 
                 name="Add"
                 component={AddTaskPage}
@@ -93,7 +92,6 @@ const ListNavigator = () => {
             name="List"
             component={ListPage}
             options={{ title: "Task List" }}
-  
         />
         </Stack.Navigator>
     );
@@ -115,7 +113,8 @@ const PrefsNavigator = () => {
 
 const DrawerNavigator = () => {
     return (
-        <Drawer.Navigator>
+        <Drawer.Navigator initialRouteName="Home">
+        
             <Drawer.Screen 
                 name="Home" 
                 component={HomeNavigator}

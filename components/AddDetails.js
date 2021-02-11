@@ -7,22 +7,22 @@ import {DurationInput, DifficultyInput, InterestInput, PriorityInput} from './Ta
 // called inside modal in AddTaskPage
 // gets task object with task, due, and category properties
 // updates task with details input, passes back to parent
-   const AddDetails = ({taskBasics, createTask}) => {
+   const AddDetails = ({taskBasics, createTask, defaultTask}) => {
       // hooks for detail inputs
-      const [priority, setPriority] = useState(2);
-      const [difficulty, setDifficulty] = useState(2);
-      const [interest, setInterest] = useState(2);
-      const [duration, setDuration] = useState(90);
+      const [priority, setPriority] = useState(defaultTask.priority);
+      const [difficulty, setDifficulty] = useState(defaultTask.difficulty);
+      const [interest, setInterest] = useState(defaultTask.interest);
+      const [duration, setDuration] = useState(defaultTask.duration);
 
       // convert duration input into hours for display
       let durationText = (duration/60).toFixed(1) + " hours";
 
       // reset local state
       const resetDetails = () => {
-         setPriority(2);
-         setDifficulty(2);
-         setInterest(2);
-         setDuration(90);
+         setPriority(defaultTask.priority);
+         setDifficulty(defaultTask.difficulty);
+         setInterest(defaultTask.interest);
+         setDuration(defaultTask.duration);
       }
 
       // combine detail input with existing basic task
