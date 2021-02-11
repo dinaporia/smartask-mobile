@@ -12,8 +12,11 @@ const PriorityInput = ({priority, setPriority}) => {
             <AirbnbRating 
                 count={3}
                 reviews={["WANT", "SHOULD", "MUST"]}
+                reviewSize={14}
                 defaultRating={priority}
                 size={30}
+                selectedColor='teal'
+                reviewColor='teal'
                 onFinishRating={(rating) => setPriority(rating)}
 
             />
@@ -30,8 +33,11 @@ const DifficultyInput = ({difficulty, setDifficulty}) => {
             <AirbnbRating 
                 count={4}
                 reviews={["EASY", "DOABLE", "CHALLENGING", "HARD"]}
+                reviewSize={14}
                 defaultRating={difficulty}
                 size={30}
+                selectedColor='teal'
+                reviewColor='teal'
                 onFinishRating={(rating) => setDifficulty(rating)}
 
             />
@@ -48,8 +54,11 @@ const InterestInput = ({interest, setInterest}) => {
             <AirbnbRating 
                 count={3}
                 reviews={["TEDIOUS", "MEH", "FUN"]}
+                reviewSize={14}
                 defaultRating={interest}
                 size={30}
+                selectedColor='teal'
+                reviewColor='teal'
                 onFinishRating={(rating) => setInterest(rating)}
 
             />

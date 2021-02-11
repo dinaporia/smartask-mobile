@@ -6,6 +6,7 @@ import AddDetails from './AddDetails';
 import { connect, useSelector } from 'react-redux';
 import { addTask } from '../redux/tasksSlice';
 
+
 const mapDispatch = { addTask };
 
 const AddTaskPage = (props) => {
@@ -41,7 +42,7 @@ const AddTaskPage = (props) => {
    return (
       <View style={{flex: 1}}>
          <View style={{flex: 1}}>
-            <View style={{flex: 2, margin: 20, padding: 10, justifyContent: 'flex-start', borderColor: 'pink', borderWidth: 1}}>
+            <View style={styles.inputs}>
             <TaskNameInput onTextChange={setTaskText} task={taskText} />
             <TaskDateInput onDateChange={setTaskDate} date={taskDate} />
             <TaskCategoryInput onSelect={setTaskCategory} category={taskCategory} />
@@ -89,6 +90,14 @@ const styles = StyleSheet.create({
      flexDirection: 'row',
      marginHorizontal: 20
    },
+   inputs: {
+      flex: 2, 
+      margin: 20, 
+      padding: 10, 
+      justifyContent: 'flex-start', 
+      borderColor: 'pink', 
+      borderWidth: 1
+   }
 });
 
 
