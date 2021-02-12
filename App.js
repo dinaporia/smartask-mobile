@@ -2,11 +2,9 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import DrawerNavigator from './components/Navigation';
-
 import { ThemeProvider } from 'react-native-elements';
 import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import rootReducer from './redux'
+import store from './redux/store';
 
 const theme = {
   Button: {
@@ -15,9 +13,6 @@ const theme = {
   }
 };
 
-const store = configureStore({
-  reducer: rootReducer,
-});
 
 export default function App() {
   return (

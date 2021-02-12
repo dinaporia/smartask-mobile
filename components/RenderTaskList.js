@@ -15,10 +15,6 @@ const RenderTaskList = (props) => {
     const {tasks, toggleCompleted, removeTask, selectTask, sortBy, forPage } = props;
     if (!tasks || tasks.length === 0) return <View />;
 
-    const rescheduleTask = () => {
-        console.log("reschedule task");
-    }
-
     // sort tasks before passing to ListItems
     let sortedTasks = tasks.slice();
     // sortBy is set by SortMenu and passed as props
@@ -41,7 +37,7 @@ const RenderTaskList = (props) => {
         return (
             <SwipeRow rightOpenValue={-100} >
                 {(forPage === "list") ?
-                <View style={styles.deleteView} >
+                <View style={styles.deleteView}>
                     <TouchableOpacity 
                         style={styles.deleteTouchable}
                         onPress={() => Alert.alert(
@@ -50,7 +46,7 @@ const RenderTaskList = (props) => {
                             [
                                 {
                                     text: 'Cancel',
-                                    style: 'cancel'
+                                    style: 'cancel',
                                 },
                                 {
                                     text: 'OK',
@@ -77,13 +73,13 @@ const RenderTaskList = (props) => {
                                 },
                                 {
                                     text: 'OK',
-                                    onPress: () => rescheduleTask(item.id)
+                                    onPress: () => selectTask(item.id)
                                 }
                             ],
                             { cancelable: false }
                         )}
                     >
-                        <Text style={styles.deleteText} >Delete</Text>
+                        <Text style={styles.deleteText} >Reschedule</Text>
                     </TouchableOpacity>
                 </View>
                 }
@@ -108,13 +104,13 @@ const RenderTaskList = (props) => {
                                 style={{flex: 2}}
                             />
                         </ListItem.Content>
-                        {/* pencil icon allows editing task */}
+                        {(forPage === "list") &&
                         <ListItem.Chevron 
                             type='font-awesome'
                             name="pencil"
                             style={{flex: 1}}
                             onPress={() => selectTask(item.id)}
-                        />
+                        />}
                     </ListItem>  
                 </View>
             </SwipeRow>   
