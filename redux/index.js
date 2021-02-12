@@ -8,5 +8,5 @@ import taskPrefsReducer from './taskPrefsSlice';
 export default combineReducers({
     tasks: tasksReducer,
     schedulePrefs: schedulePrefsReducer,
-    defaultTask: taskPrefsReducer
+    taskPrefs: taskPrefsReducer
 })

@@ -24,5 +24,6 @@ const taskPrefsSlice = createSlice({
     }
 });
 
+export { defaultTask };
 export const { editDefaultTask, resetDefaultTask } = taskPrefsSlice.actions;
 export default taskPrefsSlice.reducer;

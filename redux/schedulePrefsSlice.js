@@ -23,5 +23,6 @@ const schedulePrefsSlice = createSlice({
     }
 });
 
+export {defaultPrefs};
 export const { editPrefs, resetPrefs } = schedulePrefsSlice.actions;
 export default schedulePrefsSlice.reducer;

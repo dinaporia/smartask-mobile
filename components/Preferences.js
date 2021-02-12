@@ -5,13 +5,13 @@ import { ScrollView } from 'react-native-gesture-handler';
 import {DurationInput, DifficultyInput, InterestInput, PriorityInput} from './TaskDetails';
 import { TaskCategoryInput } from './TaskBasics';
 import { connect } from 'react-redux';
-import { editPrefs, resetPrefs } from '../redux/schedulePrefsSlice';
-import { editDefaultTask, resetDefaultTask } from '../redux/taskPrefsSlice';
+import { editPrefs, resetPrefs, defaultPrefs } from '../redux/schedulePrefsSlice';
+import { editDefaultTask, resetDefaultTask, defaultTask } from '../redux/taskPrefsSlice';
 
 const mapState = state => {
    return {
       schedulePrefs: state.schedulePrefs,
-      defaultTask: state.defaultTask
+      taskPrefs: state.taskPrefs
    }
 };
 
@@ -25,7 +25,7 @@ const mapDispatch = {
 const Preferences = (props) => {
    const { editPrefs, resetPrefs, editDefaultTask, resetDefaultTask } = props;
    const prefs = props.schedulePrefs;
-   const task = props.defaultTask;
+   const task = props.taskPrefs;
    // schedule preferences
    const [hours, setHours] = useState(prefs.hours);
    const [maxHard, setMaxHard] = useState(prefs.maxHard);
@@ -64,23 +64,22 @@ const Preferences = (props) => {
       editDefaultTask(newTask);
       return Alert.alert('Your task defaults have been updated.');
    };
-   // reset prefs in store, reset hooks to store values
+   // reset prefs in store, set local state to defaults
    const resetSchedPrefs = () => {
       resetPrefs();
-      setHours(prefs.hours);
-      setMaxTedious(prefs.maxTedious);
-      setMaxHard(prefs.maxHard);
-      setIncludeFun(prefs.includeFun);
-      // debug note: doesn't update screen until 2nd reset!
+      setHours(defaultPrefs.hours);
+      setMaxTedious(defaultPrefs.maxTedious);
+      setMaxHard(defaultPrefs.maxHard);
+      setIncludeFun(defaultPrefs.includeFun);
    }
-      // reset task default in store, reset hooks to store values
+   // reset task default in store, set local state to defaults
    const onTaskReset = () => {
       resetDefaultTask();
-      setCategory(task.category);
-      setInterest(task.interest);
-      setPriority(task.priority);
-      setDifficulty(task.difficulty);
-      setDuration(task.duration);
+      setCategory(defaultTask.category);
+      setInterest(defaultTask.interest);
+      setPriority(defaultTask.priority);
+      setDifficulty(defaultTask.difficulty);
+      setDuration(defaultTask.duration);
    }
 
    return (
