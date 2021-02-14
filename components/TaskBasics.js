@@ -3,7 +3,7 @@ import { Text, View, TextInput, ScrollView } from 'react-native';
 import { Button } from 'react-native-elements';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Picker} from '@react-native-community/picker';
-import { parseISO } from 'date-fns'
+import { parseISO } from 'date-fns';
 
 // components render input fields and pass input back to parent
 // rendered by AddTaskPage and EditDetails

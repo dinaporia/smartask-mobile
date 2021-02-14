@@ -33,7 +33,7 @@ const HomeNavigator = () => {
                 name="Home"
                 component={Home}
             />
-            <Stack.Screen 
+            <Stack.Screen   
                 name="Add"
                 component={AddTaskPage}
                 options={{ title: "Add a task" }}
@@ -120,20 +120,24 @@ const DrawerNavigator = () => {
                 component={HomeNavigator}
             />
             <Drawer.Screen 
-                name="Add Task" 
+                name="Add" 
                 component={TaskNavigator}
+                options={{ title: "Add a task" }}
             />
             <Drawer.Screen 
-                name="View Tasks" 
+                name="List" 
                 component={ListNavigator}
+                options={{ title: "Task List" }}
             />
             <Drawer.Screen 
-                name="View Schedule" 
+                name="Schedule" 
                 component={ScheduleNavigator}
+                options={{ title: "Today's Tasks" }}
             />
             <Drawer.Screen 
                 name="Prefs" 
                 component={PrefsNavigator}
+                options={{ title: "Preferences" }}
             />
         </Drawer.Navigator>
     );

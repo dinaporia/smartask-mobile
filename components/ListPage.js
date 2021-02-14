@@ -65,7 +65,7 @@ const ListPage = (props) => {
             <Filter priorityFilter={priorityFilter} interestFilter={interestFilter} difficultyFilter={difficultyFilter} completedFilter={completedFilter} setDifficultyFilter={setDifficultyFilter} setInterestFilter={setInterestFilter} setPriorityFilter={setPriorityFilter} setCompletedFilter={setCompletedFilter} clearFilters={clearFilters}/>
          </View>
 
-         <RenderTaskList tasks={filteredTasks} sortBy={sortBy} selectTask={selectTask} forPage="list" />
+         <RenderTaskList tasks={filteredTasks} sortBy={sortBy} selectTask={selectTask} canDelete canEdit />
          
          <ScrollView contentContainerStyle={{justifyContent: 'flex-end', flexShrink: 1, paddingTop: 15, paddingBottom: 5 }} >
             <Footer tasks={filteredTasks}/>
