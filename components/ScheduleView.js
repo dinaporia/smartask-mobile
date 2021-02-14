@@ -24,167 +24,220 @@ const ScheduleView = (props) => {
   
 
 
-   // const buildSchedule = (tasks) => {
-   //    let schedule = [];
-   //    let hard = 0;
-   //    let tedious = 0;
-   //    const {hours, maxHard, maxTedious, includeFun } = prefs;
+   const buildSchedule = (tasks) => {
+      let {hours, maxHard, maxTedious, includeFun } = prefs;
+      let schedule = [];
+      let todos = [];
+      let scheduleIt = false;
+      // if no fun tasks need to be included, mark true
+      let funIncluded = (!includeFun) ? true : false;
+      // get today and tomorrow's dates as strings 
+      const date = new Date();
+      const today = date.toISOString().substring(0, 10);
+      date.setDate(date.getDate() + 1);
+      const tomorrow = date.toISOString().substring(0, 10);
 
-   //    // if no fun tasks need to be included, mark true
-   //    let funIncluded = (!includeFun) ? true : false;
+      // alerts for non-optimal schedule builds
+      const somethingWrongAlert = () => Alert.alert(
+         'Something went wrong!',
+         'Most likely, your alotted daily time is shorter than any of your tasks. Change your preferences or task durations and try again. \nIf you think something else is causing this error, please submit feedback to the developer.',
+         [
+            {
+               text: 'OK',
+            }
+         ],
+         { cancelable: false }
+      );
+      const soBusyAlert = () => Alert.alert(
+         'No fun day!',
+         'Your schedule is so busy, there is no time left for fun tasks today... Hopefully, you can squeeze some in later!',
+         [
+            {
+               text: 'OK',
+            }
+         ],
+         { cancelable: false }
+      );
+      const pressingAlert = () => Alert.alert(
+         'Very Long Task',
+         'This task is the most pressing, but it would take up all your time today. Is that OK?',
+         [
+            {
+               text: 'No, skip it',
+               style: 'cancel',
+            },
+            {
+               text: 'Schedule it',
+               onPress: () => (scheduleIt = true)
+            }
+        ],
+        { cancelable: false }
+      );
+      const noTasksAlert = () => Alert.alert(
+            'Task List Empty',
+            'Add some tasks to generate a schedule!',
+            [
+               {
+                  text: 'OK',
+                  onPress: () => props.navigation.navigate('Add')
+               }
+           ],
+           { cancelable: false }
+         );
+      const allDoneAlert = () => Alert.alert(
+         'All done!',
+         'All your tasks are marked as completed. Add some more to generate a schedule!',
+         [
+            {
+               text: 'OK',
+               onPress: () => props.navigation.navigate('Add')
+            }
+         ],
+         { cancelable: false }
+      );
+      const tooManyAlert = () => Alert.alert(
+         'Sort out your priorities!',
+         'You have too many tasks due today or tomorrow. If possible, update some due dates for better functionality.',
+         [
+            {
+               text: 'OK',
+            }
+         ],
+         { cancelable: false }
+      );
+      // check tasks have been added
+      if (!tasks) {
+         return noTasksAlert();
+      } else { 
+         // retrieve tasks left to do
+         todos = tasks.filter(task => !task.completed);
+         // check todos exist
+         if (todos.length === 0) {
+            return allDoneAlert();
+         } else {
+            scheduleGenerator: { 
+                // retrieve tasks that are due today or tomorrow
+               const urgentTasks = todos.filter(task => {
+               if (task.due.substring(0,10) === today) return true;
+               if (task.due.substring(0,10) === tomorrow) return true;
+               });
+                // add all urgent tasks to schedule
+               if (urgentTasks) {
+                  // update todos array
+                  todos = todos.filter(task => !urgentTasks.includes(task))
+                  // update schedule array
+                  schedule = urgentTasks;
+                  // for each task, track time remaining, difficulty, tedium, and fun
+                  schedule.forEach( task => {
+                     hours -= task.duration;
+                     if (task.interest === 3) {
+                        funIncluded = true;
+                     } else if (task.interest === 1) {
+                        maxTedious--;
+                     }
+                     if (task.difficulty === 4) {
+                        maxHard--;
+                     }
+                  });
+                  // if urgent tasks go over time alotted, alert, end build
+                  if (hours < 0) {
+                     tooManyAlert();
+                     break scheduleGenerator;
+                  } 
+                  // if no time is left
+                  // if no fun, alert
+                  // end build
+                  if (hours === 0) {
+                     if (!funIncluded) {
+                        soBusyAlert();
+                     } 
+                     break scheduleGenerator;
+                  }
+               }
+   // the schedule is either empty or has some urgent tasks but there is time left
+               // sort remaining todos by date and priority
+               todos.sort((a, b) => a.priority - b.priority).sort((a, b) => a.due.localeCompare(b.due));
+               // include a fun task
+               if (!funIncluded) {
+                  let funTasks = todos.filter(task => task.interest === 3);
+                  // if fun tasks are available
+                  if (funTasks.length > 0) {
+                     // exclude difficult tasks if max reached
+                     funTasks = funTasks.filter( task => {
+                        if ((task.difficulty === 4) && (maxHard <= 0)) {
+                           return false;
+                        }
+                        return true;
+                     });
+                     // exclude tasks that are too long for remaining time
+                     funTasks = funTasks.filter( task => {
+                        if (hours < task.duration) return false;
+                        return true;
+                     });
+                     // add next fun task to schedule, update counters, update todos array
+                     if (funTasks.length > 0) {
+                        let funTask = funTasks[0];
+                        schedule.push(funTask);
+                        if (funTask.difficulty === 4) maxHard--;
+                        funIncluded = true;
+                        todos = todos.filter(task => task.id != funTask.id);
+                     }
+                  }   
+               }
+// the schedule is either empty or includes urgent tasks and/or a fun task
+               // if no tasks have been added yet, add next task
+               if (schedule.length <= 0) {
+                  // runs until a task is added to the schedule or looped through all todos
+                  for (let i = 0; (schedule.length < 1); i++) {
+                     // if we've looped through the entire todos, there are no other tasks to add
+                     if (i === todos.length) {
+                        break scheduleGenerator;
+                     }
+                     let firstTask = todos[i];
+                     // if task takes up all alotted time, alert
+                     if (hours <= firstTask.duration) {
+                        pressingAlert();
+                        // if user says ok, add task, build schedule
+                        // if user cancels, continue loop
+                        if (scheduleIt) {
+                           schedule.push(firstTask);
+                           todos = todos.filter(task => task.id !== firstTask.id);
+                           break scheduleGenerator;
+                        }
+                     }   
+                  }
+               }
+               // add tasks from todos until schedule is full or no todos left
+               todos.forEach( task => {
+                  // if enough time remains for task 
+                  if (task.duration < hours) {
+                     // check against difficulty and tedium counters
+                     if (
+                        !((task.difficulty === 4) && (maxHard <= 0)) || 
+                        !((task.interest === 1) && (maxTedious <= 0))
+                        ) {
+                           // add task
+                           schedule.push(task);
+                           // update counters
+                           if (task.difficulty === 4) maxHard--;
+                           if (task.interest === 1) maxTedious--;
+                           hours -= task.duration;
+                     }
+                  }
+               });
+            } // end of scheduleGenerator loop
 
-   //    // get today and tomorrow's dates as strings 
-   //    const date = new Date();
-   //    const today = date.toISOString().substring(0, 10);
-   //    date.setDate(date.getDate() + 1);
-   //    const tomorrow = date.toISOString().substring(0, 10);
+            if (schedule.length > 0) {
+            // get ids of all tasks in schedule array, pass to reducer
+            schedule = schedule.map(task => task.id);
+            props.createSchedule(schedule);
+            } else {
+               somethingWrongAlert();
+            }
 
-
-   //    // CONVERT TO FUNCTION 
-   //    const soBusyAlert = 'Your schedule is so busy, there is no time left for fun tasks today... Hopefully, you can squeeze some in later!';
-   //    // OK, build schedule
-
-   //    // CONVERT TO FUNCTION 
-   //    const pressingAlert = 'This task is the most pressing, but it would take up all your time today. Is that OK?';
-   //    // OK, build schedule
-   //    // not OK keep going
-
-   //    const noTasksAlert = () => Alert.alert(
-   //          'Task List Empty',
-   //          'Add some tasks to generate a schedule!',
-   //          [
-   //             {
-   //                text: 'Cancel',
-   //                style: 'cancel'
-   //             },
-   //             {
-   //                text: 'OK',
-   //                onPress: () => props.navigation.navigate('Add')
-   //             }
-   //         ],
-   //         { cancelable: false }
-   //       );
-
-   //    const tooManyAlert = () => Alert.alert(
-   //       'Everything is urgent!',
-   //       'You have too many tasks due today or tomorrow. If possible, update some due dates for better functionality.',
-   //       [
-   //          {
-   //             text: 'OK',
-   //             onPress: () => props.createSchedule(schedule)
-   //          }
-   //       ],
-   //       { cancelable: false }
-   //    );
-
-
-   //    // check that there are tasks to add
-   //    if (!tasks) return noTasksAlert();
-
-   //    // retrieve tasks left to do
-   //    let todos = tasks.filter(task => !task.completed);
-   //    if (todos.length === 0) return noTasksAlert();
-
-   //    // retrieve tasks that are due today or tomorrow
-   //    const urgentTasks = todos.filter(task => {
-   //       if (task.due.substring(0,10) === today) return true;
-   //       if (task.due.substring(0,10) === tomorrow) return true;
-   //       });
-      
-   //    // add all urgent tasks to schedule
-   //    if (urgentTasks) {
-   //       // update todos array
-   //       todos = todos.filter(task => !urgentTasks.includes(task))
-   //       // update schedule array
-   //       schedule = urgentTasks;
-   //       // for each task, track time remaining, difficulty, tedium, and fun
-   //       schedule.forEach( task => {
-   //          hours -= task.duration;
-   //          if (task.interest === 3) {
-   //             funIncluded = true;
-   //          } else if (task.interest === 1) {
-   //             tedious++;
-   //          }
-   //          if (task.difficulty === 4) {
-   //             hard++;
-   //          }
-   //       });
-   //       // if urgent tasks go over time alotted
-   //       if (hours < 0) return tooManyAlert();
-   //       // if no time is left, check if fun was included
-   //       if (hours === 0) {
-   //          if (!funIncluded) {
-   //             return soBusyAlert();
-   //          } else {
-   //             return props.createSchedule(schedule);
-   //          }
-   //       }
-   //    }
-   //    // sort remaining todos by date and priority
-   //    todos.sort((a, b) => a.priority - b.priority).sort((a, b) => a.due.localeCompare(b.due));
-   //    // make sure to include a fun task
-   //    if (!funIncluded) {
-   //       let funTasks = todos.filter(task => task.interest === 3);
-   //       // if fun tasks are available
-   //       if (funTasks.length > 0) {
-   //          // add first fun task to schedule
-   //          let funTask = funTasks[0];
-   //          schedule.push(funTask);
-   //          // check task difficulty
-   //          if (funTask.difficulty === 4) hard++;
-   //          // remove task from todos
-   //          todos = todos.filter(task => task.id != funTask.id);
-   //       }
-   //       // mark fun included
-   //       funIncluded = true;
-   //    }
-   //    // if no tasks have been added, add the first task regardless of duration
-   //    if (schedule.length === 0) {
-   //       let task = todos[0];
-   //       schedule.push(task);
-   //       if (task.difficulty === 4) hard++;
-   //       if (task.interest === 1) {
-   //          tedious++;
-   //       }
-   //       hours -= task.duration;
-   //    }
-
-   //    // for each remaining task
-   //    todos.forEach( task => {
-   //       // as long as there is time left
-   //       if (hours > 0) {
-   //          // if the task is shorter than the remaining time
-   //          if (task.duration < hours) {
-   //             if ((task.difficulty === 4) && (task.interest === 1)) {
-   //                if (hard < maxHard) {
-                     
-   //                }
-   //             }            
-   //          }
-   //       }
-   //    })
-   //    tasks = tasks.flatMap(task => {
-   //       if (timeRemaining < task.duration) return [];
-   //       timeRemaining -= task.duration;
-   //       return task;
-   //   });
-
-
-
-
-
-
-
-
-
-   
-
-
-
-
-   //    // map ids
-   //    // props.createSchedule(schedule);
-   // }
+         }
+      }
+   }
     
    const reschedule = (taskId) => {
       props.removeTaskFromSchedule(taskId);
@@ -198,7 +251,7 @@ const ScheduleView = (props) => {
          title='generate schedule'
          onPress={() => buildSchedule(tasks)}
          />
-         <RenderTaskList tasks={tasks} canReschedule selectTask={reschedule} />
+         <RenderTaskList tasks={todaysTasks} canReschedule selectTask={reschedule} />
       </View> 
    );
 
