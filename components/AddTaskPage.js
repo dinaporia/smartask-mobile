@@ -11,7 +11,7 @@ const mapDispatch = { addTask };
 
 const AddTaskPage = (props) => {
    // retrieve default task settings from store
-   const defaultTask = useSelector(state => state.defaultTask);
+   const defaultTask = useSelector(state => state.taskPrefs);
    // hooks for new task object
    const [taskText, setTaskText] = useState('');
    const [taskDate, setTaskDate] = useState('');

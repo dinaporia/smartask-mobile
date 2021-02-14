@@ -12,7 +12,7 @@ const mapDispatch = {
  }; 
 
 const RenderTaskList = (props) => {
-    const {tasks, toggleCompleted, removeTask, selectTask, sortBy, forPage } = props;
+    const {tasks, toggleCompleted, removeTask, selectTask, sortBy, canDelete = false, canEdit = false } = props;
     if (!tasks || tasks.length === 0) return <View />;
 
     // sort tasks before passing to ListItems
@@ -36,7 +36,7 @@ const RenderTaskList = (props) => {
     const renderTask = ({item}) => {
         return (
             <SwipeRow rightOpenValue={-100} >
-                {(forPage === "list") ?
+                {canDelete ?
                 <View style={styles.deleteView}>
                     <TouchableOpacity 
                         style={styles.deleteTouchable}
@@ -104,7 +104,7 @@ const RenderTaskList = (props) => {
                                 style={{flex: 2}}
                             />
                         </ListItem.Content>
-                        {(forPage === "list") &&
+                        {canEdit &&
                         <ListItem.Chevron 
                             type='font-awesome'
                             name="pencil"
