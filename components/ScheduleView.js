@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, {useEffect} from 'react';
 import { View, ScrollView, StyleSheet, Modal, Alert, Text } from 'react-native';
 import { Button } from 'react-native-elements';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import RenderTaskList from './RenderTaskList';
 import { createSchedule, rebuildSchedule, removeTaskFromSchedule } from '../redux/scheduleSlice';
-import { parseISO } from 'date-fns';
 
 
 const mapState = state => {
    return {
       tasks: state.tasks,
       prefs: state.schedulePrefs,
-      schedule: state.schedule.schedule
+      schedule: state.schedule.schedule,
+      forDate: state.schedule.forDate,
+      notToday: state.schedule.notToday
    }
 };
 
@@ -19,11 +20,28 @@ const mapDispatch = { createSchedule, rebuildSchedule, removeTaskFromSchedule };
 
 
 const ScheduleView = (props) => {
-   const { tasks, prefs, schedule } = props;
+   const { tasks, prefs, schedule, forDate, notToday } = props;
    const todaysTasks = tasks.filter(task => schedule.includes(task.id))
-  
 
+   const date = new Date();
+   const today = date.toISOString().substring(0, 10);
+   date.setDate(date.getDate() + 1);
+   const tomorrow = date.toISOString().substring(0, 10);
 
+   // runs if no tasks exist
+   const noTasksAlert = () => Alert.alert(
+      'Task List Empty',
+      'Add some tasks to generate a schedule!',
+      [
+         {
+            text: 'OK',
+            onPress: () => props.navigation.navigate('Add')
+         }
+     ],
+     { cancelable: false }
+   );
+
+   // builds new schedule from all tasks
    const buildSchedule = (tasks) => {
       let {hours, maxHard, maxTedious, includeFun } = prefs;
       let schedule = [];
@@ -32,10 +50,11 @@ const ScheduleView = (props) => {
       // if no fun tasks need to be included, mark true
       let funIncluded = (!includeFun) ? true : false;
       // get today and tomorrow's dates as strings 
-      const date = new Date();
-      const today = date.toISOString().substring(0, 10);
-      date.setDate(date.getDate() + 1);
-      const tomorrow = date.toISOString().substring(0, 10);
+      // dates are declared in component
+               // const date = new Date();
+               // const today = date.toISOString().substring(0, 10);
+               // date.setDate(date.getDate() + 1);
+               // const tomorrow = date.toISOString().substring(0, 10);
 
       // alerts for non-optimal schedule builds
       const somethingWrongAlert = () => Alert.alert(
@@ -72,18 +91,7 @@ const ScheduleView = (props) => {
             }
         ],
         { cancelable: false }
-      );
-      const noTasksAlert = () => Alert.alert(
-            'Task List Empty',
-            'Add some tasks to generate a schedule!',
-            [
-               {
-                  text: 'OK',
-                  onPress: () => props.navigation.navigate('Add')
-               }
-           ],
-           { cancelable: false }
-         );
+      ); 
       const allDoneAlert = () => Alert.alert(
          'All done!',
          'All your tasks are marked as completed. Add some more to generate a schedule!',
@@ -106,7 +114,7 @@ const ScheduleView = (props) => {
          { cancelable: false }
       );
       // check tasks have been added
-      if (!tasks) {
+      if (!tasks || tasks.length === 0) {
          return noTasksAlert();
       } else { 
          // retrieve tasks left to do
@@ -230,7 +238,7 @@ const ScheduleView = (props) => {
             if (schedule.length > 0) {
             // get ids of all tasks in schedule array, pass to reducer
             schedule = schedule.map(task => task.id);
-            props.createSchedule(schedule);
+            props.createSchedule({schedule: schedule, forDate: today});
             } else {
                somethingWrongAlert();
             }
@@ -238,20 +246,32 @@ const ScheduleView = (props) => {
          }
       }
    }
-    
-   const reschedule = (taskId) => {
-      props.removeTaskFromSchedule(taskId);
-      
+   //  rebuilds schedule from tasks that haven't been rescheduled
+   const updateSchedule = () => {
+      const updatedTasks = tasks.filter( task => !notToday.includes(task.id));
+      buildSchedule(updatedTasks);
    }
- 
    
+   const rescheduleTask = (taskId) => {
+      props.removeTaskFromSchedule(taskId);
+   }
+
+
+
+   useEffect( () => {
+      if (schedule.length === 0) {
+         buildSchedule(tasks);
+      }
+   });
+   
+ 
    return (
       <View>
+         <RenderTaskList tasks={todaysTasks} canReschedule selectTask={rescheduleTask} />
          <Button 
-         title='generate schedule'
-         onPress={() => buildSchedule(tasks)}
+         title='Regenerate Schedule'
+         onPress={() => updateSchedule(tasks)}
          />
-         <RenderTaskList tasks={todaysTasks} canReschedule selectTask={reschedule} />
       </View> 
    );
 

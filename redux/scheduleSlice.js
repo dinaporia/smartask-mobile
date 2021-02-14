@@ -10,9 +10,18 @@ const scheduleSlice = createSlice({
     reducers: {
         // create intial schedule
         createSchedule(state, action) {
+            const { schedule, forDate } = action.payload;
+            // if date hasn't changed, retain notToday array
+            if (forDate === state.forDate) {
+                return {
+                    ...state,
+                    schedule: schedule,
+                }
+            };
+            // if new date, reset notToday, update date
             return {
-                forDate: (new Date().toISOString()),
-                schedule: action.payload,
+                forDate: forDate,
+                schedule: schedule,
                 notToday: []
             }
         },
