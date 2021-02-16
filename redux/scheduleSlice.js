@@ -25,13 +25,6 @@ const scheduleSlice = createSlice({
                 notToday: []
             }
         },
-        // update schedule
-        rebuildSchedule(state, action) {
-            return {
-                ...state,
-                schedule: action.payload
-            }
-        },
         removeTaskFromSchedule(state, action) {
             // add task to notToday if not already there
             if (state.notToday && (!state.notToday.includes(action.payload))) {
