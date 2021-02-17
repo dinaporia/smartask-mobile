@@ -4,19 +4,19 @@ const myTasks = [
     {
         id: '2021-01-12-1',
         task: "Create a to-do list",
-        due: "2021-07-25",
-        duration: 30,
+        due: "2021-02-19",
+        duration: 90,
         category: "Home",
         priority: 1,
         difficulty: 1,
         interest: 1,
         recurring: false,
-        completed: true
+        completed: false
     },
     {
             id: '2021-01-14-2',
             task: "Test my to-do list",
-            due: "2021-06-26",
+            due: "2021-05-17",
             duration: 30,
             category: "Work",
             priority: 1,
@@ -28,7 +28,7 @@ const myTasks = [
     {
             id: '2021-01-14-3',
             task: "Implement error checking",
-            due: "2022-10-25",
+            due: "2021-03-17",
             duration: 120,
             category: "Other",
             priority: 2,
@@ -40,7 +40,7 @@ const myTasks = [
     {
             id: '2021-01-14-4',
             task: "Fetch tasks from server",
-            due: "2021-03-25",
+            due: "2021-02-25",
             duration: 120,
             category: "Work",
             priority: 2,

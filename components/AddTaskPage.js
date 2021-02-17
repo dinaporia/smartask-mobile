@@ -5,6 +5,7 @@ import { TaskCategoryInput, TaskNameInput, TaskDateInput } from './TaskBasics';
 import AddDetails from './AddDetails';
 import { connect, useSelector } from 'react-redux';
 import { addTask } from '../redux/tasksSlice';
+import { Alert } from 'react-native';
 
 
 const mapDispatch = { addTask };
@@ -29,11 +30,48 @@ const AddTaskPage = (props) => {
       setShowModal(false);
    };
    
+   const nameReqAlert = () => {
+      Alert.alert(
+         'Task name required',
+         'Please name your task, so you\'ll know what it is!',
+         [
+            {
+               text: 'OK',
+               style: 'cancel',
+            }
+         ],
+         { cancelable: false }
+      );
+   };
+
+   const dateReqAlert = () => {
+      Alert.alert(
+         'Due date required',
+         'Please enter a due date to ensure smooth scheduling functionality!',
+         [
+            {
+               text: 'OK',
+               style: 'cancel'
+            }
+         ],
+         { cancelable: false }
+      );
+   }
+
    // add complete task object to store, navigate to list page
    const createTask = (task) => {
-      // override defaults with new input
+      if (!taskText) {
+         nameReqAlert();
+         if (showModal) setShowModal(false);
+         return;
+      }
+      if (!taskDate) {
+         dateReqAlert();
+         if (showModal) setShowModal(false);
+         return;
+      }
+      // merge defaults with new input
       const newTask = {...defaultTask, ...task};
-      // dispatch addTask
       props.addTask(newTask);
       props.navigation.navigate('List');
       resetBasics();
@@ -61,7 +99,11 @@ const AddTaskPage = (props) => {
                <Button
                containerStyle={{flex: 1, marginHorizontal: 5}}
                title='ADD DETAILS'
-               onPress={() => setShowModal(true)}
+               onPress={() => {
+                  (!taskText) ? nameReqAlert() :
+                     (!taskDate) ? dateReqAlert() :
+                        setShowModal(true)}
+                  }
                accessibilityLabel='Tap to add more details to task'
                />
             </View>

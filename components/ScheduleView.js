@@ -2,9 +2,9 @@ import React, {useEffect} from 'react';
 import { View, ScrollView, StyleSheet, Modal, Alert, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
+import AlertAsync from "react-native-alert-async";
 import RenderTaskList from './RenderTaskList';
 import { createSchedule, rebuildSchedule, removeTaskFromSchedule } from '../redux/scheduleSlice';
-
 
 const mapState = state => {
    return {
@@ -52,7 +52,7 @@ const ScheduleView = (props) => {
    // alert if too many urgent tasks
    const tooManyAlert = () => Alert.alert(
       'Sort out your priorities!',
-      'You have too many tasks due today or tomorrow - or one of them is taking too long. If possible, update some due dates or durations for better functionality.',
+      'You have a lot of tasks due today or tomorrow - or one of them takes a long time. If possible, update some due dates or durations for better functionality.',
       [
          {
             text: 'OK',
@@ -81,35 +81,40 @@ const ScheduleView = (props) => {
             text: 'OK',
             onPress: () => props.navigation.navigate('Add')
          }
-   ],
-   { cancelable: false }
-   );
+      ],
+      { cancelable: false }
+      );
+
+      /* IMPLEMENT ASYNC AT LATER TIME
+      // alert if one task takes up the full alotted time, store user input
+      const pressingAlert = (longTask) => {
+        Alert.alert(
+            'Very Long Task',
+            `\'${longTask}\' is the most pressing, but it would take up all your time today. Is that OK?`,
+            [
+               {
+                  text: 'No, skip it',
+                  style: 'cancel',
+                  onPress: () => 'no'
+               },
+               {
+                  text: 'Schedule it',
+                  onPress: () => 'yes'
+               }
+            ],
+            { cancelable: false }
+         ); 
+      }
+      */
 
    // builds new schedule from all tasks
    const buildSchedule = (tasks) => {
       let {hours, maxHard, maxTedious, includeFun } = prefs;
       let schedule = [];
       let todos = [];
-      let scheduleIt = false;
+      // let scheduleIt = false;
       // if no fun tasks need to be included, mark true
       let funIncluded = !includeFun;
-
-      // alert if one task takes up the full alotted time, store user input
-      const pressingAlert = () => Alert.alert(
-         'Very Long Task',
-         'This task is the most pressing, but it would take up all your time today. Is that OK?',
-         [
-            {
-               text: 'No, skip it',
-               style: 'cancel',
-            },
-            {
-               text: 'Schedule it',
-               onPress: () => (scheduleIt = true)
-            }
-        ],
-        { cancelable: false }
-      ); 
 
       //  check that tasks exist that have not been completed or rescheduled
       if (!tasks || tasks.length === 0) {
@@ -186,6 +191,7 @@ const ScheduleView = (props) => {
                   }
                   // safeguards against case: most pressing task is too long for the entire time alotted
                   // allows user to decide if task should be added anyway
+                  /* IMPLEMENT LATER
                   if (schedule.length === 0) {
                      // runs until a task is added to the schedule or no todos left
                      for (let i = 0; (schedule.length < 1); i++) {
@@ -202,7 +208,7 @@ const ScheduleView = (props) => {
                            todos = todos.filter(task => task.id !== firstTask.id);
                        } else {
                         // if task too long, get user input via scheduleIt variable
-                           pressingAlert();
+                           pressingAlert(firstTask.task);
                            if (scheduleIt) {
                               schedule.push(firstTask);
                               todos = todos.filter(task => task.id !== firstTask.id);
@@ -212,6 +218,7 @@ const ScheduleView = (props) => {
                         }   
                      }
                   }
+                  */
                   // add tasks from todos until schedule is full
                   todos.forEach( task => {
                      if (task.duration <= hours) {
@@ -233,9 +240,7 @@ const ScheduleView = (props) => {
                // get ids of all tasks in schedule array, pass to reducer
                schedule = schedule.map(task => task.id);
                props.createSchedule({schedule: schedule, forDate: today});
-               if (!funIncluded) {
-                  return soBusyAlert();
-               }
+
             } else {
                somethingWrongAlert();
             }
