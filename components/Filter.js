@@ -195,9 +195,9 @@ const Filter = ({priorityFilter, interestFilter, difficultyFilter, completedFilt
                 <Button 
                     title="FUN"
                     titleStyle={[styles.filterText,
-                        (interestFilter === 1) ? styles.selectedText : styles.subFilterText]}
+                        (interestFilter === 3) ? styles.selectedText : styles.subFilterText]}
                     type="clear" 
-                    onPress={() => setInterestFilter(1)}
+                    onPress={() => setInterestFilter(3)}
                 />
                 <Button 
                     title="MEH"
@@ -209,9 +209,9 @@ const Filter = ({priorityFilter, interestFilter, difficultyFilter, completedFilt
                 <Button 
                     title="TEDIOUS"
                     titleStyle={[styles.filterText,
-                        (interestFilter === 3) ? styles.selectedText : styles.subFilterText]}
+                        (interestFilter === 1) ? styles.selectedText : styles.subFilterText]}
                     type="clear" 
-                    onPress={() => setInterestFilter(3)}
+                    onPress={() => setInterestFilter(1)}
                 />
                 <Button 
                     title="ALL"
