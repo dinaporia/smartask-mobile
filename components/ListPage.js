@@ -6,7 +6,8 @@ import RenderTaskList from './RenderTaskList';
 import Footer from './Footer';
 import SortMenu from './SortMenu';
 import EditDetails from './EditDetails';
-import HeaderBackButton from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+
 
 const ListPage = (props) => {
    // retrieve tasks from store
@@ -81,13 +82,6 @@ const ListPage = (props) => {
          </Modal>
        </View>
    );
-}
-
-// override back button to return to home
-ListPage.navigationOptions = ({navigation}) => {
-   return { 
-      headerLeft: <HeaderBackButton onPress={() => navigation.navigate('Home')} /> 
-   }
 }
 
 export default connect()(ListPage);

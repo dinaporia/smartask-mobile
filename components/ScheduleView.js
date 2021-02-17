@@ -18,7 +18,6 @@ const mapState = state => {
 
 const mapDispatch = { createSchedule, rebuildSchedule, removeTaskFromSchedule }; 
 
-
 const ScheduleView = (props) => {
    const { tasks, prefs, schedule, forDate, notToday } = props;
    const todaysTasks = tasks.filter(task => schedule.includes(task.id))
@@ -94,14 +93,8 @@ const ScheduleView = (props) => {
       let scheduleIt = false;
       // if no fun tasks need to be included, mark true
       let funIncluded = !includeFun;
-      // get today and tomorrow's dates as strings 
-      // dates are declared in component
-               // const date = new Date();
-               // const today = date.toISOString().substring(0, 10);
-               // date.setDate(date.getDate() + 1);
-               // const tomorrow = date.toISOString().substring(0, 10);
 
-      // alert if one task takes up the full alotted time
+      // alert if one task takes up the full alotted time, store user input
       const pressingAlert = () => Alert.alert(
          'Very Long Task',
          'This task is the most pressing, but it would take up all your time today. Is that OK?',
@@ -152,9 +145,7 @@ const ScheduleView = (props) => {
                         } else if (task.interest === 1) {
                            maxTedious--;
                         }
-                        if (task.difficulty === 4) {
-                           maxHard--;
-                        }
+                        if (task.difficulty === 4)  maxHard--;
                      });
                      // alert and finish schedule if urgents go over time
                      if (hours < 0) {
