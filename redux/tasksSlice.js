@@ -3,7 +3,7 @@ import { createSlice, nanoid } from '@reduxjs/toolkit';
 const myTasks = [
     {
         id: '2021-01-12-1',
-        task: "Create a to-do list",
+        task: "Plumber union reschedule",
         due: "2021-02-19",
         duration: 90,
         category: "Home",
@@ -15,7 +15,7 @@ const myTasks = [
     },
     {
             id: '2021-01-14-2',
-            task: "Test my to-do list",
+            task: "Call temp agency",
             due: "2021-05-17",
             duration: 30,
             category: "Work",
@@ -27,7 +27,7 @@ const myTasks = [
     },
     {
             id: '2021-01-14-3',
-            task: "Implement error checking",
+            task: "Become invincible",
             due: "2021-03-17",
             duration: 120,
             category: "Other",
@@ -39,7 +39,7 @@ const myTasks = [
     },
     {
             id: '2021-01-14-4',
-            task: "Fetch tasks from server",
+            task: "Meeting with PTA",
             due: "2021-02-25",
             duration: 120,
             category: "Work",
@@ -51,37 +51,13 @@ const myTasks = [
     },
     {
             id: '2021-01-14-5',
-            task: "Scheduling algorithm",
+            task: "Haircut",
             due: "2021-06-25",
             duration: 180,
             category: "Work",
             priority: 3,
             difficulty: 3,
             interest: 3,
-            recurring: false,
-            completed: false
-    },
-    {
-            id: '2021-01-14-6',
-            task: "Preferences input page",
-            due: "2021-09-05",
-            duration: 30,
-            category: "Work",
-            priority: 3,
-            difficulty: 2,
-            interest: 1,
-            recurring: false,
-            completed: false
-    },
-    {
-            id: '2021-01-14-7',
-            task: "Split tasks into subtasks",
-            due: "2021-07-05",
-            duration: 60,
-            category: "Work",
-            priority: 2,
-            difficulty: 4,
-            interest: 1,
             recurring: false,
             completed: false
     },

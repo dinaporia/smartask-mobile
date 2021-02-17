@@ -85,34 +85,11 @@ const ScheduleView = (props) => {
       { cancelable: false }
       );
 
-      /* IMPLEMENT ASYNC AT LATER TIME
-      // alert if one task takes up the full alotted time, store user input
-      const pressingAlert = (longTask) => {
-        Alert.alert(
-            'Very Long Task',
-            `\'${longTask}\' is the most pressing, but it would take up all your time today. Is that OK?`,
-            [
-               {
-                  text: 'No, skip it',
-                  style: 'cancel',
-                  onPress: () => 'no'
-               },
-               {
-                  text: 'Schedule it',
-                  onPress: () => 'yes'
-               }
-            ],
-            { cancelable: false }
-         ); 
-      }
-      */
-
    // builds new schedule from all tasks
-   const buildSchedule = (tasks) => {
+   const buildSchedule = async (tasks) => {
       let {hours, maxHard, maxTedious, includeFun } = prefs;
       let schedule = [];
       let todos = [];
-      // let scheduleIt = false;
       // if no fun tasks need to be included, mark true
       let funIncluded = !includeFun;
 
@@ -124,22 +101,17 @@ const ScheduleView = (props) => {
          if (todos.length === 0) {
             return allDoneAlert();
          } else {
-            if (notToday.length > 0) {
-               if (today === forDate) {
-                  todos = todos.filter(task => !notToday.includes(task.id));
-               }
-            } 
             if (todos.length === 0) {
                return allDoneAlert();
             } else {
             // main scheduling algorithm
                scheduleGenerator: { 
-                  // tasks that are due today or tomorrow are urgent
+                  // tasks that are due today or tomorrow are always added
                   const urgentTasks = todos.filter(task => {
                   if (task.due.substring(0,10) === today) return true;
                   if (task.due.substring(0,10) === tomorrow) return true;
                   });
-                  // all urgent tasks are added to schedule, removed from todos array
+
                   if (urgentTasks) {
                      todos = todos.filter(task => !urgentTasks.includes(task))
                      schedule = urgentTasks;
@@ -167,9 +139,11 @@ const ScheduleView = (props) => {
                   }
                   // sort remaining tasks by date and priority
                   todos.sort((a, b) => a.priority - b.priority).sort((a, b) => a.due.localeCompare(b.due));
+
                   // include a fun task, if one is short enough to fit remaining time
                   if (!funIncluded) {
                      let funTasks = todos.filter(task => task.interest === 3);
+
                      if (funTasks.length > 0) {
                         // exclude difficult tasks if max reached
                         if (maxHard <= 0) {
@@ -180,6 +154,7 @@ const ScheduleView = (props) => {
                         // add task to schedule, update counters, continue
                         if (funTasks.length > 0) {
                            let funTask = funTasks[0];
+
                            schedule.push(funTask);
                            if (funTask.difficulty === 4) maxHard--;
                            hours -= funTask.duration;
@@ -189,9 +164,7 @@ const ScheduleView = (props) => {
                         // *** ELSE ALERT THAT FUN TASKS ARE TOO LONG *** 
                      }   
                   }
-                  // safeguards against case: most pressing task is too long for the entire time alotted
-                  // allows user to decide if task should be added anyway
-                  /* IMPLEMENT LATER
+                  // if most pressing task is too long for the entire time alotted
                   if (schedule.length === 0) {
                      // runs until a task is added to the schedule or no todos left
                      for (let i = 0; (schedule.length < 1); i++) {
@@ -199,6 +172,7 @@ const ScheduleView = (props) => {
                         if (i === todos.length) {
                            break scheduleGenerator;
                         }
+
                         let firstTask = todos[i];
                         if (hours > firstTask.duration) {
                            schedule.push(firstTask);
@@ -207,18 +181,33 @@ const ScheduleView = (props) => {
                            hours -= firstTask.duration;
                            todos = todos.filter(task => task.id !== firstTask.id);
                        } else {
-                        // if task too long, get user input via scheduleIt variable
-                           pressingAlert(firstTask.task);
-                           if (scheduleIt) {
+                        // if task too long, let user decide whether to schedule it
+                           const scheduleIt = await AlertAsync(
+                              'Very Long Task',
+                              `\'${firstTask.task}\' is the most pressing, but it would take up all your time today. Is that OK?`,
+                              [
+                                 {
+                                    text: 'Schedule it',
+                                    onPress: () => 'yes'
+                                 },
+                                 {
+                                    text: 'No, skip it',
+                                    onPress: () => Promise.resolve('no')
+                                 }
+                                 
+                              ],
+                              { cancelable: false }
+                           ); 
+                        
+                           if (scheduleIt === 'yes') {
                               schedule.push(firstTask);
                               todos = todos.filter(task => task.id !== firstTask.id);
                               break scheduleGenerator;
                            }
-                        // if user doesn't want to add long task, continue loop
                         }   
                      }
                   }
-                  */
+                  
                   // add tasks from todos until schedule is full
                   todos.forEach( task => {
                      if (task.duration <= hours) {
@@ -236,11 +225,11 @@ const ScheduleView = (props) => {
                   });
                } // end of scheduleGenerator loop
             }
+
             if (schedule.length > 0) {
                // get ids of all tasks in schedule array, pass to reducer
                schedule = schedule.map(task => task.id);
                props.createSchedule({schedule: schedule, forDate: today});
-
             } else {
                somethingWrongAlert();
             }
@@ -250,9 +239,13 @@ const ScheduleView = (props) => {
 
    //  rebuilds schedule from tasks that haven't been rescheduled
    const updateSchedule = () => {
-      const updatedTasks = tasks.filter( task => !notToday.includes(task.id));
+      // if notToday is current, exclude those tasks
+      const updatedTasks = (today === forDate) ?
+         tasks.filter(task => !notToday.includes(task.id)) :
+         tasks.slice();
       buildSchedule(updatedTasks);
    }
+
    const rescheduleTask = (taskId) => {
       props.removeTaskFromSchedule(taskId);
    }
