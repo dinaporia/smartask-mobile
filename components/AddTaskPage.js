@@ -6,6 +6,7 @@ import AddDetails from './AddDetails';
 import { connect, useSelector } from 'react-redux';
 import { addTask } from '../redux/tasksSlice';
 import { Alert } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const mapDispatch = { addTask };
@@ -78,12 +79,12 @@ const AddTaskPage = (props) => {
    };
 
    return (
-      <View style={{flex: 1}}>
+      <SafeAreaView style={{flex: 1}}>
          <View style={{flex: 1}}>
             <View style={styles.inputs}>
-            <TaskNameInput onTextChange={setTaskText} task={taskText} />
-            <TaskDateInput onDateChange={setTaskDate} date={taskDate} />
-            <TaskCategoryInput onSelect={setTaskCategory} category={taskCategory} />
+               <TaskNameInput onTextChange={setTaskText} task={taskText} />
+               <TaskDateInput onDateChange={setTaskDate} date={taskDate} />
+               <TaskCategoryInput onSelect={setTaskCategory} category={taskCategory} showLabel />
             </View>
             
             
@@ -120,7 +121,7 @@ const AddTaskPage = (props) => {
             <AddDetails taskBasics={newTask} createTask={createTask} defaultTask={defaultTask}/>
          </Modal>
    
-      </View>
+      </SafeAreaView>
    ); 
 }
 
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
    },
    inputs: {
       flex: 2, 
-      margin: 20, 
+      margin: 20,
       padding: 10, 
       justifyContent: 'flex-start', 
       borderColor: 'pink', 

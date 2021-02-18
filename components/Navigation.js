@@ -7,6 +7,7 @@ import ScheduleView from './ScheduleView';
 import AddTaskPage from './AddTaskPage';
 import Preferences from './Preferences';
 
+
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -114,7 +115,6 @@ const PrefsNavigator = () => {
 const DrawerNavigator = () => {
     return (
         <Drawer.Navigator initialRouteName="Home">
-        
             <Drawer.Screen 
                 name="Home" 
                 component={HomeNavigator}

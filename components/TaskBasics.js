@@ -12,7 +12,7 @@ const TaskNameInput = ({task, onTextChange}) => {
     return (
         <View style={{flex: 1, marginTop: 10}}>
             <TextInput  
-            style={{ height: 40, borderColor: 'gray', borderWidth: 0, borderBottomWidth: 1, paddingLeft: 5, textAlign: 'center', backgroundColor: 'pink' }}
+            style={{ height: 40, borderColor: 'gray', borderWidth: 0, borderBottomWidth: 1, paddingLeft: 5, textAlign: 'center', backgroundColor: 'azure' }}
             // disable autofill
             textContentType='none'
             placeholder={(task) ? task : 'Enter task here'}
@@ -23,13 +23,16 @@ const TaskNameInput = ({task, onTextChange}) => {
     );
 }
 
-const TaskCategoryInput = ({category, onSelect}) => {
+const TaskCategoryInput = ({category, onSelect, showLabel = false}) => {
     return (
         <View style={{flex: 1}}>
-            <Text style={{textAlign: 'center'}}>Category</Text>
+            {showLabel &&
+            <Text style={{textAlign: 'center', marginBottom: 5}}>Category:</Text>
+            }
             <Picker
                 selectedValue={category}
                 onValueChange={itemValue => onSelect(itemValue)} 
+                style={{backgroundColor: 'azure'}}
             >
                 <Picker.Item label='Work' value='Work' />
                 <Picker.Item label='Home' value='Home' />
@@ -66,6 +69,8 @@ class TaskDateInput extends Component {
                             onPress={() => this.setState({show: !this.state.show})}
                             title={(this.props.date) ? parseISO(this.props.date).toLocaleDateString('en-US') : today.toLocaleDateString('en-US')}
                             accessibilityLabel='Tap to select due date'
+                            buttonStyle={{backgroundColor: 'azure'}}
+                            titleStyle={{color: 'black'}}
                         />
                     </View>
                 </View>

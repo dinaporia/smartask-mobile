@@ -5,21 +5,21 @@ import { connect } from 'react-redux';
 import AlertAsync from "react-native-alert-async";
 import RenderTaskList from './RenderTaskList';
 import { createSchedule, rebuildSchedule, removeTaskFromSchedule } from '../redux/scheduleSlice';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const mapState = state => {
    return {
       tasks: state.tasks,
       prefs: state.schedulePrefs,
-      schedule: state.schedule.schedule,
-      forDate: state.schedule.forDate,
-      notToday: state.schedule.notToday
+      scheduleObject: state.schedule,
    }
 };
 
 const mapDispatch = { createSchedule, rebuildSchedule, removeTaskFromSchedule }; 
 
 const ScheduleView = (props) => {
-   const { tasks, prefs, schedule, forDate, notToday } = props;
+   const { tasks, prefs, scheduleObject } = props;
+   const {schedule, forDate, notToday, queued} = scheduleObject;
    const todaysTasks = tasks.filter(task => schedule.includes(task.id))
 
    const date = new Date();
@@ -93,6 +93,16 @@ const ScheduleView = (props) => {
       // if no fun tasks need to be included, mark true
       let funIncluded = !includeFun;
 
+      const updateCounters = (task) => {
+         hours -= task.duration;
+         if (task.interest === 3) {
+            funIncluded = true;
+         } else if (task.interest === 1) {
+            maxTedious--;
+         }
+         if (task.difficulty === 4)  maxHard--;
+      };
+
       //  check that tasks exist that have not been completed or rescheduled
       if (!tasks || tasks.length === 0) {
          return noTasksAlert();
@@ -106,6 +116,17 @@ const ScheduleView = (props) => {
             } else {
             // main scheduling algorithm
                scheduleGenerator: { 
+                  // add queued tasks
+                  if (queued.length > 0) {
+                     // retrieve tasks from todos
+                     const queuedTasks = todos.filter(task => queued.includes(task.id));
+                     queuedTasks.forEach(task => {
+                     // update counters, add task id to schedule, update todos
+                     updateCounters(task);
+                     schedule.push(task.id);
+                     todos = todos.filter(task => !schedule.includes(task.id))
+                     });
+                  }
                   // tasks that are due today or tomorrow are always added
                   const urgentTasks = todos.filter(task => {
                   if (task.due.substring(0,10) === today) return true;
@@ -113,17 +134,11 @@ const ScheduleView = (props) => {
                   });
 
                   if (urgentTasks) {
-                     todos = todos.filter(task => !urgentTasks.includes(task))
-                     schedule = urgentTasks;
-                     schedule.forEach( task => {
-                        hours -= task.duration;
-                        if (task.interest === 3) {
-                           funIncluded = true;
-                        } else if (task.interest === 1) {
-                           maxTedious--;
-                        }
-                        if (task.difficulty === 4)  maxHard--;
+                     urgentTasks.forEach( task => {
+                        updateCounters(task);
+                        schedule.push(task.id);
                      });
+                     todos = todos.filter(task => !schedule.includes(task.id))
                      // alert and finish schedule if urgents go over time
                      if (hours < 0) {
                         tooManyAlert();
@@ -155,7 +170,7 @@ const ScheduleView = (props) => {
                         if (funTasks.length > 0) {
                            let funTask = funTasks[0];
 
-                           schedule.push(funTask);
+                           schedule.push(funTask.id);
                            if (funTask.difficulty === 4) maxHard--;
                            hours -= funTask.duration;
                            funIncluded = true;
@@ -175,7 +190,7 @@ const ScheduleView = (props) => {
 
                         let firstTask = todos[i];
                         if (hours > firstTask.duration) {
-                           schedule.push(firstTask);
+                           schedule.push(firstTask.id);
                            if (firstTask.difficulty === 4) maxHard--;
                            if (firstTask.interest === 1) maxTedious--;
                            hours -= firstTask.duration;
@@ -200,7 +215,7 @@ const ScheduleView = (props) => {
                            ); 
                         
                            if (scheduleIt === 'yes') {
-                              schedule.push(firstTask);
+                              schedule.push(firstTask.id);
                               todos = todos.filter(task => task.id !== firstTask.id);
                               break scheduleGenerator;
                            }
@@ -216,10 +231,8 @@ const ScheduleView = (props) => {
                             ((task.interest === 1) && (maxTedious <= 0))) {
                            return;
                         } else {
-                           schedule.push(task);
-                           if (task.difficulty === 4) maxHard--;
-                           if (task.interest === 1) maxTedious--;
-                           hours -= task.duration;
+                           updateCounters(task);
+                           schedule.push(task.id);
                         }
                      }
                   });
@@ -227,8 +240,6 @@ const ScheduleView = (props) => {
             }
 
             if (schedule.length > 0) {
-               // get ids of all tasks in schedule array, pass to reducer
-               schedule = schedule.map(task => task.id);
                props.createSchedule({schedule: schedule, forDate: today});
             } else {
                somethingWrongAlert();
@@ -257,14 +268,14 @@ const ScheduleView = (props) => {
    });
    
    return (
-      <View>
+      <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
          <RenderTaskList tasks={todaysTasks} canReschedule selectTask={rescheduleTask} />
          <Button 
-            containerStyle={{marginTop: 20}}
+            containerStyle={{margin: 20}}
             title='Regenerate Schedule'
             onPress={() => updateSchedule(tasks)}
          />
-      </View> 
+      </SafeAreaView> 
    );
 
 }

@@ -58,9 +58,8 @@ const Footer = ({tasks, removeTask}) => {
                         )}
                     accessibilityLabel='Tap to remove completed tasks'
                 />
-            </View>
-        
-            <TaskCounter completedTasks={completedTasks.length} remainingTasks={tasks.filter(task => !task.completed).length} totalTasks={tasks.length} />
+            </View>       
+            <TaskCounter completedTasks={completedTasks.length} remainingTasks={tasks.filter(task => !task.completed).length} totalTasks={tasks.length} /> 
         </View>
     );
 }

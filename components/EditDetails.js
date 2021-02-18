@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Button } from 'react-native-elements';
+import { Button, Card } from 'react-native-elements';
 import {DurationInput, DifficultyInput, InterestInput, PriorityInput} from './TaskDetails';
 import { TaskCategoryInput, TaskNameInput, TaskDateInput } from './TaskBasics';
 import { connect } from 'react-redux';
 import { editTask } from '../redux/tasksSlice';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const mapState = state => {
@@ -60,29 +61,56 @@ const EditDetails = ({taskId, setShowModal, tasks, editTask}) => {
    }
    
     return (
-      <ScrollView>
-         <TaskNameInput task={taskText} onTextChange={setTaskText} />
-         <TaskDateInput onDateChange={setTaskDate} date={taskDate} />
-         <TaskCategoryInput onSelect={setTaskCategory} category={taskCategory} />
-         <PriorityInput priority={taskPriority} setPriority={setPriority} />
-         <InterestInput interest={taskInterest} setInterest={setInterest} />
-         <DifficultyInput difficulty={taskDifficulty} setDifficulty={setDifficulty} />
-         <DurationInput durationText={durationText} duration={taskDuration} setDuration={setDuration} />
+      <SafeAreaView style={{padding: 10}}>
+         <ScrollView >
+            <Card>
+            <View style={{margin: 5, marginBottom: 15}}>
+               <TaskNameInput task={taskText} onTextChange={setTaskText} />
+               </View>
+               <View style={{margin: 5, marginBottom: 15}}>
+               <TaskDateInput onDateChange={setTaskDate} date={taskDate} />
+               </View>
+               <View style={{margin: 5}}>
+               <TaskCategoryInput onSelect={setTaskCategory} category={taskCategory} />
+               </View>
+            </Card>
+            
+            <PriorityInput priority={taskPriority} setPriority={setPriority} />
+            <InterestInput interest={taskInterest} setInterest={setInterest} />
+            <DifficultyInput difficulty={taskDifficulty} setDifficulty={setDifficulty} />
+            <DurationInput durationText={durationText} duration={taskDuration} setDuration={setDuration} />
 
-         <Button 
-         title="SAVE TASK"
-         onPress={updateTask}
-         accessibilityLabel='Tap to save updated task'
-         />
-         <Button 
-         title="CANCEL"
-         onPress={resetTask}
-         accessibilityLabel='Tap to cancel'
-         />
-
-      </ScrollView>
-    )
+            <View style={styles.container}>
+               <Button 
+               title="SAVE TASK"
+               onPress={updateTask}
+               accessibilityLabel='Tap to save updated task'
+               containerStyle={styles.button}
+               />
+               <Button 
+               title="CANCEL"
+               onPress={resetTask}
+               accessibilityLabel='Tap to cancel'
+               containerStyle={styles.button}
+               />
+            </View>
+         </ScrollView>
+      </SafeAreaView>
+    );
    }
 
+   const styles = StyleSheet.create({
+      container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        margin: 20
+      },
+      button: {
+         flex: 1, 
+         marginHorizontal: 5, 
+      }
+   });
 
 export default connect(mapState, mapDispatch)(EditDetails);

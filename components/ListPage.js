@@ -6,10 +6,10 @@ import RenderTaskList from './RenderTaskList';
 import Footer from './Footer';
 import SortMenu from './SortMenu';
 import EditDetails from './EditDetails';
-import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
-const ListPage = (props) => {
+const ListPage = () => {
    // retrieve tasks from store
    const tasks = useSelector(state => state.tasks);
 
@@ -58,20 +58,22 @@ const ListPage = (props) => {
       }
  
    return (
-      <View style={{flex: 1}}>
-         <View style={{height: 80}}>
+      <SafeAreaView style={{flex: 1}}>
+         <View style={{flex: 1}}>
             {/* sorting toolbar, receives access to setSortBy hook */}
             <SortMenu sortTasks={sortTasks}/>
-               {/* filter toolbar, receives access to filters and their methods */}
+            {/* filter toolbar, receives access to filters and their methods */}
             <Filter priorityFilter={priorityFilter} interestFilter={interestFilter} difficultyFilter={difficultyFilter} completedFilter={completedFilter} setDifficultyFilter={setDifficultyFilter} setInterestFilter={setInterestFilter} setPriorityFilter={setPriorityFilter} setCompletedFilter={setCompletedFilter} clearFilters={clearFilters}/>
          </View>
-
-         <RenderTaskList tasks={filteredTasks} sortBy={sortBy} selectTask={selectTask} canDelete canEdit />
          
-         <ScrollView contentContainerStyle={{justifyContent: 'flex-end', flexShrink: 1, paddingTop: 15, paddingBottom: 5 }} >
+         <View style={{flex: 6}}>
+         <RenderTaskList tasks={filteredTasks} sortBy={sortBy} selectTask={selectTask} canDelete canEdit />
+         </View>
+
+         <ScrollView contentContainerStyle={{justifyContent: 'flex-end', flex: 1, paddingBottom: 40 }} >
             <Footer tasks={filteredTasks}/>
          </ScrollView>
-      
+
          <Modal 
             animationType={'slide'}
             transparent={false}
@@ -80,7 +82,8 @@ const ListPage = (props) => {
             >
             <EditDetails setShowModal={setShowModal} taskId={taskId}/>
          </Modal>
-       </View>
+       </SafeAreaView>
+       
    );
 }
 

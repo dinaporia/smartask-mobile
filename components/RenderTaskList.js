@@ -1,18 +1,20 @@
 import React from 'react';
 import { View, ScrollView, StyleSheet, Alert, Text } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { ListItem, Icon } from 'react-native-elements';
 import { SwipeRow } from 'react-native-swipe-list-view';
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import { toggleCompleted, removeTask } from '../redux/tasksSlice';
+import { addTaskToSchedule } from '../redux/scheduleSlice';
 
 const mapDispatch = { 
     toggleCompleted: (id) => (toggleCompleted(id)),
-    removeTask: (id) => (removeTask(id))
+    removeTask: (id) => (removeTask(id)),
+    addTaskToSchedule: (id) => (addTaskToSchedule(id))
  }; 
 
 const RenderTaskList = (props) => {
-    const {tasks, toggleCompleted, removeTask, selectTask, sortBy, canDelete = false, canEdit = false } = props;
+    const {tasks, toggleCompleted, removeTask, selectTask, sortBy, addTaskToSchedule, canDelete = false, canEdit = false } = props;
     if (!tasks || tasks.length === 0) return <View />;
 
     // sort tasks before passing to ListItems
@@ -35,9 +37,36 @@ const RenderTaskList = (props) => {
 
     const renderTask = ({item}) => {
         return (
-            <SwipeRow rightOpenValue={-100} >
+            <SwipeRow rightOpenValue={(canDelete)? -116 : -58} >
                 {canDelete ?
                 <View style={styles.deleteView}>
+                    <TouchableOpacity 
+                        style={styles.addToScheduleTouchable}
+                        onPress={() => Alert.alert(
+                            'Add to Schedule?',
+                            'This task will be added to today\'s schedule.',
+                            [
+                                {
+                                    text: 'Cancel',
+                                    style: 'cancel',
+                                },
+                                {
+                                    text: 'OK',
+                                    onPress: () => addTaskToSchedule(item.id)
+                                }
+                            ],
+                            { cancelable: false }
+                        )}
+                    >
+                        <Icon
+                            reverse
+                            name='calendar-check-o'
+                            type='font-awesome'
+                            color='green'
+                            size={20}
+
+                            />
+                    </TouchableOpacity>
                     <TouchableOpacity 
                         style={styles.deleteTouchable}
                         onPress={() => Alert.alert(
@@ -56,7 +85,13 @@ const RenderTaskList = (props) => {
                             { cancelable: false }
                         )}
                     >
-                        <Text style={styles.deleteText} >Delete</Text>
+                        <Icon
+                            reverse
+                            name='trash-o'
+                            type='font-awesome'
+                            color='red'
+                            size={20}
+                            />
                     </TouchableOpacity>
                 </View>
                 :
@@ -65,7 +100,7 @@ const RenderTaskList = (props) => {
                         style={styles.deleteTouchable}
                         onPress={() => Alert.alert(
                             'Reschedule Task?',
-                            'This will remove the task from today\'s schedule, but the task will remain on your list.',
+                            'This will remove the task from today\'s schedule, but the task will remain on your task list.',
                             [
                                 {
                                     text: 'Cancel',
@@ -79,7 +114,14 @@ const RenderTaskList = (props) => {
                             { cancelable: false }
                         )}
                     >
-                        <Text style={styles.deleteText} >Reschedule</Text>
+                        <Icon
+                            reverse
+                            name='calendar-times-o'
+                            type='font-awesome'
+                            color='red'
+                            size={20}
+
+                            />
                     </TouchableOpacity>
                 </View>
                 }
@@ -161,15 +203,20 @@ const styles = StyleSheet.create({
     deleteTouchable: {
         backgroundColor: 'red',
         height: '100%',
-        justifyContent: 'center'
+        justifyContent: 'center',
+    },
+    addToScheduleTouchable: {
+        backgroundColor: 'green',
+        height: '100%',
+        justifyContent: 'center',
     },
     deleteText: {
         color: 'white',
-        fontWeight: '700',
+        fontWeight: '600',
         textAlign: 'center',
         fontSize: 16,
-        width: 100
-    }
+        width: 75
+    },
   });
 
 export default connect(null, mapDispatch)(RenderTaskList);

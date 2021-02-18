@@ -7,51 +7,52 @@ import { ScrollView } from 'react-native-gesture-handler';
 const SortMenu = ({sortTasks}) => {
 
     return (
-        <View style={styles.container}>
-            <Icon style={{marginHorizontal: 5}}    
-                size={12}
-                name='sort'
-                type='font-awesome'
-            />
-            <Button
-                containerStyle={styles.sortItem}
-                onPress={() => sortTasks()}
-                titleStyle={{fontSize: 12}}
-                title="Added"
-                type="clear"    
-              
-            />
-            <Button
-                containerStyle={styles.sortItem}
-                onPress={() => sortTasks("alphabet")} 
-                titleStyle={{fontSize: 12}}
-                title="A-Z"   
-                type="clear"
-            />
-            <Button
-                containerStyle={styles.sortItem}
-                onPress={() => sortTasks("due")}
-                titleStyle={{fontSize: 12}}
-                title="due"
-                type="clear"
-            />
-            <Button
-                containerStyle={styles.sortItem}
-                onPress={() => sortTasks("priority")} 
-                titleStyle={{fontSize: 12}}
-                title="Priority"
-                type="clear"
-            />  
-        </View>
-    );
+      
+            <View style={styles.container}>
+                <Icon style={{marginHorizontal: 5}}    
+                    size={12}
+                    name='sort'
+                    type='font-awesome'
+                />
+                <Button
+                    containerStyle={styles.sortItem}
+                    onPress={() => sortTasks()}
+                    titleStyle={{fontSize: 12}}
+                    title="Added"
+                    type="clear"    
+                
+                />
+                <Button
+                    containerStyle={styles.sortItem}
+                    onPress={() => sortTasks("alphabet")} 
+                    titleStyle={{fontSize: 12}}
+                    title="A-Z"   
+                    type="clear"
+                />
+                <Button
+                    containerStyle={styles.sortItem}
+                    onPress={() => sortTasks("due")}
+                    titleStyle={{fontSize: 12}}
+                    title="due"
+                    type="clear"
+                />
+                <Button
+                    containerStyle={styles.sortItem}
+                    onPress={() => sortTasks("priority")} 
+                    titleStyle={{fontSize: 12}}
+                    title="Priority"
+                    type="clear"
+                />  
+            </View> 
+      
+        );
 }
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 3,
         marginBottom: 1,
         flex: 1,
-        alignItems: 'center',
+        alignItems: 'center' ,
         justifyContent: 'space-between',
         flexDirection: 'row',
     },

@@ -46,7 +46,7 @@ const SchedulePrefs = () => {
       <ScrollView>
          <View style={{flex: 1, margin: 10, padding: 10, backgroundColor: 'pink'}}>
             <Text style={styles.subTitle}>Schedule Settings</Text>
-            <Text>Specify the settings to use when scheduling your daily tasks.</Text>
+            <Text style={{paddingHorizontal: 3, textAlign: 'center'}}>Specify the settings to use when scheduling your daily tasks.</Text>
             <Card>
                <Card.Title>How many total hours would you like to work on tasks each day?</Card.Title>
                   <Text style={{textAlign: 'center'}}>
@@ -168,8 +168,14 @@ const TaskPrefs = () => {
       <ScrollView>
          <View style={{flex: 1, margin: 10, padding: 10, backgroundColor: 'pink'}}>
             <Text style={styles.subTitle}>Default Task Settings</Text>
-            <Text>Specify the default settings for quick-added tasks.</Text>
-            <TaskCategoryInput onSelect={setCategory} category={category} />
+            <Text style={{paddingHorizontal: 3, textAlign: 'center'}}>Specify the default settings for quick-added tasks.</Text>
+            <Card>
+               <Card.Title>
+                  Category
+               </Card.Title>
+               <Card.Divider />
+               <TaskCategoryInput onSelect={setCategory} category={category} />
+            </Card>
             <PriorityInput priority={priority} setPriority={setPriority}/>
             <InterestInput interest={interest} setInterest={setInterest}/>
             <DifficultyInput difficulty={difficulty} setDifficulty={setDifficulty}/>
