@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { AirbnbRating, Card, Slider } from 'react-native-elements';
+import TapRating from './TapRating';
 
 
 const PriorityInput = ({priority, setPriority}) => {
@@ -9,7 +10,7 @@ const PriorityInput = ({priority, setPriority}) => {
             <Card.Title>Priority</Card.Title>
             <Card.Divider />
  
-            <AirbnbRating 
+            <TapRating 
                 count={3}
                 reviews={["WANT", "SHOULD", "MUST"]}
                 reviewSize={14}
@@ -18,7 +19,6 @@ const PriorityInput = ({priority, setPriority}) => {
                 selectedColor='teal'
                 reviewColor='teal'
                 onFinishRating={(rating) => setPriority(rating)}
-
             />
          </Card>
     )
@@ -30,7 +30,7 @@ const DifficultyInput = ({difficulty, setDifficulty}) => {
             <Card.Title>Difficulty</Card.Title>
             <Card.Divider />
         
-            <AirbnbRating 
+            <TapRating 
                 count={4}
                 reviews={["EASY", "DOABLE", "CHALLENGING", "HARD"]}
                 reviewSize={14}
@@ -51,7 +51,7 @@ const InterestInput = ({interest, setInterest}) => {
         <Card>
             <Card.Title>Interest</Card.Title>
             <Card.Divider />
-            <AirbnbRating 
+            <TapRating 
                 count={3}
                 reviews={["TEDIOUS", "MEH", "FUN"]}
                 reviewSize={14}
