@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Text } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Button } from 'react-native-elements';
-import {DurationInput, DifficultyInput, InterestInput, PriorityInput} from './TaskDetails';
+
+import { DurationInput, DifficultyInput, InterestInput, PriorityInput } from '../shared';
 
 // called inside modal in AddTaskPage
 // gets task object with task, due, and category properties

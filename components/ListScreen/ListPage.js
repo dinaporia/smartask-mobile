@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Text, View, ScrollView, Modal } from 'react-native';
-import { connect, useSelector } from 'react-redux';
+import { View, ScrollView, Modal } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSelector } from 'react-redux';
+
 import Filter from './Filter';
-import RenderTaskList from './RenderTaskList';
-import Footer from './Footer';
 import SortMenu from './SortMenu';
 import EditDetails from './EditDetails';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
+import { RenderTaskList, Footer } from '../shared';
+// import RenderTaskList from '../shared/RenderTaskList';
+// import Footer from '../shared/Footer';
 
 const ListPage = () => {
    // retrieve tasks from store
@@ -71,7 +72,7 @@ const ListPage = () => {
          </View>
 
          <ScrollView contentContainerStyle={{justifyContent: 'flex-end', flex: 1, paddingBottom: 40 }} >
-            <Footer tasks={filteredTasks}/>
+            <Footer tasks={filteredTasks} />
          </ScrollView>
 
          <Modal 
@@ -87,4 +88,4 @@ const ListPage = () => {
    );
 }
 
-export default connect()(ListPage);
+export default ListPage;

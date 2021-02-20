@@ -1,10 +1,8 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-
 import { StyleSheet, Text, View } from 'react-native';
 
-import Star from './Star'
+import Square from './Square'
 
 export default class TapRating extends Component {
   static defaultProps = {
@@ -42,13 +40,13 @@ export default class TapRating extends Component {
     this.setState({ position: defaultRating })
   }
 
-  renderStars(rating_array) {
-    return _.map(rating_array, (star, index) => {
-      return star
+  renderSquares(rating_array) {
+    return _.map(rating_array, (square, index) => {
+      return square
     })
   }
 
-  starSelectedInPosition(position) {
+  squareSelectedInPosition(position) {
     const { onFinishRating } = this.props
 
     if (typeof onFinishRating === 'function') onFinishRating(position);
@@ -60,18 +58,18 @@ export default class TapRating extends Component {
     const { position } = this.state
     const { count, reviews, showRating, reviewColor, reviewSize } = this.props
     const rating_array = []
-    const starContainerStyle = [styles.starContainer]
+    const squareContainerStyle = [styles.squareContainer]
 
-    if (this.props.starContainerStyle) {
-        starContainerStyle.push(this.props.starContainerStyle);
+    if (this.props.squareContainerStyle) {
+        squareContainerStyle.push(this.props.squareContainerStyle);
     }
 
     _.times(count, index => {
       rating_array.push(
-        <Star
+        <Square
           key={index}
           position={index + 1}
-          starSelectedInPosition={this.starSelectedInPosition.bind(this)}
+          squareSelectedInPosition={this.squareSelectedInPosition.bind(this)}
           fill={position >= index + 1}
           {...this.props}
         />
@@ -85,8 +83,8 @@ export default class TapRating extends Component {
             {reviews[position - 1]}
           </Text>
         }
-        <View style={starContainerStyle}>
-          {this.renderStars(rating_array)}
+        <View style={squareContainerStyle}>
+          {this.renderSquares(rating_array)}
         </View>
       </View>
     );
@@ -104,7 +102,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     margin: 10,
   },
-  starContainer: {
+  squareContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

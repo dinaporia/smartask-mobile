@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { View, ScrollView, StyleSheet, Modal } from 'react-native';
+import { View, StyleSheet, Modal } from 'react-native';
 import { Button } from 'react-native-elements';
-import { TaskCategoryInput, TaskNameInput, TaskDateInput } from './TaskBasics';
-import AddDetails from './AddDetails';
-import { connect, useSelector } from 'react-redux';
-import { addTask } from '../redux/tasksSlice';
 import { Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { connect, useSelector } from 'react-redux';
+
+import { TaskCategoryInput, TaskNameInput, TaskDateInput } from '../shared';
+import AddDetails from './AddDetails';
+import { addTask } from '../../redux/tasksSlice';
 
 
 const mapDispatch = { addTask };

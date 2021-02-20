@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Button, Card } from 'react-native-elements';
-import {DurationInput, DifficultyInput, InterestInput, PriorityInput} from './TaskDetails';
-import { TaskCategoryInput, TaskNameInput, TaskDateInput } from './TaskBasics';
-import { connect } from 'react-redux';
-import { editTask } from '../redux/tasksSlice';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { connect } from 'react-redux';
+
+import { DurationInput, DifficultyInput, InterestInput, PriorityInput, TaskCategoryInput, TaskNameInput, TaskDateInput } from '../shared';
+import { editTask } from '../../redux/tasksSlice';
 
 
 const mapState = state => {

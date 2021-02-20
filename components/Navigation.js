@@ -1,11 +1,12 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+
 import Home from './Home';
-import ListPage from './ListPage';
-import ScheduleView from './ScheduleView';
-import AddTaskPage from './AddTaskPage';
-import Preferences from './Preferences';
+import ListPage from './ListScreen/ListPage';
+import ScheduleView from './ScheduleScreen/ScheduleView';
+import AddTaskPage from './AddTaskScreen/AddTaskPage';
+import Preferences from './PreferencesScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();

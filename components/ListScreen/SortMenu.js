@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Icon, Button } from 'react-native-elements';
-import { ScrollView } from 'react-native-gesture-handler';
 
 // sort order toolbar, gets access to local sortBy state in ListPage
 const SortMenu = ({sortTasks}) => {

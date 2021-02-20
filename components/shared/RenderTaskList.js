@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet, Alert, Text } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 import { SwipeRow } from 'react-native-swipe-list-view';
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
-import { toggleCompleted, removeTask } from '../redux/tasksSlice';
-import { addTaskToSchedule } from '../redux/scheduleSlice';
+
+import { toggleCompleted, removeTask } from '../../redux/tasksSlice';
+import { addTaskToSchedule } from '../../redux/scheduleSlice';
 
 const mapDispatch = { 
     toggleCompleted: (id) => (toggleCompleted(id)),

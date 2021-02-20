@@ -10,9 +10,9 @@ const Home = ({navigation}) => {
         <ThemeProvider theme={theme}>
           <Button title="ADD NEW TASK" onPress={() => navigation.navigate('Add')}
           />
-          <Button title="VIEW TODAY'S TASKS" onPress={() => navigation.navigate('Schedule')}
-          />
           <Button title="VIEW ALL TASKS" onPress={() => navigation.navigate('List')}
+          />
+          <Button title="VIEW TODAY'S TASKS" onPress={() => navigation.navigate('Schedule')}
           />
           <Button title="CHANGE PREFERENCES" onPress={() => navigation.navigate('Prefs')}
           />

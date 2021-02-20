@@ -1,11 +1,11 @@
 import React, {PureComponent} from 'react';
 import {StyleSheet, Animated, TouchableOpacity} from 'react-native';
 
-const STAR_IMAGE = require( '../assets/square-clear.png' );
-const STAR_SELECTED_IMAGE = require( '../assets/square-selected.png' );
-const STAR_SIZE = 40;
+const SQUARE_IMAGE = require( './images/square-clear.png' );
+const SQUARE_SELECTED_IMAGE = require( './images/square-selected.png' );
+const SQUARE_SIZE = 40;
 
-export default class Star extends PureComponent {
+export default class Square extends PureComponent {
   static defaultProps = {
     selectedColor: '#f1c40f'
   };
@@ -20,7 +20,7 @@ export default class Star extends PureComponent {
   }
 
   spring() {
-    const { position, starSelectedInPosition } = this.props;
+    const { position, squareSelectedInPosition } = this.props;
 
     this.springValue.setValue( 1.2 );
 
@@ -35,26 +35,26 @@ export default class Star extends PureComponent {
     ).start();
 
     this.setState( { selected: !this.state.selected } );
-    starSelectedInPosition( position );
+    squareSelectedInPosition( position );
   }
 
   render() {
-    const { fill, size, selectedColor, isDisabled, starStyle } = this.props;
-    const starSource = fill && selectedColor === null ? STAR_SELECTED_IMAGE : STAR_IMAGE;
+    const { fill, size, selectedColor, isDisabled, squareStyle } = this.props;
+    const squareSource = fill && selectedColor === null ? SQUARE_SELECTED_IMAGE : SQUARE_IMAGE;
 
     return (
       <TouchableOpacity activeOpacity={1} onPress={this.spring.bind( this )} disabled={isDisabled}>
         <Animated.Image
-          source={starSource}
+          source={squareSource}
           style={[
-            styles.starStyle,
+            styles.squareStyle,
             {
               tintColor: fill && selectedColor ? selectedColor : '#e5e5e5',
-              width: size || STAR_SIZE,
-              height: size || STAR_SIZE,
+              width: size || SQUARE_SIZE,
+              height: size || SQUARE_SIZE,
               transform: [{ scale: this.springValue }]
             },
-            starStyle
+            squareStyle
           ]}
         />
       </TouchableOpacity>
@@ -63,7 +63,7 @@ export default class Star extends PureComponent {
 }
 
 const styles = StyleSheet.create( {
-  starStyle: {
+  squareStyle: {
     margin: 3
   }
 } );

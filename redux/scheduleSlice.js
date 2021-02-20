@@ -67,5 +67,5 @@ const scheduleSlice = createSlice({
     }
 });
 
-export const { createSchedule, rebuildSchedule, removeTaskFromSchedule, addTaskToSchedule } = scheduleSlice.actions;
+export const { createSchedule, removeTaskFromSchedule, addTaskToSchedule } = scheduleSlice.actions;
 export default scheduleSlice.reducer;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TouchableHighlight, Text } from 'react-native';
-import { Rating, Button, Icon } from 'react-native-elements';
+import { StyleSheet, View } from 'react-native';
+import { Button, Icon } from 'react-native-elements';
 
 
 const Filter = ({priorityFilter, interestFilter, difficultyFilter, completedFilter, setDifficultyFilter, setInterestFilter, setPriorityFilter, setCompletedFilter, clearFilters}) => {

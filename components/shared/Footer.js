@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, ScrollView, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { removeTask } from '../redux/tasksSlice';
+
+import { removeTask } from '../../redux/tasksSlice';
 
 const mapDispatch = { 
     removeTask: (id) => (removeTask(id))
@@ -28,7 +29,7 @@ const TaskCounter = ({totalTasks, completedTasks, remainingTasks}) => {
     );
 }
 
-const Footer = ({tasks, removeTask}) => {
+const Footer = ({tasks, removeTask, canClear = false}) => {
     const completedTasks = tasks.filter(task => task.completed);
 
     const removeCompleted = () => completedTasks.forEach(task => removeTask(task.id));
@@ -58,7 +59,7 @@ const Footer = ({tasks, removeTask}) => {
                         )}
                     accessibilityLabel='Tap to remove completed tasks'
                 />
-            </View>       
+            </View>    
             <TaskCounter completedTasks={completedTasks.length} remainingTasks={tasks.filter(task => !task.completed).length} totalTasks={tasks.length} /> 
         </View>
     );
@@ -82,4 +83,5 @@ const styles = StyleSheet.create({
    
   });
   
+export {TaskCounter};
 export default connect(null, mapDispatch)(Footer);

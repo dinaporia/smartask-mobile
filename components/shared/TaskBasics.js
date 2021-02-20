@@ -7,7 +7,6 @@ import { parseISO } from 'date-fns';
 
 // components render input fields and pass input back to parent
 // rendered by AddTaskPage and EditDetails
-
 const TaskNameInput = ({task, onTextChange}) => {
     return (
         <View style={{flex: 1, marginTop: 10}}>
