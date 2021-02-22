@@ -79,7 +79,8 @@ class TaskDateInput extends Component {
                         value={(this.props.date) ? parseISO(this.props.date) : today}
                         mode={'date'}
                         display='default'
-                        onChange={(event, selectedDate) => this.handleDateInput(selectedDate)}                      
+                        onChange={(event, selectedDate) => this.handleDateInput(selectedDate)}  
+                        minimumDate={today}                
                     />
                 )}
             </ScrollView>

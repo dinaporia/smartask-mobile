@@ -83,9 +83,9 @@ const buildSchedule = async ({tasks, prefs, queued, createSchedule}) => {
                 // remove from todos to prevent adding them twice
                 todos = todos.filter(task => !schedule.includes(task.id))
             }
-            // tasks that are due today or tomorrow are always added
+            // tasks that are due before tomorrow are always added
             const urgentTasks = todos.filter(task => {
-                ((task.due.substring(0,10) === today) || (task.due.substring(0,10) === tomorrow))
+                task.due.substring(0, 10) < tomorrow
             });
 
             if (urgentTasks.length > 0) {

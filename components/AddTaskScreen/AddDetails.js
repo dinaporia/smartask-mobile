@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Button } from 'react-native-elements';
 
@@ -32,16 +32,19 @@ import { DurationInput, DifficultyInput, InterestInput, PriorityInput } from '..
       };
 
     return (
-      <ScrollView>
-         <Text>{taskBasics.task}</Text>
+         <ScrollView style={{flex: 1}}>
+         <View style={{paddingTop: 15}}>
+            <Text style={{textAlign: 'center', fontSize: 18, fontWeight: 'bold'}}>{taskBasics.task}</Text>
+         </View>
          <PriorityInput priority={priority} setPriority={setPriority}/>
          <InterestInput interest={interest} setInterest={setInterest}/>
          <DifficultyInput difficulty={difficulty} setDifficulty={setDifficulty}/>
          <DurationInput duration={duration} setDuration={setDuration} />
          <Button 
-         title="ADD TASK"
-         onPress={saveDetails}
-         accessibilityLabel='Tap to save task details'
+            title="ADD TASK"
+            onPress={saveDetails}
+            accessibilityLabel='Tap to save task details'
+            containerStyle={{ padding: 15}}
          />
       </ScrollView> 
     );

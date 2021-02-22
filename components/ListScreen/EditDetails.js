@@ -73,7 +73,7 @@ const EditDetails = ({ taskId, setShowModal }) => {
 
             <View style={styles.container}>
                <Button 
-               title="SAVE TASK"
+               title="SAVE CHANGES"
                onPress={updateTask}
                accessibilityLabel='Tap to save updated task'
                containerStyle={styles.button}

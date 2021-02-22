@@ -8,12 +8,6 @@ import { useDispatch } from 'react-redux';
 import { toggleCompleted, removeTask } from '../../redux/tasksSlice';
 import { addTaskToSchedule } from '../../redux/scheduleSlice';
 
-// const mapDispatch = { 
-//     toggleCompleted: (id) => (toggleCompleted(id)),
-//     removeTask: (id) => (removeTask(id)),
-//     addTaskToSchedule: (id) => (addTaskToSchedule(id))
-//  }; 
-
 const RenderTaskList = (props) => {
     const dispatch = useDispatch();
     const {tasks, selectTask, sortBy, canDelete = false, canEdit = false } = props;

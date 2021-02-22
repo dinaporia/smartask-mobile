@@ -16,7 +16,7 @@ const SchedulePrefs = () => {
     const [maxTedious, setMaxTedious] = useState(prefs.maxTedious);
     const [includeFun, setIncludeFun] = useState(prefs.includeFun);
  
-    let hourText = (hours/60).toFixed(1) + " hours";
+    let hourText = (hours/60).toFixed(0) + ((hours > 60) ? " hours" : " hour");
  
     // send new preferences object to store
     const savePreferences = () => {
@@ -52,9 +52,9 @@ const SchedulePrefs = () => {
                 <Slider 
                    value={hours}
                    onValueChange={value => setHours(value)}
-                   minimumValue={30}
+                   minimumValue={60}
                    maximumValue={480}
-                   step={30}
+                   step={60}
                    thumbTintColor='pink'
                    thumbTouchSize={{width: 25, height: 25}}
                    minimumTrackTintColor='purple'

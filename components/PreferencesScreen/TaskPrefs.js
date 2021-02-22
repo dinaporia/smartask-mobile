@@ -19,8 +19,6 @@ const TaskPrefs = () => {
     const [interest, setInterest] = useState(task.interest);
     const [duration, setDuration] = useState(task.duration);
  
-    let durationText = (duration/60).toFixed(1) + " hours";
- 
     // send new task object to store
     const saveDefaultTask = () => {
        const newTask = {
@@ -59,7 +57,7 @@ const TaskPrefs = () => {
              <PriorityInput priority={priority} setPriority={setPriority}/>
              <InterestInput interest={interest} setInterest={setInterest}/>
              <DifficultyInput difficulty={difficulty} setDifficulty={setDifficulty}/>
-             <DurationInput durationText={durationText} duration={duration} setDuration={setDuration} />
+             <DurationInput duration={duration} setDuration={setDuration} />
              <View style={{margin: 5, padding: 10}}>
                 <Button 
                 title="SAVE TASK DEFAULTS"
