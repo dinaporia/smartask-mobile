@@ -3,19 +3,20 @@ import { View, StyleSheet, Alert } from 'react-native';
 import { ListItem, Icon } from 'react-native-elements';
 import { SwipeRow } from 'react-native-swipe-list-view';
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { toggleCompleted, removeTask } from '../../redux/tasksSlice';
 import { addTaskToSchedule } from '../../redux/scheduleSlice';
 
-const mapDispatch = { 
-    toggleCompleted: (id) => (toggleCompleted(id)),
-    removeTask: (id) => (removeTask(id)),
-    addTaskToSchedule: (id) => (addTaskToSchedule(id))
- }; 
+// const mapDispatch = { 
+//     toggleCompleted: (id) => (toggleCompleted(id)),
+//     removeTask: (id) => (removeTask(id)),
+//     addTaskToSchedule: (id) => (addTaskToSchedule(id))
+//  }; 
 
 const RenderTaskList = (props) => {
-    const {tasks, toggleCompleted, removeTask, selectTask, sortBy, addTaskToSchedule, canDelete = false, canEdit = false } = props;
+    const dispatch = useDispatch();
+    const {tasks, selectTask, sortBy, canDelete = false, canEdit = false } = props;
     if (!tasks || tasks.length === 0) return <View />;
 
     // sort tasks before passing to ListItems
@@ -53,7 +54,7 @@ const RenderTaskList = (props) => {
                                 },
                                 {
                                     text: 'OK',
-                                    onPress: () => addTaskToSchedule(item.id)
+                                    onPress: () => dispatch(addTaskToSchedule(item.id))
                                 }
                             ],
                             { cancelable: false }
@@ -80,7 +81,7 @@ const RenderTaskList = (props) => {
                                 },
                                 {
                                     text: 'OK',
-                                    onPress: () => removeTask(item.id)
+                                    onPress: () => dispatch(removeTask(item.id))
                                 }
                             ],
                             { cancelable: false }
@@ -143,7 +144,7 @@ const RenderTaskList = (props) => {
                                     : (item.priority === 3 ) ? styles.must
                                     : styles.should]
                                     }}
-                                onPress={() => toggleCompleted(item.id)}
+                                onPress={() => dispatch(toggleCompleted(item.id))}
                                 style={{flex: 2}}
                             />
                         </ListItem.Content>
@@ -220,4 +221,4 @@ const styles = StyleSheet.create({
     },
   });
 
-export default connect(null, mapDispatch)(RenderTaskList);
+export default RenderTaskList;

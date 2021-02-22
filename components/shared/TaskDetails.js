@@ -67,22 +67,43 @@ const InterestInput = ({interest, setInterest}) => {
     )
 }
 
-const DurationInput = ({duration, durationText, setDuration}) => {
+const DurationInput = ({duration, setDuration}) => {
+    // customize text displayed depending on length
+    const getDurationText = (duration) => {
+        if (duration < 60) {
+           return duration + " minutes"
+        }
+        if (duration === 60) {
+           return "1 hour"
+        }
+        const hours = (duration/60).toFixed(0);
+        const minutes = (duration % 60);
+        if (hours > 0) {
+           if (minutes > 0) {
+              return `${hours} hours and ${minutes} minutes`
+           }
+           return `${hours} hours`
+        }
+        return `${minutes} minutes`
+    };
+    
+    const durationText =  getDurationText(duration);
+
     return (
         <Card>
             <Card.Title>Duration</Card.Title>
             <Card.Divider />
             {(duration) && 
-            <Text style={{textAlign: 'center'}}>
-               {durationText}
-            </Text>
+                <Text style={{textAlign: 'center'}}>
+                {durationText}
+                </Text>
             }
             <Slider 
                 value={duration}
                 onValueChange={value => setDuration(value)}
-                minimumValue={30}
-                maximumValue={240}
-                step={30}
+                minimumValue={15}
+                maximumValue={180}
+                step={15}
                 thumbTintColor='pink'
                 thumbTouchSize={{width: 25, height: 25}}
                 minimumTrackTintColor='purple'
@@ -92,4 +113,4 @@ const DurationInput = ({duration, durationText, setDuration}) => {
     );
 }
          
-export {DurationInput, DifficultyInput, InterestInput, PriorityInput}
+export { DurationInput, DifficultyInput, InterestInput, PriorityInput }

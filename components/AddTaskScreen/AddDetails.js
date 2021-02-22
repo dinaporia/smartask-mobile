@@ -15,9 +15,6 @@ import { DurationInput, DifficultyInput, InterestInput, PriorityInput } from '..
       const [interest, setInterest] = useState(defaultTask.interest);
       const [duration, setDuration] = useState(defaultTask.duration);
 
-      // convert duration input into hours for display
-      let durationText = (duration/60).toFixed(1) + " hours";
-
       // reset local state
       const resetDetails = () => {
          setPriority(defaultTask.priority);
@@ -40,7 +37,7 @@ import { DurationInput, DifficultyInput, InterestInput, PriorityInput } from '..
          <PriorityInput priority={priority} setPriority={setPriority}/>
          <InterestInput interest={interest} setInterest={setInterest}/>
          <DifficultyInput difficulty={difficulty} setDifficulty={setDifficulty}/>
-         <DurationInput durationText={durationText} duration={duration} setDuration={setDuration} />
+         <DurationInput duration={duration} setDuration={setDuration} />
          <Button 
          title="ADD TASK"
          onPress={saveDetails}

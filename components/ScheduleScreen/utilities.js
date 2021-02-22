@@ -27,7 +27,7 @@ const basicAlert = (type) => {
         break;
         default:
             title = 'Something went wrong!';
-            msg = 'Most likely, your alotted daily time is shorter than any of your tasks. Change your preferences or task durations and try again. \nIf you think something else is causing this error, please submit feedback to the developer.'
+            msg = 'Most likely, your allotted daily time is shorter than any of your tasks. Change your preferences or task durations and try again. \nIf you think something else is causing this error, please submit feedback to the developer.'
     }
     
     const button = (nav) ? ({text: 'OK', onPress: () => props.navigation.navigate('Add')}) : ({text: 'OK'});
@@ -40,9 +40,9 @@ const basicAlert = (type) => {
     );
 }
 
-// builds new schedule from received tasks
+// build new schedule from received tasks and options
 const buildSchedule = async ({tasks, prefs, queued, createSchedule}) => {
-    let {hours, maxHard, maxTedious, includeFun } = prefs;
+    let { hours, maxHard, maxTedious, includeFun } = prefs;
     let schedule = [];
     let todos = [];
     // if no fun tasks need to be included, mark true
@@ -73,24 +73,22 @@ const buildSchedule = async ({tasks, prefs, queued, createSchedule}) => {
         } else {
             // main scheduling algorithm
             scheduleGenerator: { 
-            // add queued tasks
+            // tasks manually added to schedule are always added
             if (queued.length > 0) {
-                // retrieve tasks from todos
                 const queuedTasks = todos.filter(task => queued.includes(task.id));
                 queuedTasks.forEach(task => {
-                // update counters, add task id to schedule, update todos
-                updateCounters(task);
-                schedule.push(task.id);
+                    updateCounters(task);
+                    schedule.push(task.id);
                 });
+                // remove from todos to prevent adding them twice
                 todos = todos.filter(task => !schedule.includes(task.id))
             }
             // tasks that are due today or tomorrow are always added
             const urgentTasks = todos.filter(task => {
-            if (task.due.substring(0,10) === today) return true;
-            if (task.due.substring(0,10) === tomorrow) return true;
+                ((task.due.substring(0,10) === today) || (task.due.substring(0,10) === tomorrow))
             });
 
-            if (urgentTasks) {
+            if (urgentTasks.length > 0) {
                 urgentTasks.forEach( task => {
                     updateCounters(task);
                     schedule.push(task.id);
@@ -107,7 +105,7 @@ const buildSchedule = async ({tasks, prefs, queued, createSchedule}) => {
                     break scheduleGenerator;
                 }
                 // finish if no todos left
-                if (todos.length < 1) {
+                if (todos.length === 0) {
                     break scheduleGenerator;
                 }
             }
@@ -121,26 +119,22 @@ const buildSchedule = async ({tasks, prefs, queued, createSchedule}) => {
                 if (funTasks.length > 0) {
                     // exclude difficult tasks if max reached
                     if (maxHard <= 0) {
-                        funTasks = funTasks.filter( task => task.difficulty != 4); 
+                        funTasks = funTasks.filter( task => task.difficulty != 4 ); 
                     }
                     // exclude tasks that are too long for remaining time
                     funTasks = funTasks.filter( task => task.duration < hours);
-                    // add task to schedule, update counters, continue
+                    // add task to schedule, continue
                     if (funTasks.length > 0) {
                         let funTask = funTasks[0];
+                        updateCounters(funTask);
                         schedule.push(funTask.id);
-
-                        if (funTask.difficulty === 4) maxHard--;
-                        hours -= funTask.duration;
-                        funIncluded = true;
                         todos = todos.filter(task => task.id != funTask.id);
                     }
-                    // *** ELSE ALERT THAT FUN TASKS ARE TOO LONG *** 
                 }   
             }
-            // if most pressing task is too long for the entire time alotted
+            // guards against case: most pressing non-urgent task is too long for the entire time allotted
             if (schedule.length === 0) {
-                // runs until a task is added or none left
+                // run until a task is added or none left
                 for (let i = 0; (schedule.length < 1); i++) {
                     // if none left, all are too long & user chose not to add
                     if (i === todos.length) {
@@ -154,29 +148,30 @@ const buildSchedule = async ({tasks, prefs, queued, createSchedule}) => {
                         updateCounters(firstTask);
                         todos = todos.filter(task => task.id !== firstTask.id);
                     } else {
-                    // if task too long, let user decide 
+                        // if task too long, let user decide 
                         const scheduleIt = await AlertAsync(
-                        'Very Long Task',
-                        `\'${firstTask.task}\' is the most pressing, but it would take up all your time today. Is that OK?`,
-                        [
-                            {
-                                text: 'Schedule it',
-                                onPress: () => 'yes'
-                            },
-                            {
-                                text: 'No, skip it',
-                                onPress: () => Promise.resolve('no')
-                            }
-                            
-                        ],
-                        { cancelable: false }
+                            'Very Long Task',
+                            `\'${firstTask.task}\' is the most pressing, but it would take up all your time today. Is that OK?`,
+                            [
+                                {
+                                    text: 'Schedule it',
+                                    onPress: () => 'yes'
+                                },
+                                {
+                                    text: 'No, skip it',
+                                    onPress: () => Promise.resolve('no')
+                                }
+                                
+                            ],
+                            { cancelable: false }
                         ); 
                     
                         if (scheduleIt === 'yes') {
-                        schedule.push(firstTask.id);
-                        // no need to update counters/todos if task too long
-                        break scheduleGenerator;
+                            schedule.push(firstTask.id);
+                            // no need to update counters/todos if task too long
+                            break scheduleGenerator;
                         }
+                        // if user says no, continue loop
                     }   
                 }
             }
@@ -185,9 +180,9 @@ const buildSchedule = async ({tasks, prefs, queued, createSchedule}) => {
             todos.forEach( task => {
                 if (task.duration <= hours) {
                     // check against difficulty and tedium counters
-                    if (((task.difficulty === 4) && (maxHard <= 0)) || 
-                        ((task.interest === 1) && (maxTedious <= 0))) {
-                        return;
+                    if (((task.difficulty === 4) && (maxHard <= 0)) 
+                        || ((task.interest === 1) && (maxTedious <= 0))) {
+                            return;
                     } else {
                         updateCounters(task);
                         schedule.push(task.id);
@@ -199,10 +194,11 @@ const buildSchedule = async ({tasks, prefs, queued, createSchedule}) => {
 
         if (schedule.length > 0) {
             createSchedule({schedule: schedule, forDate: today});
+
         } else {
             basicAlert();
         }
     }
 }
 
-export {buildSchedule};
+export { buildSchedule };

@@ -3,21 +3,14 @@ import { View, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Button, Card } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { DurationInput, DifficultyInput, InterestInput, PriorityInput, TaskCategoryInput, TaskNameInput, TaskDateInput } from '../shared';
 import { editTask } from '../../redux/tasksSlice';
 
-
-const mapState = state => {
-   return {
-      tasks: state.tasks
-   }
-};
-
-const mapDispatch = { editTask };
-
-const EditDetails = ({taskId, setShowModal, tasks, editTask}) => {
+const EditDetails = ({ taskId, setShowModal }) => {
+   const dispatch = useDispatch();
+   const tasks = useSelector(state => state.tasks);
    // retrieve task from store by id
    const {task, due, category, priority, duration, difficulty, interest } = tasks.filter(task => task.id === taskId)[0];
    
@@ -29,8 +22,6 @@ const EditDetails = ({taskId, setShowModal, tasks, editTask}) => {
    const [taskDifficulty, setDifficulty] = useState(difficulty);
    const [taskInterest, setInterest] = useState(interest);
    const [taskDuration, setDuration] = useState(duration);
-   // customized tesk for duration slider
-   const durationText = (taskDuration/60).toFixed(1) + " hours";
 
    // resets task on Cancel
    const resetTask = () => {
@@ -56,7 +47,7 @@ const EditDetails = ({taskId, setShowModal, tasks, editTask}) => {
          difficulty: taskDifficulty, 
          interest: taskInterest 
       };
-      editTask({taskId: taskId, updatedTask: updatedTask});
+      dispatch(editTask({taskId: taskId, updatedTask: updatedTask}));
       setShowModal(false);
    }
    
@@ -78,7 +69,7 @@ const EditDetails = ({taskId, setShowModal, tasks, editTask}) => {
             <PriorityInput priority={taskPriority} setPriority={setPriority} />
             <InterestInput interest={taskInterest} setInterest={setInterest} />
             <DifficultyInput difficulty={taskDifficulty} setDifficulty={setDifficulty} />
-            <DurationInput durationText={durationText} duration={taskDuration} setDuration={setDuration} />
+            <DurationInput duration={taskDuration} setDuration={setDuration} />
 
             <View style={styles.container}>
                <Button 
@@ -113,4 +104,4 @@ const EditDetails = ({taskId, setShowModal, tasks, editTask}) => {
       }
    });
 
-export default connect(mapState, mapDispatch)(EditDetails);
+export default EditDetails;

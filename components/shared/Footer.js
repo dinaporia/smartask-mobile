@@ -1,14 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { removeTask } from '../../redux/tasksSlice';
 
-const mapDispatch = { 
-    removeTask: (id) => (removeTask(id))
- }; 
- 
 // counter returns amount of total, completed, and uncompleted task
 const TaskCounter = ({totalTasks, completedTasks, remainingTasks}) => {
     return (
@@ -29,10 +25,10 @@ const TaskCounter = ({totalTasks, completedTasks, remainingTasks}) => {
     );
 }
 
-const Footer = ({tasks, removeTask, canClear = false}) => {
+const Footer = ({tasks}) => {
+    const dispatch = useDispatch();
     const completedTasks = tasks.filter(task => task.completed);
-
-    const removeCompleted = () => completedTasks.forEach(task => removeTask(task.id));
+    const removeCompleted = () => completedTasks.forEach(task => dispatch(removeTask(task.id)));
 
     return (
         <View style={{ alignSelf: 'stretch' }}>
@@ -52,7 +48,7 @@ const Footer = ({tasks, removeTask, canClear = false}) => {
                                 },
                                 {
                                     text: 'OK',
-                                    onPress: () => removeCompleted()
+                                    onPress: removeCompleted
                                 }
                             ],
                             { cancelable: false }
@@ -84,4 +80,4 @@ const styles = StyleSheet.create({
   });
   
 export {TaskCounter};
-export default connect(null, mapDispatch)(Footer);
+export default Footer;

@@ -7,8 +7,6 @@ import Filter from './Filter';
 import SortMenu from './SortMenu';
 import EditDetails from './EditDetails';
 import { RenderTaskList, Footer } from '../shared';
-// import RenderTaskList from '../shared/RenderTaskList';
-// import Footer from '../shared/Footer';
 
 const ListPage = () => {
    // retrieve tasks from store

@@ -1,51 +1,48 @@
 import React, {useEffect} from 'react';
-import { View, ScrollView, Alert } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { Button } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import AlertAsync from "react-native-alert-async";
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { RenderTaskList, TaskCounter } from '../shared';
 import { createSchedule, removeTaskFromSchedule } from '../../redux/scheduleSlice';
 import { buildSchedule } from './utilities';
 
+const ScheduleView = () => {
+   const dispatch = useDispatch();
+   const dispatchSchedule = (object) => {
+      dispatch(createSchedule(object))
+   };
 
-const mapState = state => {
-   return {
-      tasks: state.tasks,
-      prefs: state.schedulePrefs,
-      scheduleObject: state.schedule,
-   }
-};
+   const tasks = useSelector(state => state.tasks);
+   const prefs = useSelector(state => state.schedulePrefs);
+   const schedule = useSelector(state => state.schedule.schedule);
+   const forDate = useSelector(state => state.schedule.forDate);
+   const notToday = useSelector(state => state.schedule.notToday);
+   const queued = useSelector(state => state.schedule.queued);
+   
+   const today = new Date().toISOString().substring(0, 10);
+   const todaysTasks = tasks.filter(task => schedule.includes(task.id));
 
-const mapDispatch = { createSchedule, removeTaskFromSchedule }; 
-
-const ScheduleView = (props) => {
-   const { tasks, prefs, scheduleObject } = props;
-   const {schedule, forDate, notToday, queued} = scheduleObject;
-   const todaysTasks = tasks.filter(task => schedule.includes(task.id))
-   const date = new Date();
-   const today = date.toISOString().substring(0, 10);
    const scheduleSettings = {
       tasks: tasks,
       prefs: prefs,
       queued: queued,
-      createSchedule: props.createSchedule
-  };
+      createSchedule: dispatchSchedule
+   };
 
-   //  rebuilds schedule from tasks that haven't been rescheduled
+   //  rebuilds schedule from tasks that haven't been rescheduled today
    const updateSchedule = () => {
       // if notToday is current, exclude those tasks
-      const updatedTasks = (today === forDate) ?
-         tasks.filter(task => !notToday.includes(task.id)) :
-         tasks.slice();
-         buildSchedule({...scheduleSettings, tasks: updatedTasks});
-
+      const updatedTasks = (today === forDate) 
+         ? tasks.filter(task => !notToday.includes(task.id)) 
+         : tasks.slice();
+      buildSchedule({...scheduleSettings, tasks: updatedTasks});
    }
 
    const rescheduleTask = (taskId) => {
-      props.removeTaskFromSchedule(taskId);
-   }
+     dispatch(removeTaskFromSchedule(taskId))
+   };
 
    // on mount, build new schedule if not already there
    useEffect( () => {
@@ -70,6 +67,6 @@ const ScheduleView = (props) => {
          </View>
       </SafeAreaView> 
    );
-
 }
-export default connect(mapState, mapDispatch)(ScheduleView);
+
+export default ScheduleView;

@@ -3,16 +3,14 @@ import { View, StyleSheet, Modal } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { connect, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { TaskCategoryInput, TaskNameInput, TaskDateInput } from '../shared';
 import AddDetails from './AddDetails';
 import { addTask } from '../../redux/tasksSlice';
 
-
-const mapDispatch = { addTask };
-
 const AddTaskPage = (props) => {
+   const dispatch = useDispatch();
    // retrieve default task settings from store
    const defaultTask = useSelector(state => state.taskPrefs);
    // hooks for new task object
@@ -74,7 +72,7 @@ const AddTaskPage = (props) => {
       }
       // merge defaults with new input
       const newTask = {...defaultTask, ...task};
-      props.addTask(newTask);
+      dispatch(addTask(newTask));
       props.navigation.navigate('List');
       resetBasics();
    };
@@ -145,4 +143,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default connect(null, mapDispatch)(AddTaskPage);
+export default AddTaskPage;

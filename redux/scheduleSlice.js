@@ -9,7 +9,7 @@ const scheduleSlice = createSlice({
         queued: []
     },
     reducers: {
-        // create intial schedule
+        // create initial schedule
         createSchedule(state, action) {
             const { schedule, forDate } = action.payload;
             // if date hasn't changed, retain notToday array
