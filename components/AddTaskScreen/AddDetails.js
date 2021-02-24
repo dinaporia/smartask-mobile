@@ -1,54 +1,66 @@
-import React, { useState } from 'react';
-import { Text, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { Button } from 'react-native-elements';
+import React, { useState } from "react";
+import { Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { Button } from "react-native-elements";
 
-import { DurationInput, DifficultyInput, InterestInput, PriorityInput } from '../shared';
+import {
+  DurationInput,
+  DifficultyInput,
+  InterestInput,
+  PriorityInput,
+} from "../shared";
 
 // called inside modal in AddTaskPage
 // gets task object with task, due, and category properties
 // updates task with details input, passes back to parent
-   const AddDetails = ({taskBasics, createTask, defaultTask}) => {
-      // hooks for detail inputs
-      const [priority, setPriority] = useState(defaultTask.priority);
-      const [difficulty, setDifficulty] = useState(defaultTask.difficulty);
-      const [interest, setInterest] = useState(defaultTask.interest);
-      const [duration, setDuration] = useState(defaultTask.duration);
+const AddDetails = ({ taskBasics, createTask, defaultTask }) => {
+  // hooks for detail inputs
+  const [priority, setPriority] = useState(defaultTask.priority);
+  const [difficulty, setDifficulty] = useState(defaultTask.difficulty);
+  const [interest, setInterest] = useState(defaultTask.interest);
+  const [duration, setDuration] = useState(defaultTask.duration);
 
-      // reset local state
-      const resetDetails = () => {
-         setPriority(defaultTask.priority);
-         setDifficulty(defaultTask.difficulty);
-         setInterest(defaultTask.interest);
-         setDuration(defaultTask.duration);
-      }
+  // reset local state
+  const resetDetails = () => {
+    setPriority(defaultTask.priority);
+    setDifficulty(defaultTask.difficulty);
+    setInterest(defaultTask.interest);
+    setDuration(defaultTask.duration);
+  };
 
-      // combine detail input with existing basic task
-      // pass task back to parent through createTask
-      const saveDetails = () => {
-         const newTask = {...taskBasics, priority: priority, difficulty: difficulty, interest: interest, duration: duration};
-         createTask(newTask);
-         resetDetails();
-      };
+  // combine detail input with existing basic task
+  // pass task back to parent through createTask
+  const saveDetails = () => {
+    const newTask = {
+      ...taskBasics,
+      priority: priority,
+      difficulty: difficulty,
+      interest: interest,
+      duration: duration,
+    };
+    createTask(newTask);
+    resetDetails();
+  };
 
-    return (
-         <ScrollView style={{flex: 1}}>
-         <View style={{paddingTop: 15}}>
-            <Text style={{textAlign: 'center', fontSize: 18, fontWeight: 'bold'}}>{taskBasics.task}</Text>
-         </View>
-         <PriorityInput priority={priority} setPriority={setPriority}/>
-         <InterestInput interest={interest} setInterest={setInterest}/>
-         <DifficultyInput difficulty={difficulty} setDifficulty={setDifficulty}/>
-         <DurationInput duration={duration} setDuration={setDuration} />
-         <Button 
-            title="ADD TASK"
-            onPress={saveDetails}
-            accessibilityLabel='Tap to save task details'
-            containerStyle={{ padding: 15}}
-         />
-      </ScrollView> 
-    );
-}
-
+  return (
+    <ScrollView style={{ flex: 1 }}>
+      <View style={{ paddingTop: 15 }}>
+        <Text style={{ textAlign: "center", fontSize: 18, fontWeight: "bold" }}>
+          {taskBasics.task}
+        </Text>
+      </View>
+      <PriorityInput priority={priority} setPriority={setPriority} />
+      <InterestInput interest={interest} setInterest={setInterest} />
+      <DifficultyInput difficulty={difficulty} setDifficulty={setDifficulty} />
+      <DurationInput duration={duration} setDuration={setDuration} />
+      <Button
+        title="ADD TASK"
+        onPress={saveDetails}
+        accessibilityLabel="Tap to save task details"
+        containerStyle={{ padding: 15 }}
+      />
+    </ScrollView>
+  );
+};
 
 export default AddDetails;
