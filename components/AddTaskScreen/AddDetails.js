@@ -9,6 +9,7 @@ import {
   InterestInput,
   PriorityInput,
 } from "../shared";
+import * as Animatable from "react-native-animatable";
 
 // called inside modal in AddTaskPage
 // gets task object with task, due, and category properties
@@ -43,23 +44,51 @@ const AddDetails = ({ taskBasics, createTask, defaultTask }) => {
   };
 
   return (
-    <ScrollView style={{ flex: 1 }}>
-      <View style={{ paddingTop: 15 }}>
-        <Text style={{ textAlign: "center", fontSize: 18, fontWeight: "bold" }}>
+    <>
+      <Animatable.View
+        animation="slideInDown"
+        duration={1300}
+        style={{
+          padding: 15,
+          backgroundColor: "#2a363b",
+        }}
+      >
+        <Text
+          style={{
+            textAlign: "center",
+            fontSize: 18,
+            fontWeight: "bold",
+            color: "#e84a5f",
+          }}
+        >
           {taskBasics.task}
         </Text>
-      </View>
-      <PriorityInput priority={priority} setPriority={setPriority} />
-      <InterestInput interest={interest} setInterest={setInterest} />
-      <DifficultyInput difficulty={difficulty} setDifficulty={setDifficulty} />
-      <DurationInput duration={duration} setDuration={setDuration} />
-      <Button
-        title="ADD TASK"
-        onPress={saveDetails}
-        accessibilityLabel="Tap to save task details"
-        containerStyle={{ padding: 15 }}
-      />
-    </ScrollView>
+      </Animatable.View>
+      <ScrollView style={{ flex: 1 }}>
+        <Animatable.View animation="zoomIn" duration={1300}>
+          <PriorityInput priority={priority} setPriority={setPriority} />
+        </Animatable.View>
+        <Animatable.View animation="zoomIn" duration={1300}>
+          <InterestInput interest={interest} setInterest={setInterest} />
+        </Animatable.View>
+        <Animatable.View animation="zoomIn" duration={1300}>
+          <DifficultyInput
+            difficulty={difficulty}
+            setDifficulty={setDifficulty}
+          />
+        </Animatable.View>
+        <Animatable.View animation="zoomIn" duration={1300}>
+          <DurationInput duration={duration} setDuration={setDuration} />
+        </Animatable.View>
+        <Button
+          title="ADD TASK"
+          onPress={saveDetails}
+          accessibilityLabel="Tap to save task details"
+          containerStyle={{ padding: 15 }}
+          buttonStyle={{ backgroundColor: "#e84a5f" }}
+        />
+      </ScrollView>
+    </>
   );
 };
 
