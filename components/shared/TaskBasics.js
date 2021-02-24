@@ -23,7 +23,6 @@ const TaskNameInput = ({ task, onTextChange }) => {
           borderBottomWidth: 1,
           paddingLeft: 5,
           textAlign: "center",
-          backgroundColor: "#ff847c",
         }}
         // disable autofill
         textContentType="none"
@@ -50,7 +49,6 @@ const TaskCategoryInput = ({ category, onSelect, showLabel = false }) => {
         <Picker
           selectedValue={category}
           onValueChange={(itemValue) => onSelect(itemValue)}
-          style={{ backgroundColor: "#ff847c" }}
         >
           <Picker.Item label="Work" value="Work" />
           <Picker.Item label="Home" value="Home" />
@@ -96,7 +94,6 @@ class TaskDateInput extends Component {
                   : today.toLocaleDateString("en-US")
               }
               accessibilityLabel="Tap to select due date"
-              buttonStyle={{ backgroundColor: "#ff847c" }}
               titleStyle={{ color: "black" }}
             />
           </View>
