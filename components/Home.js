@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
-import { Button } from "react-native-elements";
+import { Button, Icon } from "react-native-elements";
 import Overlay from "react-native-modal-overlay";
 import * as Animatable from "react-native-animatable";
 
@@ -36,7 +36,16 @@ const Home = ({ navigation }) => {
         style={{ margin: 10 }}
       >
         <Button
-          title="ADD NEW TASK"
+          icon={
+            <Icon 
+              name='plus-square-o'
+              type='font-awesome'
+              color='white'
+              size={40}
+              iconStyle={{paddingRight: 30}}
+              />
+          }
+          title="ADD TASK"
           raised
           onPress={() => navigation.navigate("Add")}
           buttonStyle={{
@@ -52,7 +61,16 @@ const Home = ({ navigation }) => {
         style={{ margin: 10 }}
       >
         <Button
-          title="VIEW ALL TASKS"
+          icon={
+            <Icon 
+              name='list'
+              type='font-awesome'
+              color='white'
+              size={30}
+              iconStyle={{paddingRight: 30}}
+              />
+          }
+          title="VIEW ALL"
           raised
           onPress={() => navigation.navigate("List")}
           buttonStyle={{
@@ -68,7 +86,16 @@ const Home = ({ navigation }) => {
         style={{ margin: 10 }}
       >
         <Button
-          title="VIEW TODAY'S TASKS"
+        icon={
+            <Icon 
+              name='calendar'
+              type='font-awesome'
+              color='white'
+              size={30}
+              iconStyle={{paddingRight: 30}}
+              />
+          }
+          title="SCHEDULE"
           raised
           onPress={() => navigation.navigate("Schedule")}
           buttonStyle={{
@@ -84,7 +111,16 @@ const Home = ({ navigation }) => {
         style={{ margin: 10 }}
       >
         <Button
-          title="CHANGE PREFERENCES"
+        icon={
+            <Icon 
+              name='sliders'
+              type='font-awesome'
+              color='white'
+              size={30}
+              iconStyle={{paddingRight: 30}}
+              />
+          }
+          title="SETTINGS"
           raised
           onPress={() => navigation.navigate("Prefs")}
           buttonStyle={{
