@@ -5,30 +5,30 @@ import Overlay from "react-native-modal-overlay";
 import * as Animatable from "react-native-animatable";
 
 const Home = ({ navigation }) => {
-  const [isOverlayOpen, setIsOverlayOpen] = useState(true);
+  // const [isOverlayOpen, setIsOverlayOpen] = useState(true);
 
-  const toggleOverlay = () => {
-    setIsOverlayOpen(!isOverlayOpen);
-  };
+  // const toggleOverlay = () => {
+  //   setIsOverlayOpen(!isOverlayOpen);
+  // };
 
-  return isOverlayOpen ? (
-    <Overlay
-      visible={isOverlayOpen}
-      onClose={toggleOverlay}
-      closeOnTouchOutside
-      animationType="slideInDown"
-      duration={1300}
-    >
-      <Text style={{ fontSize: 26, marginBottom: 20, fontWeight: "bold" }}>
-        Welcome to SmartTask
-      </Text>
-      <Button
-        title="READY TO DO"
-        buttonStyle={{ backgroundColor: "#e84a5f", height: 44 }}
-        onPress={() => toggleOverlay()}
-      />
-    </Overlay>
-  ) : (
+  return (
+    //   <Overlay
+    //     visible={isOverlayOpen}
+    //     onClose={toggleOverlay}
+    //     closeOnTouchOutside
+    //     animationType="slideInDown"
+    //     duration={1300}
+    //   >
+    //     <Text style={{ fontSize: 26, marginBottom: 20, fontWeight: "bold" }}>
+    //       Welcome to SmartTask
+    //     </Text>
+    //     <Button
+    //       title="READY TO DO"
+    //       buttonStyle={{ backgroundColor: "#e84a5f", height: 44 }}
+    //       onPress={() => toggleOverlay()}
+    //     />
+    //   </Overlay>
+    // ) : (
     <View style={styles.container}>
       <Animatable.View
         animation="slideInLeft"
@@ -37,13 +37,13 @@ const Home = ({ navigation }) => {
       >
         <Button
           icon={
-            <Icon 
-              name='plus-square-o'
-              type='font-awesome'
-              color='white'
+            <Icon
+              name="plus-square-o"
+              type="font-awesome"
+              color="white"
               size={40}
-              iconStyle={{paddingRight: 30}}
-              />
+              iconStyle={{ paddingRight: 30 }}
+            />
           }
           title="ADD TASK"
           raised
@@ -62,13 +62,13 @@ const Home = ({ navigation }) => {
       >
         <Button
           icon={
-            <Icon 
-              name='list'
-              type='font-awesome'
-              color='white'
+            <Icon
+              name="list"
+              type="font-awesome"
+              color="white"
               size={30}
-              iconStyle={{paddingRight: 30}}
-              />
+              iconStyle={{ paddingRight: 30 }}
+            />
           }
           title="VIEW ALL"
           raised
@@ -86,14 +86,14 @@ const Home = ({ navigation }) => {
         style={{ margin: 10 }}
       >
         <Button
-        icon={
-            <Icon 
-              name='calendar'
-              type='font-awesome'
-              color='white'
+          icon={
+            <Icon
+              name="calendar"
+              type="font-awesome"
+              color="white"
               size={30}
-              iconStyle={{paddingRight: 30}}
-              />
+              iconStyle={{ paddingRight: 30 }}
+            />
           }
           title="SCHEDULE"
           raised
@@ -111,14 +111,14 @@ const Home = ({ navigation }) => {
         style={{ margin: 10 }}
       >
         <Button
-        icon={
-            <Icon 
-              name='sliders'
-              type='font-awesome'
-              color='white'
+          icon={
+            <Icon
+              name="sliders"
+              type="font-awesome"
+              color="white"
               size={30}
-              iconStyle={{paddingRight: 30}}
-              />
+              iconStyle={{ paddingRight: 30 }}
+            />
           }
           title="SETTINGS"
           raised
