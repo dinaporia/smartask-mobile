@@ -37,7 +37,7 @@ const Footer = ({ tasks }) => {
     completedTasks.forEach((task) => dispatch(removeTask(task.id)));
 
   return (
-    <View style={{ alignSelf: "stretch" }}>
+    <View style={{ alignSelf: 'stretch'}}>
       <Animatable.View animation="slideInDown" duration={1300}>
         {/* button to remove filtered tasks that are completed */}
         <Button

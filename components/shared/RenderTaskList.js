@@ -156,11 +156,13 @@ const RenderTaskList = (props) => {
     };
             
     return (
+        <View style={{marginBottom: 200}}>
         <FlatList 
             data={sortedTasks}
             renderItem={renderTask}
             keyExtractor={item => item.id}
         />   
+        </View>
     );
 }
 

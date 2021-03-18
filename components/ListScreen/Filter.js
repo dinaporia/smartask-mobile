@@ -62,7 +62,7 @@ const Filter = ({
   };
 
   return (
-    <Animatable.View animation="slideInRight" style={{ flex: 2 }}>
+    <Animatable.View animation="slideInRight" style={{height: 70}} >
       {/* main filter menu */}
       <View style={styles.container}>
         <Icon
@@ -125,6 +125,7 @@ const Filter = ({
           containerStyle={{ alignContent: "flex-end", flex: 1.5 }}
         />
       </View>
+      <View style={{ flexDirection: 'row'}}>
       {/* priority toggle menu */}
       {priorityOpen && (
         <View style={styles.subContainer}>
@@ -181,6 +182,7 @@ const Filter = ({
                 ? styles.selectedText
                 : styles.subFilterText,
             ]}
+            containerStyle={styles.filterSubItem}
             type="clear"
             onPress={() => setDifficultyFilter(1)}
           />
@@ -192,6 +194,7 @@ const Filter = ({
                 ? styles.selectedText
                 : styles.subFilterText,
             ]}
+            containerStyle={styles.filterSubItem}
             type="clear"
             onPress={() => setDifficultyFilter(2)}
           />
@@ -203,6 +206,7 @@ const Filter = ({
                 ? styles.selectedText
                 : styles.subFilterText,
             ]}
+            containerStyle={styles.filterSubItem}
             type="clear"
             onPress={() => setDifficultyFilter(3)}
           />
@@ -214,6 +218,7 @@ const Filter = ({
                 ? styles.selectedText
                 : styles.subFilterText,
             ]}
+            containerStyle={styles.filterSubItem}
             type="clear"
             onPress={() => setDifficultyFilter(4)}
           />
@@ -225,6 +230,7 @@ const Filter = ({
                 ? styles.selectedText
                 : styles.subFilterText,
             ]}
+            containerStyle={{flex: 0.5}}
             type="clear"
             onPress={() => setDifficultyFilter(0)}
           />
@@ -239,6 +245,7 @@ const Filter = ({
               styles.filterText,
               interestFilter === 3 ? styles.selectedText : styles.subFilterText,
             ]}
+            containerStyle={styles.filterSubItem}
             type="clear"
             onPress={() => setInterestFilter(3)}
           />
@@ -248,6 +255,7 @@ const Filter = ({
               styles.filterText,
               interestFilter === 2 ? styles.selectedText : styles.subFilterText,
             ]}
+            containerStyle={styles.filterSubItem}
             type="clear"
             onPress={() => setInterestFilter(2)}
           />
@@ -257,6 +265,7 @@ const Filter = ({
               styles.filterText,
               interestFilter === 1 ? styles.selectedText : styles.subFilterText,
             ]}
+            containerStyle={styles.filterSubItem}
             type="clear"
             onPress={() => setInterestFilter(1)}
           />
@@ -266,12 +275,14 @@ const Filter = ({
               styles.filterText,
               interestFilter === 0 ? styles.selectedText : styles.subFilterText,
             ]}
+            containerStyle={styles.filterSubItem}
             type="clear"
             raised={interestFilter === 0 ? true : false}
             onPress={() => setInterestFilter(0)}
           />
         </View>
       )}
+      </View>
     </Animatable.View>
   );
 };
@@ -282,13 +293,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
+    // paddingTop: 3
   },
   subContainer: {
-    marginBottom: 3,
-    marginHorizontal: 15,
+    marginHorizontal: 5,
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+ 
+   // alignItems: "center",
+    // justifyContent: 'space-evenly' ,
     flexDirection: "row",
   },
   filterItem: {
@@ -301,7 +313,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255,255,255,0)",
   },
   filterSubItem: {
-    flex: 1,
+    flex: 1
   },
   filterText: {
     fontSize: 10,

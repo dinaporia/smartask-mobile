@@ -11,7 +11,8 @@ const SortMenu = ({ sortTasks }) => {
         size={16}
         name="sort"
         type="font-awesome"
-        iconStyle={{ color: "#e84a5f", marginLeft: 9 }}
+        iconStyle={{ color: "#e84a5f", marginRight: 5, marginLeft: 10}}
+
       />
       <Button
         containerStyle={styles.sortItem}
@@ -21,7 +22,7 @@ const SortMenu = ({ sortTasks }) => {
         type="clear"
         buttonStyle={{
           backgroundColor: "#e84a5f",
-          margin: 8,
+          marginHorizontal: 5,
           opacity: 0.9,
         }}
       />
@@ -33,7 +34,7 @@ const SortMenu = ({ sortTasks }) => {
         type="clear"
         buttonStyle={{
           backgroundColor: "#e84a5f",
-          margin: 8,
+          marginHorizontal: 5,
           opacity: 0.9,
         }}
       />
@@ -45,7 +46,7 @@ const SortMenu = ({ sortTasks }) => {
         type="clear"
         buttonStyle={{
           backgroundColor: "#e84a5f",
-          margin: 8,
+          marginHorizontal: 5,
           opacity: 0.9,
         }}
       />
@@ -57,7 +58,7 @@ const SortMenu = ({ sortTasks }) => {
         type="clear"
         buttonStyle={{
           backgroundColor: "#e84a5f",
-          margin: 8,
+          marginHorizontal: 5,
           opacity: 0.9,
         }}
       />
@@ -67,10 +68,11 @@ const SortMenu = ({ sortTasks }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 1,
-    flex: 1,
+    // marginBottom: 5,
+    // paddingVertical: 12,
+   // flex: 1,
     alignItems: "center",
-    justifyContent: "space-between",
+    //justifyContent: "space-between",
     flexDirection: "row",
   },
   sortItem: {

@@ -65,8 +65,10 @@ const ListPage = () => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, paddingVertical: 10 }}>
+   {/* <View style={{height: 75, justifyContent: 'space-evenly' }}> */}
+
+ 
         {/* sorting toolbar, receives access to setSortBy hook */}
         <SortMenu sortTasks={sortTasks} />
         {/* filter toolbar, receives access to filters and their methods */}
@@ -81,9 +83,10 @@ const ListPage = () => {
           setCompletedFilter={setCompletedFilter}
           clearFilters={clearFilters}
         />
-      </View>
+  {/* </View> */}
 
-      <Animatable.View animation="zoomIn" duration={1300} style={{ flex: 6 }}>
+
+      {/* <Animatable.View animation="zoomIn" duration={1300} style={{zIndex: 0, paddingBottom:80}}> */}
         <RenderTaskList
           tasks={filteredTasks}
           sortBy={sortBy}
@@ -91,17 +94,20 @@ const ListPage = () => {
           canDelete
           canEdit
         />
-      </Animatable.View>
+      {/* </Animatable.View> */}
 
-      <ScrollView
-        contentContainerStyle={{
+      <View
+        style={{
           justifyContent: "flex-end",
           flex: 1,
-          paddingBottom: 40,
+          position: 'absolute',
+          bottom: 20,
+          width: '100%',
+          zIndex: 1
         }}
       >
         <Footer tasks={filteredTasks} />
-      </ScrollView>
+      </View>
 
       <Modal
         animationType={"slide"}
@@ -111,7 +117,7 @@ const ListPage = () => {
       >
         <EditDetails setShowModal={setShowModal} taskId={taskId} />
       </Modal>
-    </SafeAreaView>
+    </View>
   );
 };
 

@@ -1,34 +1,12 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 import { Button, Icon } from "react-native-elements";
-import Overlay from "react-native-modal-overlay";
 import * as Animatable from "react-native-animatable";
 
 const Home = ({ navigation }) => {
-  // const [isOverlayOpen, setIsOverlayOpen] = useState(true);
-
-  // const toggleOverlay = () => {
-  //   setIsOverlayOpen(!isOverlayOpen);
-  // };
-
+ 
   return (
-    //   <Overlay
-    //     visible={isOverlayOpen}
-    //     onClose={toggleOverlay}
-    //     closeOnTouchOutside
-    //     animationType="slideInDown"
-    //     duration={1300}
-    //   >
-    //     <Text style={{ fontSize: 26, marginBottom: 20, fontWeight: "bold" }}>
-    //       Welcome to SmartTask
-    //     </Text>
-    //     <Button
-    //       title="READY TO DO"
-    //       buttonStyle={{ backgroundColor: "#e84a5f", height: 44 }}
-    //       onPress={() => toggleOverlay()}
-    //     />
-    //   </Overlay>
-    // ) : (
+
     <View style={styles.container}>
       <Animatable.View
         animation="slideInLeft"
