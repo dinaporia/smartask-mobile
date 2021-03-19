@@ -1,16 +1,13 @@
 import React, { useEffect } from "react";
-import { View, ScrollView } from "react-native";
-import { Button } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector, useDispatch } from "react-redux";
-
-import { RenderTaskList, TaskCounter } from "../shared";
-import {
-  createSchedule,
-  removeTaskFromSchedule,
-} from "../../redux/scheduleSlice";
-import { buildSchedule } from "./utilities";
 import * as Animatable from "react-native-animatable";
+import { Text } from 'react-native';
+
+import { RenderTaskList, Footer } from "../shared";
+import { createSchedule, removeTaskFromSchedule } from "../../redux/scheduleSlice";
+import { buildSchedule } from "./utilities";
+
 
 const ScheduleView = () => {
   const dispatch = useDispatch();
@@ -58,31 +55,21 @@ const ScheduleView = () => {
 
   return (
     <SafeAreaView
-      style={{ flex: 1, backgroundColor: "white", paddingBottom: 40 }}
+      style={{ flex: 1, backgroundColor: "white", paddingBottom: 40, backgroundColor: "#CCCCD9" }}
     >
+    <Text style={{fontSize: 18, fontWeight: 'bold', textAlign: 'center', paddingBottom: 20, color: '#13294B'}}>
+      TASKS FOR {(new Date()).toLocaleDateString("en-US")}
+    </Text>
       <Animatable.View animation="slideInLeft" duration={1300}>
         <RenderTaskList
           tasks={todaysTasks}
           canReschedule
           selectTask={rescheduleTask}
-        />
-        <Animatable.View animation="slideInRight">
-          <Button
-            containerStyle={{ margin: 20 }}
-            title="Update Schedule"
-            onPress={() => updateSchedule(tasks)}
-            buttonStyle={{ backgroundColor: "#e84a5f" }}
-          />
-        </Animatable.View>
+         />
       </Animatable.View>
 
-      <View style={{ alignItems: "stretch" }}>
-        <TaskCounter
-          completedTasks={todaysTasks.filter((task) => task.completed).length}
-          remainingTasks={todaysTasks.filter((task) => !task.completed).length}
-          totalTasks={todaysTasks.length}
-        />
-      </View>
+      <Footer tasks={todaysTasks} updateSchedule={updateSchedule} />
+
     </SafeAreaView>
   );
 };

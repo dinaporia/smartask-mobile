@@ -30,51 +30,77 @@ const TaskCounter = ({ totalTasks, completedTasks, remainingTasks }) => {
   );
 };
 
-const Footer = ({ tasks }) => {
+
+const Footer = ({ tasks, clearBtn = false, updateSchedule = false }) => {
   const dispatch = useDispatch();
+
+  let pressFunction, titleText, labelText;
   const completedTasks = tasks.filter((task) => task.completed);
+  const remainingTasks = tasks.filter((task) => !task.completed).length;
+
   const removeCompleted = () =>
     completedTasks.forEach((task) => dispatch(removeTask(task.id)));
 
+  // button changes depending on passed in props
+  if (clearBtn) {
+    pressFunction = () => {
+      Alert.alert(
+        "Remove Completed Tasks?",
+        "This will permanently remove all currently visible completed tasks.",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+          {
+            text: "OK",
+            onPress: removeCompleted,
+          },
+        ],
+        { cancelable: false }
+      )
+    };
+    titleText = "CLEAR COMPLETED";
+    labelText = "Tap to remove completed tasks";
+  } else if (updateSchedule) {
+    pressFunction = () => updateSchedule(tasks);
+    titleText = "Update Schedule";
+    labelText = "Tap to generate new schedule"
+  }
+
   return (
-    <View style={{ alignSelf: 'stretch'}}>
-      <Animatable.View animation="slideInDown" duration={1300}>
-        {/* button to remove filtered tasks that are completed */}
-        <Button
-          buttonStyle={{ backgroundColor: "red" }}
-          raised
-          title="CLEAR COMPLETED"
-          buttonStyle={{ backgroundColor: "#e84a5f" }}
-          onPress={() =>
-            Alert.alert(
-              "Remove Completed Tasks?",
-              "This will permanently remove all currently visible completed tasks.",
-              [
-                {
-                  text: "Cancel",
-                  style: "cancel",
-                },
-                {
-                  text: "OK",
-                  onPress: removeCompleted,
-                },
-              ],
-              { cancelable: false }
-            )
-          }
-          accessibilityLabel="Tap to remove completed tasks"
-        />
-      </Animatable.View>
+    <View 
+     style={styles.wrapper}>
+      <Button
+        raised
+        title={titleText}
+       
+        onPress={pressFunction}
+        accessibilityLabel={labelText}
+        titleStyle={{color: "white"}}
+        buttonStyle={{ 
+          backgroundColor: "#e84a5f", 
+          height: 60 }}
+      />
       <TaskCounter
         completedTasks={completedTasks.length}
-        remainingTasks={tasks.filter((task) => !task.completed).length}
+        remainingTasks={remainingTasks}
         totalTasks={tasks.length}
       />
     </View>
   );
 };
 
+
 const styles = StyleSheet.create({
+  wrapper: {
+    justifyContent: "flex-end",
+    flex: 1,
+    position: 'absolute',
+    bottom: 20,
+    width: '100%',
+    zIndex: 1
+  },
   container: {
     flexDirection: "row",
     flex: 1,
@@ -91,5 +117,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export { TaskCounter };
+
 export default Footer;

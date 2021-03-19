@@ -96,9 +96,9 @@ const DurationInput = ({ duration, setDuration }) => {
         minimumValue={15}
         maximumValue={180}
         step={15}
-        thumbTintColor="#e84a5f"
+        thumbTintColor="teal"
         thumbTouchSize={{ width: 25, height: 25 }}
-        minimumTrackTintColor="#e84a5f"
+        minimumTrackTintColor="teal"
         animateTransitions
       />
     </Card>

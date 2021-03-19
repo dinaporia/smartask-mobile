@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import * as Animatable from "react-native-animatable";
 
+
 const Home = ({ navigation }) => {
  
   return (
@@ -18,19 +19,16 @@ const Home = ({ navigation }) => {
             <Icon
               name="plus-square-o"
               type="font-awesome"
-              color="white"
+              color="#13294B"
               size={40}
               iconStyle={{ paddingRight: 30 }}
             />
           }
           title="ADD TASK"
+          titleStyle={{color: "#13294B"}}
           raised
           onPress={() => navigation.navigate("Add")}
-          buttonStyle={{
-            backgroundColor: "#e84a5f",
-            width: 200,
-            height: 60,
-          }}
+          buttonStyle={styles.button}
         />
       </Animatable.View>
       <Animatable.View
@@ -43,19 +41,16 @@ const Home = ({ navigation }) => {
             <Icon
               name="list"
               type="font-awesome"
-              color="white"
+              color="#13294B"
               size={30}
               iconStyle={{ paddingRight: 30 }}
             />
           }
           title="VIEW ALL"
+          titleStyle={{color: "#13294B"}}
           raised
           onPress={() => navigation.navigate("List")}
-          buttonStyle={{
-            backgroundColor: "#e84a5f",
-            width: 200,
-            height: 60,
-          }}
+          buttonStyle={styles.button}
         />
       </Animatable.View>
       <Animatable.View
@@ -68,19 +63,16 @@ const Home = ({ navigation }) => {
             <Icon
               name="calendar"
               type="font-awesome"
-              color="white"
+              color="#13294B"
               size={30}
               iconStyle={{ paddingRight: 30 }}
             />
           }
           title="SCHEDULE"
+          titleStyle={{color: "#13294B"}}
           raised
           onPress={() => navigation.navigate("Schedule")}
-          buttonStyle={{
-            backgroundColor: "#e84a5f",
-            width: 200,
-            height: 60,
-          }}
+          buttonStyle={styles.button}
         />
       </Animatable.View>
       <Animatable.View
@@ -93,19 +85,16 @@ const Home = ({ navigation }) => {
             <Icon
               name="sliders"
               type="font-awesome"
-              color="white"
+              color="#13294B"
               size={30}
               iconStyle={{ paddingRight: 30 }}
             />
           }
           title="SETTINGS"
+          titleStyle={{color: "#13294B"}}
           raised
           onPress={() => navigation.navigate("Prefs")}
-          buttonStyle={{
-            backgroundColor: "#e84a5f",
-            width: 200,
-            height: 60,
-          }}
+          buttonStyle={styles.button}
         />
       </Animatable.View>
     </View>
@@ -118,8 +107,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "white",
+    backgroundColor: "#13294B",
   },
+  button: {
+    backgroundColor: "#8BD3E6",
+    width: 200,
+    height: 60,
+  }
 });
 
 export default Home;

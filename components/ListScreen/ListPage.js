@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { View, ScrollView, Modal } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { View, Modal } from "react-native";
 import { useSelector } from "react-redux";
 
 import Filter from "./Filter";
@@ -65,50 +64,32 @@ const ListPage = () => {
   }
 
   return (
-    <View style={{ flex: 1, paddingVertical: 10 }}>
-   {/* <View style={{height: 75, justifyContent: 'space-evenly' }}> */}
+    <View style={{ flex: 1, paddingVertical: 10, backgroundColor: "#CCCCD9" }}>
+      {/* sorting toolbar, receives access to setSortBy hook */}
+      <SortMenu sortTasks={sortTasks} />
+      {/* filter toolbar, receives access to filters and their methods */}
+      <Filter
+        priorityFilter={priorityFilter}
+        interestFilter={interestFilter}
+        difficultyFilter={difficultyFilter}
+        completedFilter={completedFilter}
+        setDifficultyFilter={setDifficultyFilter}
+        setInterestFilter={setInterestFilter}
+        setPriorityFilter={setPriorityFilter}
+        setCompletedFilter={setCompletedFilter}
+        clearFilters={clearFilters}
+      />
 
- 
-        {/* sorting toolbar, receives access to setSortBy hook */}
-        <SortMenu sortTasks={sortTasks} />
-        {/* filter toolbar, receives access to filters and their methods */}
-        <Filter
-          priorityFilter={priorityFilter}
-          interestFilter={interestFilter}
-          difficultyFilter={difficultyFilter}
-          completedFilter={completedFilter}
-          setDifficultyFilter={setDifficultyFilter}
-          setInterestFilter={setInterestFilter}
-          setPriorityFilter={setPriorityFilter}
-          setCompletedFilter={setCompletedFilter}
-          clearFilters={clearFilters}
-        />
-  {/* </View> */}
-
-
-      {/* <Animatable.View animation="zoomIn" duration={1300} style={{zIndex: 0, paddingBottom:80}}> */}
-        <RenderTaskList
-          tasks={filteredTasks}
-          sortBy={sortBy}
-          selectTask={selectTask}
-          canDelete
-          canEdit
-        />
-      {/* </Animatable.View> */}
-
-      <View
-        style={{
-          justifyContent: "flex-end",
-          flex: 1,
-          position: 'absolute',
-          bottom: 20,
-          width: '100%',
-          zIndex: 1
-        }}
-      >
-        <Footer tasks={filteredTasks} />
-      </View>
-
+      <RenderTaskList
+        tasks={filteredTasks}
+        sortBy={sortBy}
+        selectTask={selectTask}
+        canDelete
+        canEdit
+      />
+     
+      <Footer tasks={filteredTasks} clearBtn />
+   
       <Modal
         animationType={"slide"}
         transparent={false}

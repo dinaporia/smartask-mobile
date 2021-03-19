@@ -2,7 +2,7 @@ import React, { Component, useState } from "react";
 import { Text, View, TextInput, ScrollView } from "react-native";
 import { Button } from "react-native-elements";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { Picker } from "@react-native-community/picker";
+import { Picker } from "@react-native-picker/picker";
 import { parseISO } from "date-fns";
 
 // components render input fields and pass input back to parent
@@ -14,15 +14,16 @@ const TaskNameInput = ({ task, onTextChange }) => {
     setIsFocus(true);
   };
   return (
-    <View style={{ flex: 1, marginTop: 10 }}>
+    <View style={{ flex: 1, marginTop: 10, alignItems: 'center' }}>
       <TextInput
         style={{
-          height: isFocus ? 80 : 40,
-          borderColor: "#2a363b",
+          height: isFocus ? 60 : 40,
+          width: 300,
+          borderColor: "teal",
           borderWidth: 0,
           borderBottomWidth: 1,
-          paddingLeft: 5,
           textAlign: "center",
+          backgroundColor: 'white'
         }}
         // disable autofill
         textContentType="none"
@@ -37,20 +38,21 @@ const TaskNameInput = ({ task, onTextChange }) => {
 
 const TaskCategoryInput = ({ category, onSelect, showLabel = false }) => {
   return (
-    <View style={{ flexDirection: "row" }}>
+    <View style={{ flexDirection: "row", alignItems: 'center' }}>
       {showLabel && (
         <View style={{ flex: 1, alignItems: "center" }}>
-          <Text style={{ textAlignVertical: "center", borderRadius: 16 }}>
+          <Text style={{ textAlignVertical: "center", borderRadius: 16, fontWeight: 'bold', fontSize: 16 }}>
             Category:
           </Text>
         </View>
       )}
-      <View style={{ flex: 2 }}>
+      <View style={{ flex: 2, borderWidth: 1, borderColor: 'teal'}}>
         <Picker
           selectedValue={category}
           onValueChange={(itemValue) => onSelect(itemValue)}
+          style={{backgroundColor: 'white'}}
         >
-          <Picker.Item label="Work" value="Work" />
+          <Picker.Item label="Work" value="Work"  />
           <Picker.Item label="Home" value="Home" />
           <Picker.Item label="Other" value="Other" />
         </Picker>
@@ -80,7 +82,7 @@ class TaskDateInput extends Component {
           <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
-            <Text style={{ textAlignVertical: "center", borderRadius: 16 }}>
+            <Text style={{ textAlignVertical: "center", borderRadius: 16, fontWeight: 'bold', fontSize: 16 }}>
               Due date:
             </Text>
           </View>
@@ -95,6 +97,7 @@ class TaskDateInput extends Component {
               }
               accessibilityLabel="Tap to select due date"
               titleStyle={{ color: "black" }}
+              buttonStyle={{backgroundColor: 'white', borderColor: 'teal', borderWidth: 1}}
             />
           </View>
         </View>

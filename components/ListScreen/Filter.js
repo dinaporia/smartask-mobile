@@ -298,9 +298,6 @@ const styles = StyleSheet.create({
   subContainer: {
     marginHorizontal: 5,
     flex: 1,
- 
-   // alignItems: "center",
-    // justifyContent: 'space-evenly' ,
     flexDirection: "row",
   },
   filterItem: {
@@ -316,8 +313,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   filterText: {
-    fontSize: 10,
-    color: "#155263",
+    fontSize: 11,
+    color: "#13294B",
     paddingVertical: 0,
   },
   subFilterText: {

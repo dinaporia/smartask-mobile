@@ -79,7 +79,7 @@ const AddTaskPage = (props) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+    <SafeAreaView style={{ flex: 1,  backgroundColor: "#13294B" }}>
       <View style={{ flex: 1 }}>
         <Animatable.View
           animation="flipInY"
@@ -106,7 +106,10 @@ const AddTaskPage = (props) => {
             title="QUICK ADD"
             onPress={() => createTask(newTask)}
             accessibilityLabel="Tap to quickly add task basics"
-            buttonStyle={{ backgroundColor: "#e84a5f" }}
+            titleStyle={{color: "#13294B"}}
+            buttonStyle={{ 
+              backgroundColor: "#8BD3E6", 
+              height: 60 }}
           />
           {/* open modal for details without adding task to store */}
           <Button
@@ -120,7 +123,11 @@ const AddTaskPage = (props) => {
                 : setShowModal(true);
             }}
             accessibilityLabel="Tap to add more details to task"
-            buttonStyle={{ backgroundColor: "#155263" }}
+            titleStyle={{color: "white"}}
+            buttonStyle={{ 
+              backgroundColor: "#e84a5f", 
+              height: 60,
+              }}
           />
         </Animatable.View>
       </View>
@@ -150,6 +157,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
     marginHorizontal: 20,
+    
   },
   inputs: {
     flex: 2,
@@ -158,7 +166,13 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     borderColor: "#e84a5f",
     borderWidth: 1,
+    backgroundColor: '#CCCCD9'
   },
+  button: {
+    backgroundColor: "#8BD3E6",
+    width: 200,
+    height: 60,
+  }
 });
 
 export default AddTaskPage;

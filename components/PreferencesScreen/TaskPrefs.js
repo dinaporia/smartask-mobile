@@ -54,16 +54,11 @@ const TaskPrefs = () => {
 
   return (
     <>
-      <View style={{ backgroundColor: "#e84a5f", padding: 10 }}>
-        <Text style={styles.subTitle}>Default Task Settings</Text>
+      <View style={{ backgroundColor: "#13294B", padding: 10 }}>
         <Text
-          style={{
-            paddingHorizontal: 3,
-            textAlign: "center",
-            color: "white",
-          }}
+          style={{ paddingHorizontal: 5, textAlign: "center", color: "white", fontSize: 16 }}
         >
-          Specify the default settings for quick-added tasks.
+          Set the preferences used for quick-added tasks. 
         </Text>
       </View>
       <ScrollView>
@@ -86,14 +81,23 @@ const TaskPrefs = () => {
           <DurationInput duration={duration} setDuration={setDuration} />
           <View style={{ margin: 5, padding: 10 }}>
             <Button
-              title="SAVE TASK DEFAULTS"
-              buttonStyle={{ backgroundColor: "#e84a5f" }}
+              title="SAVE TASK PREFERENCES"
+              raised
+              titleStyle={{color: "#13294B"}}
+              buttonStyle={{ 
+                backgroundColor: "#8BD3E6", 
+                height: 60 }}
               onPress={saveDefaultTask}
               accessibilityLabel="Tap to save task settings"
             />
             <Button
               containerStyle={{ marginTop: 10 }}
-              buttonStyle={{ backgroundColor: "#155263" }}
+              raised
+              titleStyle={{color: "white"}}
+              buttonStyle={{ 
+                backgroundColor: "#e84a5f", 
+                height: 60,
+                }}
               title="RESET TASK DEFAULTS"
               onPress={onTaskReset}
               accessibilityLabel="Tap to reset task defaults"

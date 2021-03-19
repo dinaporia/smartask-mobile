@@ -50,7 +50,7 @@ const AddDetails = ({ taskBasics, createTask, defaultTask }) => {
         duration={1300}
         style={{
           padding: 15,
-          backgroundColor: "#2a363b",
+          backgroundColor: "teal",
         }}
       >
         <Text
@@ -58,7 +58,7 @@ const AddDetails = ({ taskBasics, createTask, defaultTask }) => {
             textAlign: "center",
             fontSize: 18,
             fontWeight: "bold",
-            color: "#e84a5f",
+            color: "white",
           }}
         >
           {taskBasics.task}
@@ -85,7 +85,12 @@ const AddDetails = ({ taskBasics, createTask, defaultTask }) => {
           onPress={saveDetails}
           accessibilityLabel="Tap to save task details"
           containerStyle={{ padding: 15 }}
-          buttonStyle={{ backgroundColor: "#e84a5f" }}
+          raised
+          titleStyle={{color: "#13294B"}}
+            buttonStyle={{ 
+              backgroundColor: "#8BD3E6", 
+              height: 60
+              }}
         />
       </ScrollView>
     </>

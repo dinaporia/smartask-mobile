@@ -46,12 +46,11 @@ const SchedulePrefs = () => {
 
   return (
     <>
-      <View style={{ backgroundColor: "#e84a5f", padding: 10 }}>
-        <Text style={styles.subTitle}>Schedule Settings</Text>
+      <View style={{ backgroundColor: "#13294B", padding: 10 }}>
         <Text
-          style={{ paddingHorizontal: 3, textAlign: "center", color: "white" }}
+          style={{ paddingHorizontal: 5, textAlign: "center", color: "white", fontSize: 16 }}
         >
-          Specify the settings to use when scheduling your daily tasks.
+          These settings determine the alogrithm used for your daily scheduler. 
         </Text>
       </View>
       <ScrollView>
@@ -71,9 +70,9 @@ const SchedulePrefs = () => {
               minimumValue={60}
               maximumValue={480}
               step={60}
-              thumbTintColor="#e84a5f"
+              thumbTintColor="teal"
               thumbTouchSize={{ width: 25, height: 25 }}
-              minimumTrackTintColor="#e84a5f"
+              minimumTrackTintColor="teal"
               animateTransitions
             />
           </Card>
@@ -88,9 +87,9 @@ const SchedulePrefs = () => {
               minimumValue={1}
               maximumValue={10}
               step={1}
-              thumbTintColor="#e84a5f"
+              thumbTintColor="teal"
               thumbTouchSize={{ width: 25, height: 25 }}
-              minimumTrackTintColor="#e84a5f"
+              minimumTrackTintColor="teal"
               animateTransitions
             />
           </Card>
@@ -103,9 +102,9 @@ const SchedulePrefs = () => {
               minimumValue={1}
               maximumValue={10}
               step={1}
-              thumbTintColor="#e84a5f"
+              thumbTintColor="teal"
               thumbTouchSize={{ width: 25, height: 25 }}
-              minimumTrackTintColor="#e84a5f"
+              minimumTrackTintColor="teal"
               animateTransitions
             />
           </Card>
@@ -113,8 +112,8 @@ const SchedulePrefs = () => {
             <Card.Title>Include a fun task each day if possible?</Card.Title>
             <Switch
               style={{ alignSelf: "center" }}
-              trackColor={{ false: "#767577", true: "#e84a5f" }}
-              thumbColor={includeFun ? "#e84a5f" : "#f4f3f4"}
+              trackColor={{ false: "#767577", true: "#8BD3E6" }}
+              thumbColor={includeFun ? "teal" : "#f4f3f4"}
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => setIncludeFun(!includeFun)}
               value={includeFun}
@@ -122,15 +121,24 @@ const SchedulePrefs = () => {
           </Card>
           <View style={{ margin: 5, padding: 10 }}>
             <Button
-              title="SAVE SETTINGS"
-              buttonStyle={{ backgroundColor: "#e84a5f" }}
+              title="SAVE SCHEDULING SETTINGS"
+              raised
+              titleStyle={{color: "#13294B"}}
+              buttonStyle={{ 
+                backgroundColor: "#8BD3E6", 
+                height: 60 }}
               onPress={savePreferences}
               accessibilityLabel="Tap to save scheduling settings"
             />
             <Button
               containerStyle={{ marginTop: 10 }}
-              buttonStyle={{ backgroundColor: "#155263" }}
-              title="RESET SETTINGS"
+              raised
+              titleStyle={{color: "white"}}
+              buttonStyle={{ 
+                backgroundColor: "#e84a5f", 
+                height: 60,
+                }}
+              title="RESET SCHEDULING DEFAULTS"
               onPress={resetSchedPrefs}
               accessibilityLabel="Tap to reset scheduling settings"
             />

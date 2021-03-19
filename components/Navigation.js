@@ -12,7 +12,7 @@ const Drawer = createDrawerNavigator();
 
 const screenOptionStyle = {
   headerStyle: {
-    backgroundColor: "#2a363b",
+    backgroundColor: "#5A819C",
   },
   headerTitleStyle: {
     fontWeight: "bold",
@@ -65,7 +65,7 @@ const DrawerNavigator = () => {
         name="Schedule"
         component={ScheduleView}
         options={{  ...screenOptionStyle,
-        title: "Today's Tasks" }}
+        title: "Schedule" }}
       />
       <Drawer.Screen
         name="Prefs"

@@ -33,7 +33,7 @@ const RenderTaskList = (props) => {
 
     const renderTask = ({item}) => {
         return (
-            <SwipeRow rightOpenValue={(canDelete)? -116 : -58} >
+            <SwipeRow rightOpenValue={(canDelete)? -116 : -58}>
                 {canDelete ?
                 <View style={styles.deleteView}>
                     <TouchableOpacity 
@@ -168,7 +168,7 @@ const RenderTaskList = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
+       
         borderWidth: 0,
     },
     titleText: {
