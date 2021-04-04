@@ -21,7 +21,7 @@ const SchedulePrefs = () => {
   const [maxTedious, setMaxTedious] = useState(prefs.maxTedious);
   const [includeFun, setIncludeFun] = useState(prefs.includeFun);
 
-  let hourText = (hours / 60).toFixed(0) + (hours > 60 ? " hours" : " hour");
+  let hourText = (hours / 60) + (hours > 60 ? " hours" : " hour");
 
   // send new preferences object to store
   const savePreferences = () => {

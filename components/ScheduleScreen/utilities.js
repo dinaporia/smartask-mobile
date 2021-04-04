@@ -65,10 +65,12 @@ const buildSchedule = async ({tasks, prefs, queued, createSchedule}) => {
 
     //  check that tasks exist that have not been completed or rescheduled
     if (!tasks || tasks.length === 0) {
+       
        return basicAlert('noTasks');
     } else { 
         todos = tasks.filter(task => !task.completed);
         if (todos.length === 0) {
+            
             return basicAlert('allDone');
         } else {
             // main scheduling algorithm
@@ -190,15 +192,14 @@ const buildSchedule = async ({tasks, prefs, queued, createSchedule}) => {
                 }
             });
             } // end of scheduleGenerator
-        }
 
-        if (schedule.length > 0) {
-            createSchedule({schedule: schedule, forDate: today});
-
-        } else {
-            basicAlert();
+            if (schedule.length === 0) {
+                basicAlert();
+            }
+            
         }
     }
+    createSchedule({schedule: schedule, forDate: today});
 }
 
 export { buildSchedule };

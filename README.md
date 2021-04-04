@@ -48,6 +48,7 @@ SmarTask was built using React Native and Expo CLI
    * add your own category
    * Persist and cloud storage (using MongoDB and Express Server)
    * unit testing for scheduling algorithm
+   * reminders and notifications
    * improved UI on task list filters/sort menu
    * accessibility enhancements
 

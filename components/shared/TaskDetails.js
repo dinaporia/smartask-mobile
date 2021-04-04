@@ -72,7 +72,7 @@ const DurationInput = ({ duration, setDuration }) => {
     if (duration === 60) {
       return "1 hour";
     }
-    const hours = (duration / 60).toFixed(0);
+    const hours = Math.floor(duration / 60);
     const minutes = duration % 60;
     if (hours > 0) {
       if (minutes > 0) {

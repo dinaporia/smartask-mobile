@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const defaultPrefs = {
-    hours: 320,
+    hours: 180,
     maxHard: 1,
     maxTedious: 1,
     includeFun: true,

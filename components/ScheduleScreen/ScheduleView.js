@@ -34,11 +34,7 @@ const ScheduleView = () => {
 
   //  rebuilds schedule from tasks that haven't been rescheduled today
   const updateSchedule = () => {
-    // if notToday is current, exclude those tasks
-    const updatedTasks =
-      today === forDate
-        ? tasks.filter((task) => !notToday.includes(task.id))
-        : tasks.slice();
+    const updatedTasks = tasks.filter((task) => !notToday.includes(task.id));
     buildSchedule({ ...scheduleSettings, tasks: updatedTasks });
   };
 
@@ -46,12 +42,10 @@ const ScheduleView = () => {
     dispatch(removeTaskFromSchedule(taskId));
   };
 
-  // on mount, build new schedule if not already there
-  useEffect(() => {
-    if (schedule.length === 0) {
-      buildSchedule(scheduleSettings);
-    }
-  });
+  // build new schedule if not already there
+  if (today != forDate) {
+    buildSchedule(scheduleSettings);
+  }
 
   return (
     <SafeAreaView
@@ -61,11 +55,12 @@ const ScheduleView = () => {
       TASKS FOR {(new Date()).toLocaleDateString("en-US")}
     </Text>
       <Animatable.View animation="slideInLeft" duration={1300}>
-        <RenderTaskList
+          <RenderTaskList
           tasks={todaysTasks}
           canReschedule
           selectTask={rescheduleTask}
          />
+        
       </Animatable.View>
 
       <Footer tasks={todaysTasks} updateSchedule={updateSchedule} />
